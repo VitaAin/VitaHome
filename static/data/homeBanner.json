@@ -1,0 +1,23 @@
+{
+  "status": true,
+  "message": "OK",
+  "banners": [{
+      "title": "111",
+      "desc": "description-1",
+      "imgSrc": "",
+      "link": ""
+    },
+    {
+      "title": "222",
+      "desc": "description-2",
+      "imgSrc": "",
+      "link": ""
+    },
+    {
+      "title": "333",
+      "desc": "description-3",
+      "imgSrc": "",
+      "link": ""
+    }
+  ]
+}
