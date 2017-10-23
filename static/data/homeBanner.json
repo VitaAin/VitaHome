@@ -1,7 +1,7 @@
 {
-  "status": true,
+  "status": 1,
   "message": "OK",
-  "banners": [{
+  "data": [{
       "title": "111",
       "desc": "description-1",
       "imgSrc": "",

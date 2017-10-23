@@ -1,10 +1,13 @@
 <template>
   <div class="content-body">
-    <router-link class="content-title" :to="{name: 'ArticleShow', params: {slug: article.id}}">
+    <router-link class="content-title" :to="{name: 'ArticleShow', params: {id: article.id}}">
       <h3>{{article.title}}</h3>
     </router-link>
     <div class="content-from">由
-      <router-link :to="{name: 'UserArticles', params: {slug: article.user.id}}">{{article.user.name}}</router-link> 发表于 {{article.created_at}}</div>
+      <!-- <router-link :to="{name: 'UserArticles', params: {slug: article.user.id}}">{{article.user.name}}</router-link>  -->
+      {{article.user.name}}
+      发表于 {{article.created_at}}
+    </div>
     <div class="content-body-body">
       {{ article.abstract }} ...
     </div>
@@ -35,20 +38,24 @@
 <script>
 export default {
   name: "article-item",
-  props: ["i", "atc"],
+  props: {
+    propIndex: Number,
+    propArticle: null
+  },
   data() {
     return {
-      index: this.i,
-      article: this.atc
+      index: this.propIndex,
+      article: this.propArticle
     };
   },
   mounted() {
-    console.log("index: " + index + ", article: " + article);
-  }
+    // console.log("index: " + this.index + ", article: " + this.article.title);
+  },
+  methods: {}
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .content-body {
   width: 95%;
   margin-top: 30px;
@@ -65,11 +72,6 @@ export default {
       text-decoration: underline;
     }
   }
-  .content-from {
-    padding-top: 5px;
-    font-size: 13px;
-    color: #bbb;
-  }
   .content-body-body {
     padding-top: 12px;
     line-height: 25px;
@@ -81,5 +83,21 @@ export default {
   padding-top: 2px;
   color: #999;
   padding-left: 5px;
+}
+#btn-topic {
+  border-radius: 4px;
+  font-size: 13px;
+  border: 1px solid orangered;
+  padding: 2px 7px 2px;
+  margin-right: 12px;
+  font-weight: 500;
+  color: orangered;
+}
+#btn-topic:hover {
+  color: #00b5ad;
+  border-radius: 4px;
+  border: 1px solid #00b5ad;
+  box-shadow: none;
+  text-decoration: none;
 }
 </style>
