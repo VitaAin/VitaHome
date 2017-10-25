@@ -39,13 +39,13 @@
 export default {
   name: "article-item",
   props: {
-    propIndex: Number,
-    propArticle: null
+    index: Number,
+    article: null
   },
   data() {
     return {
-      index: this.propIndex,
-      article: this.propArticle
+      // index: this.propIndex,
+      // article: this.propArticle
     };
   },
   mounted() {

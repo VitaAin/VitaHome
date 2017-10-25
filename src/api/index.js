@@ -20,5 +20,19 @@ export default {
   },
   getArticle(id) {
     return Vue.http.get(API_ROOT + "OneArticle.json");
+  },
+  getAllTags() {
+    return Vue.http.get(API_ROOT + "AllTags.json");
+  },
+  getAllCategories() {
+    return Vue.http.get(API_ROOT + "AllCategories.json");
+  },
+  createArticle(article) {
+    // return Vue.http.post(API_ROOT + "");
+    return Vue.http.get(API_ROOT + "EditArticle.json");
+  },
+  editArticle(id, article) {
+    // return Vue.http.post(API_ROOT + "");
+    return Vue.http.get(API_ROOT + "EditArticle.json");
   }
 }

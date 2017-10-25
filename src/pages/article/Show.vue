@@ -6,7 +6,7 @@
           <p>{{article.title}}</p>
           <!-- <div class="article-edit" v-if="auth.id == article.user.id"> -->
           <div class="article-edit" v-if="article.user.id">
-            <router-link :to="{name: 'ArticleEdit', params: {slug: this.$route.params.slug}}">
+            <router-link :to="{name: 'ArticleEdit', params: {id: this.$route.params.id}}">
               <span style="padding-left: 10px; font-size: larger">
                 <i class="fa fa-edit"></i>
               </span>
@@ -32,7 +32,9 @@
             </div>
           </div>
           <div class="article-body">
-            <vue-markdown class="markdown-body">{{article.body}}</vue-markdown>
+            <!-- <vue-markdown class="markdown-body">{{article.body}}</vue-markdown> -->
+            <!-- <div class="markdown-body">{{article.body}}</div> -->
+            <div class="markdown-body" v-html="article.body"></div>
           </div>
           <div class="article-like">
             <!-- <el-button type="submit" id="btn-like" @click.prevent="click_like()"> -->
@@ -131,14 +133,15 @@
 </template>
 
 <script>
-import VueMarkdown from "vue-markdown";
+// import VueMarkdown from "vue-markdown";
+import Marked from "marked";
 import HotArticles from "../../components/HotArticles";
 import HotTags from "../../components/HotTags";
 import api from "../../api";
 
 export default {
   components: {
-    VueMarkdown,
+    // VueMarkdown,
     HotArticles,
     HotTags
   },
@@ -153,6 +156,12 @@ export default {
     };
   },
   mounted() {
+    Marked.setOptions({
+      highlight: function(code) {
+        return require("highlight.js").highlightAuto(code).value;
+      }
+    });
+    // this.setupMarked();
     this.getArticle();
   },
   methods: {
@@ -162,6 +171,7 @@ export default {
         console.log("Show getArticle: res:: " + res.data.data.title);
         if (res.data.status) {
           this.article = res.data.data;
+          this.article.body = Marked(res.data.data.body);
         }
       });
     }
@@ -171,6 +181,7 @@ export default {
 
 <style lang="scss">
 @import "../../../static/css/markdown.css";
+@import "~highlight.js/styles/atom-one-light.css";
 .article {
   margin-top: 40px;
   p {
@@ -214,7 +225,7 @@ export default {
 
 .article-body {
   padding-top: 35px;
-  // line-height: 25px;
+  line-height: 25px;
 }
 
 .comment-author {
