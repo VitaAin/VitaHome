@@ -1,21 +1,36 @@
 <template>
   <div>
-    <el-menu :default-active="activeIndex" class="header" mode="horizontal" @select="handleSelect">
+    <el-menu :default-active="'1'" class="header" mode="horizontal" @select="handleSelect">
       <el-menu-item index="0" class="header-title">{{headTitle}}</el-menu-item>
+
       <div class="header-nav">
-        <el-menu-item index="1">
-          <router-link to="/">首页</router-link>
-        </el-menu-item>
-        <el-menu-item index="2">
-          <router-link to="/">文章</router-link>
-        </el-menu-item>
-        <el-menu-item index="3">
-          <router-link to="/">关于</router-link>
-        </el-menu-item>
+        <router-link to="/">
+          <el-menu-item index="1">
+          首页
+          </el-menu-item>
+        </router-link>
+
+        <router-link to="/article/create">
+        <!-- <router-link :to="{name:'ArticleCreate'}"> -->
+          <el-menu-item index="2">
+            写文章
+          </el-menu-item>
+        </router-link>
+
+        <router-link to="/about">
+          <el-menu-item index="3">
+          关于
+          </el-menu-item>
+        </router-link>
       </div>
+      
       <div class="user-nav">
-        <el-menu-item index="10">登录</el-menu-item>
-        <el-menu-item index="11">注册</el-menu-item>
+        <router-link to="/user/login">
+          <el-menu-item index="10">登录</el-menu-item>
+        </router-link>
+        <router-link to="/user/register">
+          <el-menu-item index="11">注册</el-menu-item>
+        </router-link>
       </div>
     </el-menu>
   </div>
@@ -25,7 +40,6 @@
 export default {
   data() {
     return {
-      activeIndex: "1",
       headTitle: "Vita's Home"
     };
   },

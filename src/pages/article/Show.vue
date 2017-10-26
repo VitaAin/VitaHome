@@ -33,7 +33,7 @@
           </div>
           <div class="article-body">
             <!-- <vue-markdown class="markdown-body">{{article.body}}</vue-markdown> -->
-            <!-- <div class="markdown-body">{{article.body}}</div> -->
+            <!-- <div class="markdown-body">{{article.body}}</div> wrong -->
             <div class="markdown-body" v-html="article.body"></div>
           </div>
           <div class="article-like">
@@ -161,7 +161,6 @@ export default {
         return require("highlight.js").highlightAuto(code).value;
       }
     });
-    // this.setupMarked();
     this.getArticle();
   },
   methods: {

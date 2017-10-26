@@ -34,5 +34,13 @@ export default {
   editArticle(id, article) {
     // return Vue.http.post(API_ROOT + "");
     return Vue.http.get(API_ROOT + "EditArticle.json");
+  },
+  login(user) {
+    // return Vue.http.post(API_ROOT + "", user);
+    return Vue.http.get(API_ROOT + "Login.json");
+  },
+  register(params) {
+    // return Vue.http.post(API_ROOT + "", params);
+    return Vue.http.get(API_ROOT + "Register.json");
   }
 }

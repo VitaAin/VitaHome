@@ -1,6 +1,7 @@
 <template>
   <div>
     <page-header></page-header>
+
     <el-carousel :interval="4000" height="300px" v-if="bannerList && bannerList.length > 0">
       <el-carousel-item v-for="banner in bannerList" :key="banner.title">
         <p>{{ banner.desc }}</p>
@@ -10,15 +11,18 @@
     <el-row :gutter="25">
       <el-col :span="10" :offset="5">
         <div style="border: 1px solid #fff;padding-top: 10px"></div>
+
         <div class="content" v-for="(article, index) in articleList">
           <article-item v-bind:index="index" v-bind:article="article"></article-item>
           <div style="border-bottom: 1px solid #ddd; padding-top: 50px"></div>
         </div>
+
         <div style="text-align: right; margin-top: 20px">
           <el-pagination layout="prev, pager, next" :total="total" :page-size="page_size" @current-change="handleCurrentChange">
           </el-pagination>
         </div>
       </el-col>
+      
       <el-col :span="4" style="margin-top: 20px;">
         <hot-articles></hot-articles>
         <hot-tags></hot-tags>

@@ -3,42 +3,37 @@
     <el-row>
       <el-col :span="12" :offset="6">
         <div class="grid-content">
-          <form action="" v-on:submit.prevent>
-            <div class="article-create">
-              <dt>标题：</dt>
+          <el-form :rules="rules" :ref="params" :label-position="'left'" label-width="70px" v-on:submit.prevent>
+            <el-form-item prop="title" label="标题" class="article-create">
               <el-input v-model="params.title" class="el-input" placeholder="至少4个字符"></el-input>
-            </div>
+            </el-form-item>
 
-            <div class="article-create">
-              <dt>文章类别：</dt>
+            <el-form-item prop="category" label="文章类别" class="article-create">
               <el-select v-model="params.category" class="el-input" placeholder="请选择">
                 <el-option v-for="category in allCategories" :key="category.id" :label="category.name" :value="category.id"></el-option>
               </el-select>
-            </div>
+            </el-form-item>
 
-            <div class="article-create">
-              <dt>文章标签：</dt>
+            <el-form-item label="文章标签" class="article-create">
               <el-select v-model="tags" multiple filterable allow-create class="el-input" placeholder="请选择">
                 <el-option v-for="tag in allTags" :key="tag.if" :label="tag.name" :value="tag.id"></el-option>
               </el-select>
-            </div>
+            </el-form-item>
 
-            <div class="article-create">
-              <dt>内容：</dt>
-              <markdown-editor class="md-editor" ref="markdownEditor"></markdown-editor>
-            </div>
+            <el-form-item prop="body" label="内容" class="article-create">
+              <markdown-editor class="md-editor" ref="markdownEditor" :configs="configs" :highlight="true" :custom-theme="true" v-model="params.body"></markdown-editor>
+            </el-form-item>
 
-            <div class="article-create">
-              <dt>是否允许评论：</dt>
+            <el-form-item prop="isHidden" label="允许评论" class="article-create">
               <el-select v-model="params.isHidden" class="el-input" placeholder="请选择">
                 <el-option v-for="item in allowCommentsOptions" :key="item.value" :label="item.label" :value="item.value"></el-option>
               </el-select>
-            </div>
+            </el-form-item>
 
             <div>
               <button type="submit" class="article-btn" @click="submit($event)">提交</button>
             </div>
-          </form>
+          </el-form>
         </div>
       </el-col>
     </el-row>
@@ -58,6 +53,14 @@ export default {
   },
   data() {
     return {
+      rules: {
+        title: [
+          { required: true, message: "请输入文章标题", trigger: "blur" }
+        ],
+        body: [
+          { required: true, message: "请输入文章内容", trigger: "blur" }
+        ]
+      },
       params: {
         title: "",
         body: "",
@@ -65,19 +68,28 @@ export default {
         isHidden: "F"
       },
       allowCommentsOptions: [
-        { value: "F", label: "否" },
-        { value: "T", label: "是" }
+        { value: "F", label: "是" },
+        { value: "T", label: "否" }
       ],
       tags: [],
       allTags: [],
       allCategories: [],
-      failure: ""
+      failure: "",
+      configs: {
+        status: false,
+        // initialValue: '请输入内容',
+        renderingConfig: {
+          codeSyntaxHighlighting: true,
+          highlightingTheme: 'tomorrow'
+        }
+      }
     };
   },
   mounted() {
     this.getAllTags();
     this.getAllCategories();
 
+    console.log("FormArticle type: " + this.type);
     if (this.type != "create_article") {
       this.getArticle();
     }
@@ -117,7 +129,7 @@ export default {
       } else {
         let form = {
           tag: this.tags,
-          isHidden: this.params.is_hidden,
+          isHidden: this.params.isHidden,
           title: this.params.title,
           body: this.params.body,
           category: this.params.category
@@ -128,10 +140,10 @@ export default {
     createArticle() {
       api.createArticle(this.params).then(res => {
         if (res.data.status == 1) {
-          this.$router.push({
-            name: "ArticleShow",
-            params: { id: res.data.data.id }
-          });
+          // this.$router.push({
+          //   name: "ArticleShow",
+          //   params: { id: res.data.data.id }
+          // });
         } else {
           this.failure = "error";
         }
@@ -140,10 +152,10 @@ export default {
     editArticle() {
       api.editArticle(this.$route.params.id, form).then(res => {
         if (res.data.status == 1) {
-          this.$router.push({
-            name: "ArticleShow",
-            params: { id: res.data.data.id }
-          });
+          // this.$router.push({
+          //   name: "ArticleShow",
+          //   params: { id: res.data.data.id }
+          // });
         }
       });
     }
@@ -158,6 +170,7 @@ export default {
   margin-top: 60px;
   .article-create {
     margin-bottom: 20px;
+    padding: auto 10px;
     dt {
       color: #555;
       padding-top: 5px;
