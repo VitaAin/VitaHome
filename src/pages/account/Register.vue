@@ -15,7 +15,7 @@
         </div>
 
         <div class="ms-login">
-          <el-form :rules="rules" ref="registerForm" :model="params" :label-position="'left'" label-width="90px">
+          <el-form status-icon :rules="rules" ref="registerForm" :model="params" :label-position="'left'" label-width="90px">
             <el-form-item label="用户名" prop="name">
               <el-input v-model="params.name" placeholder="至少4个字符"></el-input>
             </el-form-item>

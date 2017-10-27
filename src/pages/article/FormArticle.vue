@@ -3,7 +3,7 @@
     <el-row>
       <el-col :span="12" :offset="6">
         <div class="grid-content">
-          <el-form :rules="rules" ref="params" :label-position="'left'" label-width="80px">
+          <el-form status-icon :rules="rules" ref="params" :model="params" :label-position="'left'" label-width="80px">
             <el-form-item prop="title" label="标题" class="article-create">
               <el-input v-model="params.title" class="el-input" placeholder="至少4个字符"></el-input>
             </el-form-item>
@@ -15,7 +15,7 @@
             </el-form-item>
 
             <el-form-item prop="tags" label="文章标签" class="article-create">
-              <el-select v-model="tags" multiple filterable allow-create class="el-input" placeholder="请选择">
+              <el-select v-model="params.tags" multiple filterable allow-create class="el-input" placeholder="请选择">
                 <el-option v-for="tag in allTags" :key="tag.if" :label="tag.name" :value="tag.id"></el-option>
               </el-select>
             </el-form-item>
@@ -61,13 +61,13 @@ export default {
         title: "",
         body: "",
         category: "",
-        isHidden: "F"
+        isHidden: "F",
+        tags: []
       },
       allowCommentsOptions: [
         { value: "F", label: "是" },
         { value: "T", label: "否" }
       ],
-      tags: [],
       allTags: [],
       allCategories: [],
       failure: "",
@@ -108,7 +108,7 @@ export default {
     getArticle() {
       api.getArticle(this.$route.params.id).then(res => {
         for (var index in res.data.data.tags) {
-          this.tags.push(res.data.data.tags[index].id);
+          this.params.tags.push(res.data.data.tags[index].id);
         }
         this.params = res.data.data;
         this.params.category = res.data.data.category_id;
@@ -125,7 +125,7 @@ export default {
       //   console.log("FormArticle valid: " + valid);
       //   if (valid) {
       //     alert("submit");
-          this.submitCallback();
+      this.submitCallback();
       //   } else {
       //     alert("提交的数据不正确，请重新提交！");
       //     return false;
@@ -134,11 +134,10 @@ export default {
     },
     submitCallback() {
       if (this.type == "create_article") {
-        this.params.tags = this.tags;
         this.createArticle();
       } else {
         let form = {
-          tag: this.tags,
+          tag: this.params.tags,
           isHidden: this.params.isHidden,
           title: this.params.title,
           body: this.params.body,

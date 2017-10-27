@@ -15,7 +15,7 @@
         </div>
 
         <div class="login-box">
-          <el-form :model="user" :rules="rules" ref="loginForm" :label-position="'left'" label-width="70px" class="login-form">
+          <el-form status-icon :model="user" :rules="rules" ref="loginForm" :label-position="'left'" label-width="70px" class="login-form">
             <el-form-item prop="account" label="帐号">
               <el-input v-model="user.account" placeholder="用户名/邮箱"></el-input>
             </el-form-item>
