@@ -15,7 +15,7 @@
         </div>
 
         <div class="ms-login">
-          <el-form :rules="rules" ref="params" :model="params" :label-position="'left'" label-width="90px">
+          <el-form :rules="rules" ref="registerForm" :model="params" :label-position="'left'" label-width="90px">
             <el-form-item label="用户名" prop="name">
               <el-input v-model="params.name" placeholder="至少4个字符"></el-input>
             </el-form-item>
@@ -40,12 +40,12 @@
             </div>
 
             <div class="login-btn">
-              <el-button class="btn-define" @click="submit()">注 册</el-button>
+              <el-button class="btn-define" @click="submit('registerForm')">注 册</el-button>
             </div>
           </el-form>
 
           <div class="pull-center">
-            <el-button class="github-login" @click="githubLogin()">GitHub 账号注册</el-button>
+            <el-button class="github-login" @click="githubRegister()">GitHub 账号注册</el-button>
           </div>
         </div>
       </div>
@@ -100,18 +100,29 @@ export default {
         email: "",
         password: "",
         passwordConfirmation: ""
-      }
+      },
+      failure: ""
     };
   },
   methods: {
-    submit() {
-      api.register().then(res => {
-        if (res.data.status) {
-        } else {
+    submit(formName) {
+      this.$refs[formName].validate(valid => {
+        console.log("Register valid: " + valid);
+        if (valid) {
+          this.register();
         }
       });
     },
-    githubLogin() {
+    register() {
+      api.register().then(res => {
+        if (res.data.status) {
+          console.log("Register ok");
+        } else {
+          console.log("Register failed");
+        }
+      });
+    },
+    githubRegister() {
       window.location.href = "https://api/laravue.org.github";
     }
   }

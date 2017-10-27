@@ -15,7 +15,7 @@
         </div>
 
         <div class="login-box">
-          <el-form :model="user" :rules="rules" :label-position="'left'" label-width="70px" class="login-form">
+          <el-form :model="user" :rules="rules" ref="loginForm" :label-position="'left'" label-width="70px" class="login-form">
             <el-form-item prop="account" label="帐号">
               <el-input v-model="user.account" placeholder="用户名/邮箱"></el-input>
             </el-form-item>
@@ -31,7 +31,7 @@
             </div>
 
             <div class="login-btn">
-              <el-button class="btn-define" @click="submit()">登录</el-button>
+              <el-button class="btn-define" @click="submit('loginForm')">登录</el-button>
             </div>
           </el-form>
 
@@ -72,7 +72,15 @@ export default {
   },
   mounted() {},
   methods: {
-    submit() {
+    submit(formName) {
+      this.$refs[formName].validate(valid => {
+        console.log("Login valid: " + valid);
+        if (valid) {
+          this.login();
+        }
+      });
+    },
+    login() {
       api.login(user).then(res => {
         console.log("Login login res: " + res.data);
         if (res.data.status == 1) {

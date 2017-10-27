@@ -3,7 +3,7 @@
     <el-row>
       <el-col :span="12" :offset="6">
         <div class="grid-content">
-          <el-form :rules="rules" :ref="params" :label-position="'left'" label-width="70px" v-on:submit.prevent>
+          <el-form :rules="rules" ref="params" :label-position="'left'" label-width="80px">
             <el-form-item prop="title" label="标题" class="article-create">
               <el-input v-model="params.title" class="el-input" placeholder="至少4个字符"></el-input>
             </el-form-item>
@@ -14,7 +14,7 @@
               </el-select>
             </el-form-item>
 
-            <el-form-item label="文章标签" class="article-create">
+            <el-form-item prop="tags" label="文章标签" class="article-create">
               <el-select v-model="tags" multiple filterable allow-create class="el-input" placeholder="请选择">
                 <el-option v-for="tag in allTags" :key="tag.if" :label="tag.name" :value="tag.id"></el-option>
               </el-select>
@@ -31,7 +31,7 @@
             </el-form-item>
 
             <div>
-              <button type="submit" class="article-btn" @click="submit($event)">提交</button>
+              <button type="submit" class="article-btn" @click="submit($event, 'params')">提交</button>
             </div>
           </el-form>
         </div>
@@ -54,12 +54,8 @@ export default {
   data() {
     return {
       rules: {
-        title: [
-          { required: true, message: "请输入文章标题", trigger: "blur" }
-        ],
-        body: [
-          { required: true, message: "请输入文章内容", trigger: "blur" }
-        ]
+        title: [{ required: true, message: "请输入文章标题", trigger: "blur" }],
+        body: [{ required: true, message: "请输入文章内容", trigger: "blur" }]
       },
       params: {
         title: "",
@@ -80,7 +76,7 @@ export default {
         // initialValue: '请输入内容',
         renderingConfig: {
           codeSyntaxHighlighting: true,
-          highlightingTheme: 'tomorrow'
+          highlightingTheme: "tomorrow"
         }
       }
     };
@@ -118,11 +114,25 @@ export default {
         this.params.category = res.data.data.category_id;
       });
     },
-    submit(ev) {
+    submit(ev, formName) {
       // 判断是否为按了Enter键，防止在输入标签时被提交
       if (ev != null && ev.keyCode == 13) {
         return;
       }
+
+      // console.log("FormArticle form: " + this.$refs[formName]);
+      // this.$refs.params.validate(valid => {
+      //   console.log("FormArticle valid: " + valid);
+      //   if (valid) {
+      //     alert("submit");
+          this.submitCallback();
+      //   } else {
+      //     alert("提交的数据不正确，请重新提交！");
+      //     return false;
+      //   }
+      // });
+    },
+    submitCallback() {
       if (this.type == "create_article") {
         this.params.tags = this.tags;
         this.createArticle();
@@ -140,22 +150,22 @@ export default {
     createArticle() {
       api.createArticle(this.params).then(res => {
         if (res.data.status == 1) {
-          // this.$router.push({
-          //   name: "ArticleShow",
-          //   params: { id: res.data.data.id }
-          // });
+          this.$router.push({
+            name: "ArticleShow",
+            params: { id: res.data.data.id }
+          });
         } else {
           this.failure = "error";
         }
       });
     },
     editArticle() {
-      api.editArticle(this.$route.params.id, form).then(res => {
+      api.editArticle(this.$route.params.id, this.$refs.params).then(res => {
         if (res.data.status == 1) {
-          // this.$router.push({
-          //   name: "ArticleShow",
-          //   params: { id: res.data.data.id }
-          // });
+          this.$router.push({
+            name: "ArticleShow",
+            params: { id: res.data.data.id }
+          });
         }
       });
     }
@@ -178,10 +188,6 @@ export default {
       text-align: right;
       float: left;
     }
-    .el-input {
-      width: 70%;
-      margin-left: 2%;
-    }
   }
   .article-btn {
     cursor: pointer;
@@ -195,7 +201,7 @@ export default {
     border-radius: 100px;
     box-shadow: none;
     &:hover,
-    &:focus,
+    // &:focus,
     &:active {
       color: tomato;
       border: 1px solid tomato;

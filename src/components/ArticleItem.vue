@@ -67,6 +67,7 @@ export default {
   }
   .content-title {
     color: #222;
+    text-align: left;
     &:hover {
       color: #00b5ad;
       text-decoration: underline;

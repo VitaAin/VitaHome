@@ -11,7 +11,6 @@
         </router-link>
 
         <router-link to="/article/create">
-        <!-- <router-link :to="{name:'ArticleCreate'}"> -->
           <el-menu-item index="2">
             写文章
           </el-menu-item>

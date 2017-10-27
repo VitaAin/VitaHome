@@ -43,6 +43,11 @@ export default new Router({
           component: Home
         },
         {
+          path: "/article/create",
+          name: "ArticleCreate",
+          component: ArticleCreate
+        },
+        {
           path: "/article/:id",
           name: "ArticleShow",
           component: ArticleShow
@@ -51,11 +56,6 @@ export default new Router({
           path: "/article/:id/edit",
           name: "ArticleEdit",
           component: ArticleEdit
-        },
-        {
-          path: "/article/create",
-          name: "ArticleCreate",
-          component: ArticleCreate
         },
         {
           path: "/about",
