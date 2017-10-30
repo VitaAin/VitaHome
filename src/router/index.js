@@ -12,6 +12,8 @@ const Common = resolve => require(["../pages/Common"], resolve);
 const ArticleShow = resolve => require(["../pages/article/Show"], resolve);
 const ArticleEdit = resolve => require(["../pages/article/Edit"], resolve);
 const ArticleCreate = resolve => require(["../pages/article/Create"], resolve);
+const UserOverview = resolve => require(["../pages/user/UserOverview"], resolve);
+const UserArticles = resolve => require(["../pages/user/UserArticles"], resolve);
 
 export default new Router({
   routes: [{
@@ -31,7 +33,6 @@ export default new Router({
     },
     {
       path: "/",
-      // name:""
       component: Common,
       children: [{
           path: "/",
@@ -56,6 +57,20 @@ export default new Router({
           path: "/article/:id/edit",
           name: "ArticleEdit",
           component: ArticleEdit
+        },
+        {
+          path: "/user/:id",
+          component: UserOverview,
+          children: [{
+              path: "/",
+              component: UserArticles
+            },
+            {
+              path: "articles",
+              name: "UserArticles",
+              component: UserArticles
+            }
+          ]
         },
         {
           path: "/about",

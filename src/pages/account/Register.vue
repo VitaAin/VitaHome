@@ -6,11 +6,13 @@
       <div class="container">
         <div class="ms-title">
           <span>
-            <router-link to="/user/login" class="title-text">登录</router-link>
+            <!-- <router-link to="/user/login" class="title-text">登录</router-link> -->
+            <router-link :to="{name: 'Login'}" class="title-text">登录</router-link>
           </span>
           <span class="this-span"> / </span>
           <span>
-            <router-link to="/user/register" class="title-text">注册</router-link>
+            <!-- <router-link to="/user/register" class="title-text">注册</router-link> -->
+            <router-link :to="{naem: 'Register'}" class="title-text">注册</router-link>
           </span>
         </div>
 

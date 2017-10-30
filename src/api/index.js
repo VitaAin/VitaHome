@@ -42,5 +42,11 @@ export default {
   register(params) {
     // return Vue.http.post(API_ROOT + "", params);
     return Vue.http.get(API_ROOT + "Register.json");
+  },
+  getUser(id) {
+    return Vue.http.get(API_ROOT + "User.json");
+  },
+  getUserArticles(id) {
+    return Vue.http.get(API_ROOT + "UserArticles.json");
   }
 }

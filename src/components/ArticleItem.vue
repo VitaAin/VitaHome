@@ -4,8 +4,7 @@
       <h3>{{article.title}}</h3>
     </router-link>
     <div class="content-from">由
-      <!-- <router-link :to="{name: 'UserArticles', params: {slug: article.user.id}}">{{article.user.name}}</router-link>  -->
-      {{article.user.name}}
+      <router-link :to="{name: 'UserArticles', params: {id: article.user.id}}">{{article.user.name}}</router-link> 
       发表于 {{article.created_at}}
     </div>
     <div class="content-body-body">

@@ -1,0 +1,15 @@
+{
+  "status": 1,
+  "message": "OK",
+  "data": {
+    "id": 0,
+    "avatar": "",
+    "name": "",
+    "real_name": "",
+    "city": "",
+    "last_actived_at": "",
+    "followers_count": 1,
+    "comments_count": 2,
+    "articles_count": 3
+  }
+}

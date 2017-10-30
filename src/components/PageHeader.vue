@@ -10,13 +10,15 @@
           </el-menu-item>
         </router-link>
 
-        <router-link to="/article/create">
+        <!-- <router-link to="/article/create"> -->
+        <router-link :to="{name: 'ArticleCreate'}">
           <el-menu-item index="2">
             写文章
           </el-menu-item>
         </router-link>
 
-        <router-link to="/about">
+        <!-- <router-link to="/about"> -->
+        <router-link :to="{name: 'About'}">
           <el-menu-item index="3">
           关于
           </el-menu-item>
@@ -24,10 +26,12 @@
       </div>
       
       <div class="user-nav">
-        <router-link to="/user/login">
+        <!-- <router-link to="/user/login"> -->
+        <router-link :to="{name: 'Login'}">
           <el-menu-item index="10">登录</el-menu-item>
         </router-link>
-        <router-link to="/user/register">
+        <!-- <router-link to="/user/register"> -->
+        <router-link :to="{name: 'Register'}">
           <el-menu-item index="11">注册</el-menu-item>
         </router-link>
       </div>
