@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-row :gutter="25">
+    <el-row :gutter="25" v-if="user">
       <el-col :span="4" :offset="5">
         <div class="sidebar-author" v-if="user">
           <p>作者：{{user.name}}</p>
@@ -22,11 +22,11 @@
 
           <dl class="dl-horizontal">
             <div class="df">
-              <dt><label>Name:</label></dt>
+              <dt><label>用户名:</label></dt>
               <dd><strong>{{ user.name }}</strong></dd>
             </div>
             <div class="df" v-if="user.real_name">
-              <dt><label>Real Name:</label></dt>
+              <dt><label>真实姓名:</label></dt>
               <dd><span>{{ user.real_name }}</span></dd>
             </div>
             <div class="df" v-if="user.city">
@@ -61,7 +61,7 @@
           <!-- <div v-if="auth.id == user.id"> -->
           <div >
             <!-- <el-button class="btn-define" @click.prevent="edit_user_info()"> -->
-            <el-button class="btn-define" >
+            <el-button class="btn-define" @click.prevent="editUserInfo()">
               <span><i class="fa fa-plus"></i> 编辑个人资料 </span>
             </el-button>
           </div>
@@ -108,7 +108,12 @@ import api from "../../api";
 export default {
   data() {
     return {
-      user: null
+      active: {
+        color: "#00b5ad"
+      },
+      user: null,
+      path: "",
+      follow: false
     };
   },
   mounted() {
@@ -121,6 +126,9 @@ export default {
           this.user = res.data.data;
         }
       });
+    },
+    editUserInfo(){
+      this.$router.push({name: "EditUserInfo", params: {id: this.user.id}});
     }
   }
 };

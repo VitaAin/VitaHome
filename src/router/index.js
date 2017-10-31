@@ -14,6 +14,10 @@ const ArticleEdit = resolve => require(["../pages/article/Edit"], resolve);
 const ArticleCreate = resolve => require(["../pages/article/Create"], resolve);
 const UserOverview = resolve => require(["../pages/user/UserOverview"], resolve);
 const UserArticles = resolve => require(["../pages/user/UserArticles"], resolve);
+const UserReplies = resolve => require(["../pages/user/UserReplies"], resolve);
+const EditCommon = resolve => require(["../pages/user/edit/EditCommon"], resolve);
+const EditUserInfo = resolve => require(["../pages/user/edit/EditUserInfo"], resolve);
+const EditUserAvatar = resolve => require(["../pages/user/edit/EditAvatar"], resolve);
 
 export default new Router({
   routes: [{
@@ -69,8 +73,31 @@ export default new Router({
               path: "articles",
               name: "UserArticles",
               component: UserArticles
+            },
+            {
+              path: "replies",
+              name: "UserReplies",
+              component: UserReplies
             }
           ]
+        },
+        {
+          path: "/user/:id",
+          component: EditCommon,
+          children: [{
+            path: "/",
+            component: EditUserInfo
+          }, 
+          {
+            path: "/edit_info",
+            name: "EditUserInfo",
+            component: EditUserInfo
+          }, 
+          {
+            path: "/edit_avatar",
+            name: "EditUserAvatar",
+            component: EditUserAvatar
+          }]
         },
         {
           path: "/about",

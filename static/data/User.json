@@ -2,14 +2,24 @@
   "status": 1,
   "message": "OK",
   "data": {
-    "id": 0,
-    "avatar": "",
-    "name": "",
-    "real_name": "",
-    "city": "",
-    "last_actived_at": "",
+    "id": 1,
+    "name": "laravue",
+    "email": "root@laravue.org",
+    "avatar": "https:\/\/api.laravue.org\/image\/avatar.jpeg",
+    "real_name": null,
+    "city": null,
+    "articles_count": 10,
+    "comments_count": 8,
+    "likes_count": 3,
     "followers_count": 1,
-    "comments_count": 2,
-    "articles_count": 3
+    "followings_count": 2,
+    "is_banned": "F",
+    "confirm_code": "MfIgtQBdiM1isjx6wm4t8zB0Eui1TY7Ge7j7BKXK5L2TaBmoIowzbZMFpdff",
+    "is_confirmed": 1,
+    "last_actived_at": "2017-10-30 17:57:54",
+    "created_at": "2017-08-13 22:44:54",
+    "updated_at": "2017-10-30 18:00:01",
+    "deleted_at": null,
+    "isOnLine": 0
   }
 }

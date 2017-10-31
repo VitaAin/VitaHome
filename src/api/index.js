@@ -48,5 +48,8 @@ export default {
   },
   getUserArticles(id) {
     return Vue.http.get(API_ROOT + "UserArticles.json");
+  },
+  getUserReplies(id) {
+    return Vue.http.get(API_ROOT + "UserReplies.json");
   }
 }

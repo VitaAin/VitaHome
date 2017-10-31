@@ -1,20 +1,22 @@
 <template>
   <div class="user-articles">
-    <div v-if="articles" v-for="(article, index) in articles">
+    <div v-if="comments" v-for="(comment, index) in comments">
       <div class="user-article">
-        <router-link :to="{name: 'ArticleShow', params: {id: article.id}}">
-          <span>{{article.title}}</span>
+        <router-link :to="{name: 'ArticleShow', params: {id: comment.commentable.id}}">
+          <span style="font-size: 15px">{{comment.commentable.title}}</span>
         </router-link>
-        <span class="dex create-time">[创建于 {{article.created_at.split(' ')[0]}}]</span>
-          
+        <span class="dex create-time">[评论于 {{comment.created_at.split(' ')[0]}}]</span>
+
         <div>
-          <span class="dex"> · {{article.comments_count}} 条回复 · </span>
-          <span class="dex">{{article.likes_count}} 人关注 ·</span>
+          <span class="dex"> · {{comment.commentable.comments_count}} 条回复 ·</span>
+          <span class="dex">{{comment.commentable.likes_count}} 人关注 ·</span>
         </div>
+        
+        <p style="padding-top: 10px; font-size: 15px">{{comment.body}}</p>
       </div>
-      <div style="border-bottom: 1px solid #eee; padding-top: 10px"></div>
     </div>
-    <div v-if="!articles">
+
+    <div v-if="! comments">
       <div class="no-article">
         <p>没有任何数据~~</p>
       </div>
@@ -28,17 +30,17 @@ import api from "../../api";
 export default {
   data() {
     return {
-      articles: []
+      comments: []
     };
   },
   mounted() {
-    this.getUserArticles();
+    this.getUserReplies();
   },
   methods: {
-    getUserArticles() {
-      api.getUserArticles(this.$route.params.id).then(res => {
-        if (res.data.status) {
-          this.articles = res.data.data;
+    getUserReplies() {
+      api.getUserReplies(this.$route.params.id).then(res => {
+        if (res.data.status == 1) {
+          this.comments = res.data.data;
         }
       });
     }
