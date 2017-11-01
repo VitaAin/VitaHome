@@ -39,6 +39,9 @@ export default {
     // return Vue.http.post(API_ROOT + "", user);
     return Vue.http.get(API_ROOT + "Login.json");
   },
+  logout() {
+    return Vue.http.get(API_ROOT + "Logout.json");
+  },
   register(params) {
     // return Vue.http.post(API_ROOT + "", params);
     return Vue.http.get(API_ROOT + "Register.json");

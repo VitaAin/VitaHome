@@ -12,11 +12,10 @@
         </div>
 
         <div><p>更换图像：</p></div>
-        <el-upload class="upload-demo" drag :action="upload_url" :on-success="uploadCallback" :show-file-list="false" :headers="headers">
+        <el-upload class="upload-demo" drag :action="uploadUrl" :on-success="uploadCallback" :show-file-list="false" :headers="headers">
           <i class="el-icon-upload"></i>
-          <div class="el-upload__text">将文件拖到此处，或
-            <em>点击上传</em>
-          </div>
+          <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+          <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
         </el-upload>
       </div>
     </div>

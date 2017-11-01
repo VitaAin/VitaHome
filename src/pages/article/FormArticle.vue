@@ -21,7 +21,12 @@
             </el-form-item>
 
             <el-form-item prop="body" label="内容" class="article-create">
-              <markdown-editor class="md-editor" ref="markdownEditor" :configs="configs" :highlight="true" :custom-theme="true" v-model="params.body"></markdown-editor>
+              <markdown-editor v-model="params.body" class="md-editor" ref="markdownEditor" :configs="configs" :highlight="true" :custom-theme="true"></markdown-editor>
+              <!-- <el-upload drag :action="uploadUrl" :on-success="uploadCallback" :show-file-list="true" list-type="picture-card" :multiple="true" :headers="headers">
+                <i class="el-icon-upload"></i>
+                <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+                <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
+              </el-upload> -->
             </el-form-item>
 
             <el-form-item prop="isHidden" label="允许评论" class="article-create">
@@ -125,14 +130,14 @@ export default {
       //   console.log("FormArticle valid: " + valid);
       //   if (valid) {
       //     alert("submit");
-      this.submitCallback();
+      this.afterSubmit();
       //   } else {
       //     alert("提交的数据不正确，请重新提交！");
       //     return false;
       //   }
       // });
     },
-    submitCallback() {
+    afterSubmit() {
       if (this.type == "create_article") {
         this.createArticle();
       } else {

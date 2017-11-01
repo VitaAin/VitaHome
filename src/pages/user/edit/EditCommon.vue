@@ -33,18 +33,23 @@
 </template>
 
 <script>
+import mapState from "vuex";
+
 export default {
   data() {
     return {
       active: {
         color: "#00b5ad"
       },
-      id: null,
+      // id: null,
       path: ""
     };
   },
+  computed: mapState({
+    id: state => state.account.auth.id
+  }),
   mounted() {
-    this.id = this.$route.params.id;
+    // this.id = this.$route.params.id;
   }
 };
 </script>
