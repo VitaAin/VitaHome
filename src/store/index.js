@@ -4,7 +4,7 @@ import account from "./modules/account";
 
 Vue.use(Vuex);
 
-export default new Vue.Store({
+export default new Vuex.Store({
   modules: {
     account
   }
