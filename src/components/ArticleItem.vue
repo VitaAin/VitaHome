@@ -3,19 +3,23 @@
     <router-link class="content-title" :to="{name: 'ArticleShow', params: {id: article.id}}">
       <h3>{{article.title}}</h3>
     </router-link>
+
     <div class="content-from">由
       <router-link :to="{name: 'UserArticles', params: {id: article.user.id}}">{{article.user.name}}</router-link> 
       发表于 {{article.created_at}}
     </div>
+
     <div class="content-body-body">
       {{ article.abstract }} ...
     </div>
+
     <div style="padding-top: 15px">
       <div v-for="tag in article.tags" style="float: left">
         <a v-if="tag" :href="'/#/articles?tag=' + tag.name" id="btn-topic">
           # {{ tag.name }}
         </a>
       </div>
+      
       <div class="content-count">
         <span style="padding-right: 4px">
           <i class="fa fa-eye"></i>

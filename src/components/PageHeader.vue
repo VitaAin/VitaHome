@@ -25,6 +25,17 @@
         </router-link>
       </div>
       
+      <div class="operate-nav">
+        <el-menu-item index="100" @click="colorDialogVisible = true">换肤</el-menu-item>
+        <el-dialog title="换肤" :visible.sync="colorDialogVisible" width="30%" center>
+          <el-color-picker v-model="color"></el-color-picker>
+          <span slot="footer" class="dialog-footer">
+            <el-button @click="colorDialogVisible = false">取 消</el-button>
+            <el-button type="primary" @click="changeColor()">确 定</el-button>
+          </span>
+        </el-dialog>
+      </div>
+      
       <div class="user-nav">
         <!-- <router-link to="/user/login"> -->
         <router-link :to="{name: 'Login'}">
@@ -43,28 +54,36 @@
 export default {
   data() {
     return {
-      headTitle: "Vita's Home"
+      headTitle: "Vita's Home",
+      colorDialogVisible: false,
+      color: "#409EFF"
     };
   },
   methods: {
     handleSelect(key, keyPath) {
       console.log(key, keyPath);
+    },
+    changeColor() {
+      console.log("color: " + this.color);
+      this.colorDialogVisible = false;
     }
   }
 };
 </script>
 
-<style>
+<style lang="scss">
 .header {
   background: lightskyblue;
   border-bottom: #ddd solid 1px;
-}
-.header-title {
-  font-size: 24px;
-  font-weight: bold;
-}
-.user-nav {
-  position: absolute;
-  right: 0;
+  .header-title {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  .user-nav {
+    float: right;
+  }
+  .operate-nav {
+    float: right;
+  }
 }
 </style>

@@ -16,8 +16,8 @@
           </span>
         </div>
 
-        <div class="login-box">
-          <el-form status-icon :model="user" :rules="rules" ref="loginForm" :label-position="'left'" label-width="70px" class="login-form">
+        <div class="operate-box">
+          <el-form status-icon :model="user" :rules="rules" ref="loginForm" :label-position="'left'" label-width="50px" class="login-form">
             <el-form-item prop="account" label="帐号">
               <el-input v-model="user.account" placeholder="用户名/邮箱"></el-input>
             </el-form-item>
@@ -99,27 +99,34 @@ export default {
 
 <style lang="scss">
 .wrap {
-  position: relative;
   margin-top: 5%;
   width: 100%;
   height: 100%;
+  text-align: center;
   .container {
+    width: 32%;
+    max-width: 500px;
+    height: auto;
+    max-height: 400px;
+    margin: auto;
     position: absolute;
-    top: 10%;
-    left: 38%;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
     text-align: center;
     border: 1px solid #ddd;
-    border-radius: 5px;
+    border-radius: 6px;
   }
 }
 
 .title {
-  margin: 40px 0 20px;
+  margin: 40px 0 0;
   text-align: center;
   font-size: 25px;
   color: #555;
   .title-divider {
-    padding: 0 20px 0 20px;
+    padding: 0 20px;
   }
   .title-text {
     color: #00b5ad;
@@ -127,20 +134,46 @@ export default {
   }
 }
 
-.login-box {
-  width: 360px;
+.operate-box {
   padding: 40px;
   border-radius: 5px;
-}
-
-.login-btn {
-  text-align: center;
-}
-
-.login-btn button {
-  width: 100%;
-  height: 36px;
-  margin-bottom: 36px;
+  .login-btn {
+    text-align: center;
+  }
+  .login-btn button {
+    width: 100%;
+    height: 36px;
+    margin-bottom: 36px;
+  }
+  .login-failed {
+    padding: 10px 0 10px;
+    border-radius: 4px;
+    background-color: #ffeef0;
+    margin-bottom: 20px;
+    color: red;
+    line-height: 1.6;
+    text-align: left;
+    .header {
+      padding: 10px 0 0 35px;
+      font-weight: bold;
+    }
+    .list {
+      padding: 10px 0 0 35px;
+    }
+  }
+  .github-login-btn {
+    text-align: center;
+    background-color: #fff;
+    border: 0;
+    border-radius: 5px;
+    color: #00b5ad;
+    font-size: 15px;
+    font-weight: bold;
+    box-shadow: none;
+    &:hover {
+      box-shadow: none;
+    }
+  }
 }
 
 .btn-define {
@@ -157,36 +190,5 @@ export default {
 .btn-define:active {
   background-color: #169e98;
   box-shadow: none;
-}
-
-.login-failed {
-  padding: 10px 0 10px;
-  border-radius: 4px;
-  background-color: #ffeef0;
-  margin-bottom: 20px;
-  color: red;
-  line-height: 1.6;
-  text-align: left;
-  .header {
-    padding: 10px 0 0 35px;
-    font-weight: bold;
-  }
-  .list {
-    padding: 10px 0 0 35px;
-  }
-}
-
-.github-login-btn {
-  text-align: center;
-  background-color: #fff;
-  border: 0;
-  border-radius: 5px;
-  color: #00b5ad;
-  font-size: 15px;
-  font-weight: bold;
-  box-shadow: none;
-  &:hover {
-    box-shadow: none;
-  }
 }
 </style>
