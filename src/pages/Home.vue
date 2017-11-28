@@ -9,7 +9,7 @@
     </el-carousel>
 
     <el-row :gutter="25">
-      <el-col :span="10" :offset="5">
+      <el-col :span="12" :offset="3">
         <div style="border: 1px solid #fff;padding-top: 10px"></div>
 
         <div class="content" v-for="(article, index) in articleList">
@@ -23,7 +23,7 @@
         </div>
       </el-col>
       
-      <el-col :span="4" style="margin-top: 20px;">
+      <el-col :span="6" style="margin-top: 20px;">
         <hot-articles></hot-articles>
         <hot-tags></hot-tags>
       </el-col>
@@ -79,14 +79,8 @@ export default {
     },
     getArticles() {
       api.getArticles().then(res => {
-        // console.log(
-        //   "Home getArticles: res:: " +
-        //     res.data.status +
-        //     ", " +
-        //     res.data.data.articles.length
-        // );
         if (res.data.status == 1) {
-          this.articleList = res.data.data.articles;
+          this.articleList = res.data.data.data;
           for (let index in this.articleList) {
             this.articleList[index].abstract = this.articleList[index].body
               .substring(0, 150)

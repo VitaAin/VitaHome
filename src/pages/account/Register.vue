@@ -30,8 +30,8 @@
               <el-input type="password" placeholder="至少6个字符" v-model="params.password"></el-input>
             </el-form-item>
 
-            <el-form-item prop="passwordConfirmation" label="确认密码">
-              <el-input type="password" placeholder="请再次输入密码" v-model="params.passwordConfirmation"></el-input>
+            <el-form-item prop="password_confirmation" label="确认密码">
+              <el-input type="password" placeholder="请再次输入密码" v-model="params.password_confirmation"></el-input>
             </el-form-item>
 
             <div class="failure" v-if="failure">
@@ -67,7 +67,7 @@ export default {
     var checkPwdConfirmation = (rule, value, callback) => {
       if (value === "") {
         callback(new Error("请再次输入密码"));
-      } else if (value !== this.params.passwordConfirmation) {
+      } else if (value !== this.params.password_confirmation) {
         callback(new Error("两次输入密码不一致!"));
       } else {
         callback();
@@ -87,7 +87,7 @@ export default {
           { required: true, message: "请输入密码", trigger: "blur" },
           { min: 6, message: "请输入有效密码，不少于6位", trigger: "blur" }
         ],
-        passwordConfirmation: [
+        password_confirmation: [
           { required: true, message: "请确认密码", trigger: "blur" },
           { min: 6, message: "请输入有效密码，不少于6位", trigger: "blur" },
           {
@@ -101,7 +101,7 @@ export default {
         name: "",
         email: "",
         password: "",
-        passwordConfirmation: ""
+        password_confirmation: ""
       },
       failure: ""
     };
@@ -116,7 +116,7 @@ export default {
       });
     },
     register() {
-      api.register().then(res => {
+      api.register(this.params).then(res => {
         if (res.data.status) {
           console.log("Register ok");
         } else {

@@ -1,17 +1,22 @@
 <template>
   <div v-if="article">
     <el-row :gutter="25">
-      <el-col :span="10" :offset="5">
+      <el-col :span="12" :offset="3">
         <div class="article">
-          <p>{{article.title}}</p>
-          <!-- <div class="article-edit" v-if="auth.id == article.user.id"> -->
-          <div class="article-edit" v-if="article.user.id">
-            <router-link :to="{name: 'ArticleEdit', params: {id: this.$route.params.id}}">
-              <span style="padding-left: 10px; font-size: larger">
-                <i class="fa fa-edit"></i>
-              </span>
-            </router-link>
+          <div class="title">
+            <h2>{{article.title}}</h2>
+
+            <!-- <div class="article-edit" v-if="auth.id == article.user.id"> -->
+            <div class="article-edit" v-if="article.user.id">
+              <router-link :to="{name: 'ArticleEdit', params: {id: this.$route.params.id}}">
+                <span style="padding-left: 10px; font-size: larger">
+                  <i class="fa fa-edit"></i>
+                </span>
+              </router-link>
+            </div>
           </div>
+          
+
           <div class="article-author">
             <router-link style="float: left" :to="{name: 'UserArticles', params: {slug: article.user.id}}">
               <img :src="article.user.avatar" alt="">
@@ -31,11 +36,13 @@
               </div>
             </div>
           </div>
+
           <div class="article-body">
             <!-- <vue-markdown class="markdown-body">{{article.body}}</vue-markdown> -->
             <!-- <div class="markdown-body">{{article.body}}</div> wrong -->
             <div class="markdown-body" v-html="article.body"></div>
           </div>
+
           <div class="article-like">
             <!-- <el-button type="submit" id="btn-like" @click.prevent="click_like()"> -->
             <el-button type="submit" id="btn-like">
@@ -46,6 +53,7 @@
               <span style="padding: 0 4px 0 4px"> | </span> {{article.likes_count}}
             </el-button>
           </div>
+
           <!-- <div class="article-comment" v-if="auth.check()"> -->
           <div class="article-comment">
             <!-- <img :src="auth.user.avatar" alt=""> -->
@@ -56,6 +64,7 @@
               <el-button type="submit">评 论</el-button>
             </form>
           </div>
+
           <!-- <div v-if="! auth.check()" class="article-login">
             <p>
               <router-link :to="{path: '/user/login', query: { redirect_url: this.$route.path }}">
@@ -66,6 +75,7 @@
           <div style="clear: both">
             <h4>{{article.comments_count ? article.comments_count + ' 条' : '暂无'}}评论</h4>
           </div>
+
           <div style="border-bottom: 1px solid #ddd; padding-top: 20px"></div>
           <div v-for="(comment, index) in comments">
             <div class="comment-author">
@@ -92,7 +102,7 @@
           </div>
         </div>
       </el-col>
-      <el-col :span="4">
+      <el-col :span="6">
         <div class="sidebar-author">
           <p>作者： {{article.user.name}}</p>
           <div style="border-bottom: 1px solid #eee; padding-top: 0px"></div>
@@ -183,6 +193,9 @@ export default {
 @import "~highlight.js/styles/atom-one-light.css";
 .article {
   margin-top: 40px;
+  .title {
+    text-align: left;
+  }
   p {
     font-size: 30px;
     font-weight: bold;

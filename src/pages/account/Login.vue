@@ -69,7 +69,8 @@ export default {
       user: {
         account: "",
         password: ""
-      }
+      },
+      failure: ""
     };
   },
   mounted() {},
@@ -83,9 +84,10 @@ export default {
       });
     },
     login() {
-      api.login(user).then(res => {
+      api.login(this.user).then(res => {
         console.log("Login login res: " + res.data);
         if (res.data.status == 1) {
+          // this.$router.push("Home");
         } else {
         }
       });

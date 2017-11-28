@@ -3,7 +3,7 @@ import VueResource from 'vue-resource'
 
 Vue.use(VueResource);
 
-Vue.http.options.root = process.env.API_ROOT;
+// Vue.http.options.root = process.env.API_ROOT;
 Vue.http.headers.common.Accept = `application/json`;
 
 // Vue.http.interceptors.push((request, next) => {
@@ -18,49 +18,51 @@ Vue.http.headers.common.Accept = `application/json`;
 // });
 
 const API_ROOT_TEST = "../../static/data/";
+const API_ROOT = "http://admin.vitain.top/api/v1/";
 
 export default {
+  register(params) {
+    return Vue.http.post(API_ROOT + "user/register", params);
+  },
+  login(params) {
+    return Vue.http.post(API_ROOT + "user/login", params);
+  },
+  logout() {
+    return Vue.http.get(API_ROOT_TEST + "Logout.json");
+  },
+
   getHomeBanners() {
     return Vue.http.get(API_ROOT_TEST + "HomeBanner.json");
   },
   getArticles() {
     // return Vue.http.get(API_ROOT_TEST + "Articles.json");
-    return Vue.http.get("articles");
+    return Vue.http.get(API_ROOT + "articles");
   },
   getHotArticles() {
-    return Vue.http.get(API_ROOT_TEST + "HotArticles.json");
+    // return Vue.http.get(API_ROOT_TEST + "HotArticles.json");
+    return Vue.http.get(API_ROOT + "hot_articles");
   },
   getHotTags() {
-    return Vue.http.get(API_ROOT_TEST + "HotTags.json");
+    // return Vue.http.get(API_ROOT_TEST + "HotTags.json");
+    return Vue.http.get(API_ROOT + "hot_tags");
   },
   getArticle(id) {
-    return Vue.http.get(API_ROOT_TEST + "OneArticle.json");
+    return Vue.http.get(API_ROOT + "articles/" + id);
   },
   getAllTags() {
-    return Vue.http.get(API_ROOT_TEST + "AllTags.json");
+    return Vue.http.get(API_ROOT + "tags");
   },
   getAllCategories() {
-    return Vue.http.get(API_ROOT_TEST + "AllCategories.json");
+    // return Vue.http.get(API_ROOT_TEST + "AllCategories.json");
+    return Vue.http.get(API_ROOT + "categories");
   },
-  createArticle(article) {
-    // return Vue.http.post(API_ROOT + "");
-    return Vue.http.get(API_ROOT_TEST + "EditArticle.json");
+  createArticle(params) {
+    return Vue.http.post(API_ROOT + "articles", params);
   },
-  editArticle(id, article) {
-    // return Vue.http.post(API_ROOT + "");
-    return Vue.http.get(API_ROOT_TEST + "EditArticle.json");
+  editArticle(id, params) {
+    return Vue.http.put(API_ROOT + "articles/" + id, params);
   },
-  login(user) {
-    // return Vue.http.post(API_ROOT + "", user);
-    return Vue.http.get(API_ROOT_TEST + "Login.json");
-  },
-  logout() {
-    return Vue.http.get(API_ROOT_TEST + "Logout.json");
-  },
-  register(params) {
-    // return Vue.http.post(API_ROOT + "", params);
-    return Vue.http.get(API_ROOT_TEST + "Register.json");
-  },
+
   getUser(id) {
     return Vue.http.get(API_ROOT_TEST + "User.json");
   },

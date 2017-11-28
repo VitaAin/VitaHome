@@ -29,8 +29,8 @@
               </el-upload> -->
             </el-form-item>
 
-            <el-form-item prop="isHidden" label="允许评论" class="article-create">
-              <el-select v-model="params.isHidden" class="el-input" placeholder="请选择">
+            <el-form-item prop="is_public" label="允许评论" class="article-create">
+              <el-select v-model="params.is_public" class="el-input" placeholder="请选择">
                 <el-option v-for="item in allowCommentsOptions" :key="item.value" :label="item.label" :value="item.value"></el-option>
               </el-select>
             </el-form-item>
@@ -66,12 +66,12 @@ export default {
         title: "",
         body: "",
         category: "",
-        isHidden: "F",
+        is_public: 1,
         tags: []
       },
       allowCommentsOptions: [
-        { value: "F", label: "是" },
-        { value: "T", label: "否" }
+        { value: 1, label: "是" },
+        { value: 0, label: "否" }
       ],
       allTags: [],
       allCategories: [],
@@ -143,7 +143,7 @@ export default {
       } else {
         let form = {
           tag: this.params.tags,
-          isHidden: this.params.isHidden,
+          is_public: this.params.is_public,
           title: this.params.title,
           body: this.params.body,
           category: this.params.category
