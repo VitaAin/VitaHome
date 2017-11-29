@@ -64,6 +64,7 @@ export default new Router({
         },
         {
           path: "/user/:id",
+          // name: "UserOverview",
           component: UserOverview,
           children: [{
               path: "/",
@@ -85,19 +86,20 @@ export default new Router({
           path: "/user/:id",
           component: EditCommon,
           children: [{
-            path: "/",
-            component: EditUserInfo
-          }, 
-          {
-            path: "/edit_info",
-            name: "EditUserInfo",
-            component: EditUserInfo
-          }, 
-          {
-            path: "/edit_avatar",
-            name: "EditUserAvatar",
-            component: EditUserAvatar
-          }]
+              path: "/",
+              component: EditUserInfo
+            },
+            {
+              path: "/edit_info",
+              name: "EditUserInfo",
+              component: EditUserInfo
+            },
+            {
+              path: "/edit_avatar",
+              name: "EditUserAvatar",
+              component: EditUserAvatar
+            }
+          ]
         },
         {
           path: "/about",

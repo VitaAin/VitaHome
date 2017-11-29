@@ -42,6 +42,11 @@ export default {
         }
       });
     }
+  },
+  watch: {
+    $route(to, from) {
+      this.getUserArticles();
+    }
   }
 };
 </script>
@@ -66,7 +71,7 @@ export default {
       color: #999;
       font-size: 14px;
     }
-    .create-time{
+    .create-time {
       font-size: 12px;
     }
   }

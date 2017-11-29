@@ -33,6 +33,7 @@
 
 <script>
 import { Loading } from "element-ui";
+import { mapMutations } from "vuex";
 import PageHeader from "../components/PageHeader";
 import ArticleItem from "../components/ArticleItem";
 import HotArticles from "../components/HotArticles";
@@ -53,9 +54,20 @@ export default {
       bannerList: [],
       articleList: [],
       total: null,
+      tagName: "",
       page_size: 15
     };
   },
+  // beforeRouteUpdate(to, from, next) {
+  //   this.tagName = to.query;
+  //   console.log("Home beforeRouteUpdate tagName: " + JSON.stringify(tagName));
+  //   next();
+  // },
+  // beforeRouteLeave(to, from, next) {
+  //   this.tagName = to.query;
+  //   console.log("Home beforeRouteLeave tagName: " + JSON.stringify(tagName));
+  //   next();
+  // },
   mounted() {
     console.log("Home mounted");
 
@@ -77,10 +89,15 @@ export default {
         }
       });
     },
-    getArticles() {
+    getArticles(page = null) {
+      let params = {
+        page: page,
+        tag: this.tagName.tag
+      };
       api.getArticles().then(res => {
         if (res.data.status == 1) {
           this.articleList = res.data.data.data;
+          this.total = Number(res.data.data.total);
           for (let index in this.articleList) {
             this.articleList[index].abstract = this.articleList[index].body
               .substring(0, 150)
@@ -94,7 +111,7 @@ export default {
       });
     },
     handleCurrentChange(page) {
-      // this.get_articles(page);
+      this.getArticles(page);
     }
   }
 };

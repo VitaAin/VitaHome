@@ -7,7 +7,7 @@
             <h2>{{article.title}}</h2>
 
             <!-- <div class="article-edit" v-if="auth.id == article.user.id"> -->
-            <div class="article-edit" v-if="article.user.id">
+            <div class="article-edit" v-if="auth.id == article.user.id">
               <router-link :to="{name: 'ArticleEdit', params: {id: this.$route.params.id}}">
                 <span style="padding-left: 10px; font-size: larger">
                   <i class="fa fa-edit"></i>
@@ -15,7 +15,6 @@
               </router-link>
             </div>
           </div>
-          
 
           <div class="article-author">
             <router-link style="float: left" :to="{name: 'UserArticles', params: {slug: article.user.id}}">
@@ -148,6 +147,7 @@ import Marked from "marked";
 import HotArticles from "../../components/HotArticles";
 import HotTags from "../../components/HotTags";
 import api from "../../api";
+import { mapState } from 'vuex'
 
 export default {
   components: {
@@ -165,6 +165,9 @@ export default {
       showPreview: false
     };
   },
+  computed: mapState({
+    auth: state => state.account.auth,
+  }),
   mounted() {
     Marked.setOptions({
       highlight: function(code) {

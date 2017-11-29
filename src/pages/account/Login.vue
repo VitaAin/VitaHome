@@ -26,8 +26,8 @@
             </el-form-item>
 
             <div class="login-failed" v-if="failure">
-              <div class="header">{{failure.message}}</div>
-              <ul class="list">
+              <div class="failure-header">{{failure.message}}</div>
+              <ul class="failure-list">
                 <li v-for="error in failure.data">{{error[0]}}</li>
               </ul>
             </div>
@@ -49,8 +49,10 @@
 <script>
 import PageHeader from "../../components/PageHeader";
 import api from "../../api";
+import { mapState, mapMutations } from "vuex";
 
 export default {
+  name: "login",
   components: {
     PageHeader
   },
@@ -69,10 +71,13 @@ export default {
       user: {
         account: "",
         password: ""
-      },
-      failure: ""
+      }
     };
   },
+  computed: mapState({
+    success: state => state.account.login.success,
+    failure: state => state.account.login.failure
+  }),
   mounted() {},
   methods: {
     submit(formName) {
@@ -84,17 +89,28 @@ export default {
       });
     },
     login() {
-      api.login(this.user).then(res => {
-        console.log("Login login res: " + res.data);
-        if (res.data.status == 1) {
-          // this.$router.push("Home");
-        } else {
-        }
-      });
+      this.$store.dispatch("accountLogin", this.user);
+      // api.login(this.user).then(res => {
+      //   console.log("Login login res: " + res.data);
+      //   if (res.data.status == 1) {
+      //     // this.$router.push("Home");
+      //   } else {
+      //   }
+      // });
+    },
+    successWatcher(val, oldVal) {
+      if (val && !oldVal) {
+        let redirectUrl = this.$route.query.redirect_url || "/";
+        console.log("Login redirectUrl: " + redirectUrl);
+        this.$router.push(redirectUrl);
+      }
     },
     githubLogin() {
       window.location.href = "https://api.laravue.org/github";
     }
+  },
+  watch: {
+    success: "successWatcher"
   }
 };
 </script>
@@ -155,11 +171,11 @@ export default {
     color: red;
     line-height: 1.6;
     text-align: left;
-    .header {
+    .failure-header {
       padding: 10px 0 0 35px;
       font-weight: bold;
     }
-    .list {
+    .failure-list {
       padding: 10px 0 0 35px;
     }
   }

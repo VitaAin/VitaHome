@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-row :gutter="25" v-if="user">
-      <el-col :span="4" :offset="5">
+      <el-col :span="6" :offset="3">
         <div class="sidebar-author" v-if="user">
           <p>作者：{{user.name}}</p>
           <img :src="user.avatar" alt="">
@@ -43,10 +43,8 @@
             </div>
           </dl>
 
-          <!-- <div v-if="auth.id !== user.id"> -->
-          <div >
-            <!-- <el-button class="btn-define" @click.prevent="click_follow()"> -->
-            <el-button class="btn-define" >
+          <div v-if="auth.id !== user.id">
+            <el-button class="btn-define" @click.prevent="clickFollow()">
               <span v-if="!follow">
                 <i class="fa fa-plus"></i> 关注 Ta </span>
               <span v-if="follow">
@@ -58,9 +56,7 @@
             </el-button>
           </div>
 
-          <!-- <div v-if="auth.id == user.id"> -->
-          <div >
-            <!-- <el-button class="btn-define" @click.prevent="edit_user_info()"> -->
+          <div v-if="auth.id == user.id">
             <el-button class="btn-define" @click.prevent="editUserInfo()">
               <span><i class="fa fa-plus"></i> 编辑个人资料 </span>
             </el-button>
@@ -93,7 +89,7 @@
         </div>
       </el-col>
 
-      <el-col :span="10">
+      <el-col :span="12">
         <router-view></router-view>
       </el-col>
 
@@ -104,6 +100,7 @@
 
 <script>
 import api from "../../api";
+import { mapState } from "vuex";
 
 export default {
   data() {
@@ -116,6 +113,9 @@ export default {
       follow: false
     };
   },
+  computed: mapState({
+    auth: state => state.account.auth
+  }),
   mounted() {
     this.getUser();
   },
@@ -124,11 +124,43 @@ export default {
       api.getUser(this.$route.params.id).then(res => {
         if (res.data.status == 1) {
           this.user = res.data.data;
+          if (this.auth.check()) {
+            api.isFollowOrNot(this.user.id).then(res => {
+              if (res.data.status == 1) {
+                this.follow = res.data.data.followed;
+              }
+            });
+          }
         }
       });
     },
-    editUserInfo(){
-      this.$router.push({name: "EditUserInfo", params: {id: this.user.id}});
+    clickFollow() {
+      if (this.auth.check()) {
+        api.follow(this.user.id).then(res => {
+          if (res.data.status == 1) {
+            this.follow = res.data.data.followed;
+            this.message();
+          }
+        });
+      } else {
+        // this.showPreview = true;
+      }
+    },
+    message() {
+      if (this.follow) {
+        this.$message({
+          message: '已关注',
+          type: 'success'
+        });
+      } else {
+        this.$message({
+          message: '已取消关注',
+          type: 'success'
+        });
+      }
+    },
+    editUserInfo() {
+      this.$router.push({ name: "EditUserInfo", params: { id: this.user.id } });
     }
   }
 };

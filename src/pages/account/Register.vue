@@ -35,8 +35,8 @@
             </el-form-item>
 
             <div class="failure" v-if="failure">
-              <div class="header">{{failure.message}}</div>
-              <ul class="list">
+              <div class="failure-header">{{failure.message}}</div>
+              <ul class="failure-list">
                 <li v-for="error in failure.data">{{error[0]}}</li>
               </ul>
             </div>
@@ -58,8 +58,10 @@
 <script>
 import PageHeader from "../../components/PageHeader";
 import api from "../../api";
+import { mapState, mapMutations } from "vuex";
 
 export default {
+  name: "register",
   components: {
     PageHeader
   },
@@ -102,10 +104,13 @@ export default {
         email: "",
         password: "",
         password_confirmation: ""
-      },
-      failure: ""
+      }
     };
   },
+  computed: mapState({
+    success: state => state.account.register.success,
+    failure: state => state.account.register.failure
+  }),
   methods: {
     submit(formName) {
       this.$refs[formName].validate(valid => {
@@ -116,13 +121,14 @@ export default {
       });
     },
     register() {
-      api.register(this.params).then(res => {
-        if (res.data.status) {
-          console.log("Register ok");
-        } else {
-          console.log("Register failed");
-        }
-      });
+      this.$store.dispatch("accountRegister", this.params);
+      // api.register(this.params).then(res => {
+      //   if (res.data.status) {
+      //     console.log("Register ok");
+      //   } else {
+      //     console.log("Register failed");
+      //   }
+      // });
     },
     githubRegister() {
       window.location.href = "https://api/laravue.org.github";
@@ -185,19 +191,18 @@ export default {
     margin-bottom: 36px;
   }
   .failure {
-    padding: 10px 0 10px;
     border-radius: 4px;
     background-color: #ffeef0;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     color: red;
-    line-height: 1.6;
+    line-height: 1.2;
+    font-size: 12px;
     text-align: left;
-    .header {
-      padding: 10px 0 0 35px;
-      font-weight: bold;
+    .failure-header {
+      padding: 4px 0 0;
     }
-    .list {
-      padding: 10px 0 0 35px;
+    .failure-list {
+      padding: 4px 0 0;
     }
   }
   .github-register-btn {

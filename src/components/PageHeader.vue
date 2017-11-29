@@ -1,6 +1,9 @@
 <template>
   <div>
-    <el-menu :default-active="'1'" class="header" mode="horizontal" @select="handleSelect">
+    <el-menu :default-active="'1'" class="header" 
+        mode="horizontal" 
+        @select="handleSelect"
+        unique-opened>
       <el-menu-item index="0" class="header-title">{{headTitle}}</el-menu-item>
 
       <div class="header-nav">
@@ -11,7 +14,7 @@
         </router-link>
 
         <!-- <router-link to="/article/create"> -->
-        <router-link :to="{name: 'ArticleCreate'}">
+        <router-link :to="{name: 'ArticleCreate'}" v-if="auth.check()">
           <el-menu-item index="2">
             写文章
           </el-menu-item>
@@ -37,12 +40,24 @@
       </div>
       
       <div class="user-nav">
+        <el-submenu index="77" v-if="auth.check()">
+          <template slot="title">
+          <img :src="auth.user.avatar" alt="">{{auth.user.name}}</template>
+          <router-link :to="{name: 'UserArticles', params: {id: auth.user.id}}">
+            <el-menu-item index="77-1">个人中心</el-menu-item>
+          </router-link>
+          <router-link :to="{name: 'UserArticles', params: {id: auth.user.id}}">
+            <el-menu-item index="77-2">编辑资料</el-menu-item>
+          </router-link>
+          <el-menu-item index="77-3" @click="logout()">退出</el-menu-item>
+        </el-submenu>
+
         <!-- <router-link to="/user/login"> -->
-        <router-link :to="{name: 'Login'}">
+        <router-link v-if="!auth.check()" :to="{name: 'Login'}">
           <el-menu-item index="10">登录</el-menu-item>
         </router-link>
         <!-- <router-link to="/user/register"> -->
-        <router-link :to="{name: 'Register'}">
+        <router-link  v-if="!auth.check()" :to="{name: 'Register'}">
           <el-menu-item index="11">注册</el-menu-item>
         </router-link>
       </div>
@@ -51,7 +66,12 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
+  computed: mapState({
+    auth: state => state.account.auth
+  }),
   data() {
     return {
       headTitle: "Vita's Home",
@@ -66,6 +86,16 @@ export default {
     changeColor() {
       console.log("color: " + this.color);
       this.colorDialogVisible = false;
+    },
+    logout() {
+      this.$store.dispatch("accountLogout").then(res => {
+        this.$router.push("/");
+      });
+    }
+  },
+  watch: {
+    $route(to, from) {
+      this.path = this.$route.path.split("/")[1];
     }
   }
 };
@@ -73,7 +103,6 @@ export default {
 
 <style lang="scss">
 .header {
-  background: lightskyblue;
   border-bottom: #ddd solid 1px;
   .header-title {
     font-size: 24px;
@@ -84,6 +113,15 @@ export default {
   }
   .operate-nav {
     float: right;
+  }
+}
+
+.user-nav {
+  img {
+    margin-right: 8px;
+    width: 40px;
+    border: 0.8px solid #aaa;
+    border-radius: 50%;
   }
 }
 </style>

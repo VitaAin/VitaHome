@@ -1,21 +1,22 @@
-import Vue from 'vue'
-import VueResource from 'vue-resource'
+import Vue from 'vue';
+import VueResource from 'vue-resource';
+import store from '../store';
 
 Vue.use(VueResource);
 
 // Vue.http.options.root = process.env.API_ROOT;
 Vue.http.headers.common.Accept = `application/json`;
 
-// Vue.http.interceptors.push((request, next) => {
-//   const auth = store.state.account.auth;
-//   if (auth.check()) {
-//     const accessToken = auth.access_token;
-//     Vue.http.headers.common.Authorization = `Bearer ${accessToken}`;
-//   } else {
-//     delete Vue.http.headers.common.Authorization;
-//   }
-//   next();
-// });
+Vue.http.interceptors.push((request, next) => {
+  let auth = store.state.account.auth;
+  if (auth.check()) {
+    let accessToken = auth.access_token;
+    Vue.http.headers.common.Authorization = `Bearer ${accessToken}`;
+  } else {
+    delete Vue.http.headers.common.Authorization;
+  }
+  next();
+});
 
 const API_ROOT_TEST = "../../static/data/";
 const API_ROOT = "http://admin.vitain.top/api/v1/";
@@ -28,22 +29,19 @@ export default {
     return Vue.http.post(API_ROOT + "user/login", params);
   },
   logout() {
-    return Vue.http.get(API_ROOT_TEST + "Logout.json");
+    return Vue.http.get(API_ROOT + "user/logout");
   },
 
   getHomeBanners() {
     return Vue.http.get(API_ROOT_TEST + "HomeBanner.json");
   },
   getArticles() {
-    // return Vue.http.get(API_ROOT_TEST + "Articles.json");
     return Vue.http.get(API_ROOT + "articles");
   },
   getHotArticles() {
-    // return Vue.http.get(API_ROOT_TEST + "HotArticles.json");
     return Vue.http.get(API_ROOT + "hot_articles");
   },
   getHotTags() {
-    // return Vue.http.get(API_ROOT_TEST + "HotTags.json");
     return Vue.http.get(API_ROOT + "hot_tags");
   },
   getArticle(id) {
@@ -53,7 +51,6 @@ export default {
     return Vue.http.get(API_ROOT + "tags");
   },
   getAllCategories() {
-    // return Vue.http.get(API_ROOT_TEST + "AllCategories.json");
     return Vue.http.get(API_ROOT + "categories");
   },
   createArticle(params) {
@@ -64,12 +61,25 @@ export default {
   },
 
   getUser(id) {
-    return Vue.http.get(API_ROOT_TEST + "User.json");
+    return Vue.http.get(API_ROOT + "users/" + id);
   },
   getUserArticles(id) {
-    return Vue.http.get(API_ROOT_TEST + "UserArticles.json");
+    return Vue.http.get(API_ROOT + "users/" + id + "/articles");
   },
   getUserReplies(id) {
     return Vue.http.get(API_ROOT_TEST + "UserReplies.json");
+  },
+  
+  isLikeOrNot(id) {
+    return Vue.http.get(API_ROOT + "article/is_like", { params: { id: id } });
+  },
+  like(id) {
+    return Vue.http.get(API_ROOT + "article/like", { params: { id: id } });
+  },
+  isFollowOrNot(id) {
+    return Vue.http.get(API_ROOT + "user/is_follow", { params: { id: id } });
+  },
+  follow(id) {
+    return Vue.http.get(API_ROOT + "user/follow", { params: { id: id } });
   }
 }
