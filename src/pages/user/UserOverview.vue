@@ -1,7 +1,11 @@
 <template>
   <div>
     <el-row :gutter="25" v-if="user">
-      <el-col :span="6" :offset="3">
+      <el-col :span="12" :offset="3">
+        <router-view></router-view>
+      </el-col>
+
+      <el-col :span="6">
         <div class="sidebar-author" v-if="user">
           <p>作者：{{user.name}}</p>
           <img :src="user.avatar" alt="">
@@ -87,10 +91,6 @@
             </li>
           </ul>
         </div>
-      </el-col>
-
-      <el-col :span="12">
-        <router-view></router-view>
       </el-col>
 
       <!-- <popup v-show="showPreview" @closePreview="closePreview"></popup> -->

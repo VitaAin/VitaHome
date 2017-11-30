@@ -19,7 +19,8 @@ Vue.http.interceptors.push((request, next) => {
 });
 
 const API_ROOT_TEST = "../../static/data/";
-const API_ROOT = "http://admin.vitain.top/api/v1/";
+// const API_ROOT = "http://admin.vitain.top/api/v1/";
+const API_ROOT = "http://127.0.0.1/vitahomebackend/public/api/v1/";
 
 export default {
   register(params) {
@@ -67,7 +68,13 @@ export default {
     return Vue.http.get(API_ROOT + "users/" + id + "/articles");
   },
   getUserReplies(id) {
-    return Vue.http.get(API_ROOT_TEST + "UserReplies.json");
+    return Vue.http.get(API_ROOT + "users/" + id + "/replies");
+  },
+  getUserLikeArticles(id) {
+    return Vue.http.get(API_ROOT + "users/" + id + "/like_articles");
+  },
+  getUserFollowUsers(id) {
+    return Vue.http.get(API_ROOT + "users/" + id + "/follow_users");
   },
   
   isLikeOrNot(id) {

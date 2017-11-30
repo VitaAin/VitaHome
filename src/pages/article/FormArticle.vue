@@ -36,7 +36,7 @@
             </el-form-item>
 
             <div>
-              <button type="submit" class="article-btn" @click="submit($event, 'params')">提交</button>
+              <button class="article-btn" @click="submit($event, 'params')">提交</button>
             </div>
           </el-form>
         </div>
@@ -112,11 +112,13 @@ export default {
     },
     getArticle() {
       api.getArticle(this.$route.params.id).then(res => {
-        for (var index in res.data.data.tags) {
-          this.params.tags.push(res.data.data.tags[index].id);
+        if (res.data.status == 1) {
+          for (var index in res.data.data.tags) {
+            this.params.tags.push(res.data.data.tags[index].id);
+          }
+          this.params = res.data.data;
+          this.params.category = res.data.data.category_id;
         }
-        this.params = res.data.data;
-        this.params.category = res.data.data.category_id;
       });
     },
     submit(ev, formName) {
@@ -159,7 +161,7 @@ export default {
             params: { id: res.data.data.id }
           });
         } else {
-          this.failure = "error";
+          this.failure = res.data;
         }
       });
     },
@@ -170,6 +172,8 @@ export default {
             name: "ArticleShow",
             params: { id: res.data.data.id }
           });
+        } else {
+          this.failure = res.data;
         }
       });
     }
