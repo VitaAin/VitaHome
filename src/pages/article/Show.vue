@@ -64,13 +64,13 @@
             </form>
           </div>
 
-          <!-- <div v-if="! auth.check()" class="article-login">
+          <div v-if="!auth.check()" class="login-to-comment">
             <p>
               <router-link :to="{path: '/user/login', query: { redirect_url: this.$route.path }}">
                 登录参与评论
               </router-link>
             </p>
-          </div> -->
+          </div>
           <div style="clear: both">
             <h4>{{article.comments_count ? article.comments_count + ' 条' : '暂无'}}评论</h4>
           </div>
@@ -292,18 +292,15 @@ export default {
   }
 }
 
-.article-login {
-  margin: 40px 0 40px;
-  padding-top: 40px;
+.login-to-comment {
+  margin: 48px 0;
   border: 1px dashed #00b5ad;
+  text-align: center;
   width: 100%;
   height: 80px;
   border-radius: 4px;
-  position: relative;
-  a {
-    position: absolute;
-    font-size: smaller;
-    left: 40%;
+  p {
+    line-height: 80px;
   }
 }
 
