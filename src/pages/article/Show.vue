@@ -1,13 +1,12 @@
 <template>
   <div v-if="article">
     <el-row :gutter="25">
-      <el-col :span="12" :offset="3">
+      <el-col :span="18" :offset="3">
         <div class="article">
           <div class="title">
             <h2>{{article.title}}</h2>
 
-            <!-- <div class="article-edit" v-if="auth.id == article.user.id"> -->
-            <div class="article-edit" v-if="auth.id == article.user.id">
+            <div class="to-edit" v-if="auth.id == article.user.id">
               <router-link :to="{name: 'ArticleEdit', params: {id: this.$route.params.id}}">
                 <span style="padding-left: 10px; font-size: larger">
                   <i class="fa fa-edit"></i>
@@ -17,18 +16,18 @@
           </div>
 
           <div class="article-author">
-            <router-link style="float: left" :to="{name: 'UserArticles', params: {slug: article.user.id}}">
+            <router-link :to="{name: 'UserArticles', params: {slug: article.user.id}}">
               <img :src="article.user.avatar" alt="">
             </router-link>
-            <div class="article-author-detail">
+
+            <div class="author-details">
               <div>
-                <router-link :to="{name: 'UserArticles', params: {slug: article.user.id}}" id="btn-topic">
-                  作者
+                <router-link class="author-name" :to="{name: 'UserArticles', params: {slug: article.user.id}}">
+                  <span>{{article.user.name}}</span>
                 </router-link>
-                <span>{{article.user.name}}</span>
               </div>
-              <div class="article-detail">
-                <span>创作于 {{ article.created_at }}</span>
+              <div class="article-count">
+                <span>{{ article.created_at }}</span>
                 <span>阅读 {{ article.view_count }}</span>
                 <span>评论 {{ article.comments_count }}</span>
                 <span>点赞 {{ article.likes_count }}</span>
@@ -53,14 +52,15 @@
             </el-button>
           </div>
 
-          <!-- <div class="article-comment" v-if="auth.check()"> -->
-          <div class="article-comment">
-            <!-- <img :src="auth.user.avatar" alt=""> -->
+          <div class="article-comment" v-if="auth.check()">
+            <img :src="auth.user.avatar" alt="">
             <form action="">
               <el-input type="textarea" :rows="4" placeholder="请输入评论内容" v-model="comment">
               </el-input>
               <!-- <el-button type="submit" @click.prevent="submit">评 论</el-button> -->
-              <el-button type="submit">评 论</el-button>
+              <div class="send-comment">
+                <el-button type="submit">评 论</el-button>
+              </div>
             </form>
           </div>
 
@@ -83,7 +83,7 @@
                   <img :src="comment.user.avatar" alt="">
                 </router-link>
               </div>
-              <div class="comment-author-detail">
+              <div class="comment-author-details">
                 <div>
                   <router-link style="padding-top: 1px; font-size: 16px; color: #555" :to="{name: 'UserArticles', params: {slug: comment.user_id}}">
                     {{comment.user.name}}&nbsp;
@@ -92,7 +92,7 @@
                   <span># {{index + 1}} · 评论于 {{ comment.created_at }}</span>
                 </div>
               </div>
-              <div class="comment-detail">
+              <div class="comment-details">
                 {{comment.body}}
               </div>
               <ChildComment :childComment="comment.id" :article_id="article.id"></ChildComment>
@@ -100,40 +100,6 @@
             </div>
           </div>
         </div>
-      </el-col>
-      <el-col :span="6">
-        <div class="sidebar-author">
-          <p>作者： {{article.user.name}}</p>
-          <div style="border-bottom: 1px solid #eee; padding-top: 0px"></div>
-          <img :src="article.user.avatar" alt="">
-          <el-row>
-            <el-col :span="8">
-              <h2>{{article.user.followers_count}}</h2>
-              <p>关注</p>
-            </el-col>
-            <el-col :span="8">
-              <h2>{{article.user.comments_count}}</h2>
-              <p>评论</p>
-            </el-col>
-            <el-col :span="8">
-              <h2>{{article.user.articles_count}}</h2>
-              <p>文章</p>
-            </el-col>
-          </el-row>
-          <!-- <el-button class="btn-define" @click.prevent="click_follow()"> -->
-          <el-button class="btn-define">
-            <span v-if="!follow">
-              <i class="fa fa-plus"></i> 关注 Ta </span>
-            <span v-if="follow">
-              <i class="fa fa-minus"></i> 已关注 </span>
-          </el-button>
-          <!-- <el-button v-if="follow" class="btn-define" style="margin-top: 0" @click.prevent="click_follow()"> -->
-          <el-button v-if="follow" class="btn-define" style="margin-top: 0">
-            <span> <i class="fa fa-envelope-o"></i> 发送私信 </span>
-          </el-button>
-        </div>
-        <hot-articles></hot-articles>
-        <hot-tags></hot-tags>
       </el-col>
     </el-row>
     <!-- <popup v-show="showPreview" @closePreview="closePreview"></popup> -->
@@ -147,7 +113,7 @@ import Marked from "marked";
 import HotArticles from "../../components/HotArticles";
 import HotTags from "../../components/HotTags";
 import api from "../../api";
-import { mapState } from 'vuex'
+import { mapState } from "vuex";
 
 export default {
   components: {
@@ -166,7 +132,7 @@ export default {
     };
   },
   computed: mapState({
-    auth: state => state.account.auth,
+    auth: state => state.account.auth
   }),
   mounted() {
     Marked.setOptions({
@@ -198,39 +164,39 @@ export default {
   margin-top: 40px;
   .title {
     text-align: left;
-  }
-  p {
-    font-size: 30px;
-    font-weight: bold;
-    float: left;
-    margin-bottom: 10px;
+    h2 {
+      display: inline-block;
+    }
   }
   a {
-    color: tomato;
+    color: #333;
+    :hover {
+      color: orangered;
+    }
   }
-  .article-edit {
-    padding-top: 5px;
+  .to-edit {
+    display: inline-block;
+    font-size: 12px;
   }
 }
 
 .article-author {
-  clear: both;
-  margin-top: 30px;
-  position: relative;
+  text-align: left;
+  vertical-align: middle;
+  margin-top: 24px;
   img {
-    position: absolute;
-    width: 48px;
-    border: 1px solid #aaa;
-    border-radius: 100px;
-    margin-top: 5px;
+    float: left;
+    width: 36px;
+    height: 36px;
+    border: 0.6px solid #aaa;
+    border-radius: 50%;
   }
-  .article-author-detail {
-    padding-top: 10px;
-    padding-left: 65px;
-    .article-detail {
-      padding-top: 6px;
+  .author-details {
+    text-align: left;
+    margin-left: 48px;
+    .article-count {
       color: #999;
-      font-size: 13px;
+      font-size: 12px;
       span {
         padding-right: 5px;
       }
@@ -239,45 +205,13 @@ export default {
 }
 
 .article-body {
-  padding-top: 35px;
+  margin: 56px 0;
   line-height: 25px;
 }
 
-.comment-author {
-  clear: both;
-  margin-top: 15px;
-  position: relative;
-  img {
-    position: absolute;
-    width: 36px;
-    border: 1px solid #aaa;
-    border-radius: 100px;
-    margin-top: 5px;
-  }
-  .comment-author-detail {
-    padding-top: 6px;
-    padding-left: 50px;
-    color: #999;
-    font-size: 13px;
-  }
-  .comment-detail {
-    padding: 20px 0 10px;
-    color: #555;
-  }
-}
-
-#btn-topic {
-  border-radius: 4px;
-  font-size: 13px;
-  border: 1px solid orangered;
-  padding: 2px 2px 2px 5px;
-  margin-right: 12px;
-  font-weight: 500;
-  color: orangered;
-}
-
 .article-like {
-  padding-top: 70px;
+  border-top: 0.8px solid #eee;
+  padding-top: 32px;
   #btn-like {
     background-color: #fff;
     color: tomato;
@@ -300,25 +234,28 @@ export default {
 }
 
 .article-comment {
-  padding-top: 30px;
+  text-align: left;
+  margin-top: 32px;
   img {
     position: absolute;
     width: 36px;
-    border: 1px solid #aaa;
+    height: 36px;
+    border: 0.8px solid #aaa;
     border-radius: 100px;
     margin-top: 5px;
   }
   form {
     padding-top: 8px;
-    padding-left: 55px;
+    margin-left: 48px;
+    .send-comment {
+      text-align: right;
+    }
     button {
-      margin-top: 15px;
-      margin-bottom: 20px;
-      float: right;
+      margin: 16px 0;
       background-color: #00b5ad;
       color: #fff;
-      font-size: 17px;
-      padding: 5px 15px 5px 15px;
+      font-size: 16px;
+      padding: 4px 16px 4px 16px;
       border-radius: 100px;
       box-shadow: none;
       border: 1px solid #00b5ad;
@@ -329,6 +266,29 @@ export default {
         border: 1px solid tomato;
       }
     }
+  }
+}
+
+.comment-author {
+  clear: both;
+  margin-top: 15px;
+  position: relative;
+  img {
+    position: absolute;
+    width: 36px;
+    border: 1px solid #aaa;
+    border-radius: 100px;
+    margin-top: 5px;
+  }
+  .comment-author-details {
+    padding-top: 6px;
+    padding-left: 50px;
+    color: #999;
+    font-size: 13px;
+  }
+  .comment-details {
+    padding: 20px 0 10px;
+    color: #555;
   }
 }
 
@@ -344,27 +304,6 @@ export default {
     position: absolute;
     font-size: smaller;
     left: 40%;
-  }
-}
-
-.sidebar-author {
-  text-align: center;
-  margin-top: 40px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  p {
-    padding: 8px 0 8px 0;
-    font-size: 15px;
-  }
-  img {
-    width: 100px;
-    border: 1px solid #aaa;
-    border-radius: 100px;
-    margin-top: 20px;
-    margin-bottom: 20px;
-  }
-  h2 {
-    color: #00b5ad;
   }
 }
 

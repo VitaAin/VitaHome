@@ -90,13 +90,6 @@ export default {
     },
     login() {
       this.$store.dispatch("accountLogin", this.user);
-      // api.login(this.user).then(res => {
-      //   console.log("Login login res: " + res.data);
-      //   if (res.data.status == 1) {
-      //     // this.$router.push("Home");
-      //   } else {
-      //   }
-      // });
     },
     successWatcher(val, oldVal) {
       if (val && !oldVal) {
@@ -117,21 +110,14 @@ export default {
 
 <style lang="scss">
 .wrap {
-  margin-top: 5%;
+  margin-top: 10%;
   width: 100%;
   height: 100%;
   text-align: center;
   .container {
-    width: 32%;
-    max-width: 500px;
-    height: auto;
-    max-height: 400px;
+    width: 64%;
+    max-width: 560px;
     margin: auto;
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
     text-align: center;
     border: 1px solid #ddd;
     border-radius: 6px;

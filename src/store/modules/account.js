@@ -34,7 +34,7 @@ export default {
         state.auth.access_token = data["access_token"];
         state.auth.id = data["id"];
         state.auth.user = data["user"];
-        localStorage.setItem(AUTH_ACCESS_TOKEN, JSON.stringify(data.data.jwt_token.access_token));
+        localStorage.setItem(AUTH_ACCESS_TOKEN, data.data.jwt_token.access_token);
         localStorage.setItem(AUTH_USER_ID, data.data.id);
         localStorage.setItem(AUTH_USER, JSON.stringify(data.data));
         return;

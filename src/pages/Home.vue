@@ -14,7 +14,6 @@
 
         <div class="content" v-for="(article, index) in articleList">
           <article-item v-bind:index="index" v-bind:article="article"></article-item>
-          <div style="border-bottom: 1px solid #ddd; padding-top: 50px"></div>
         </div>
 
         <div style="text-align: right; margin-top: 20px">

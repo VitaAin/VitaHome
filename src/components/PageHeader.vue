@@ -42,7 +42,9 @@
       <div class="user-nav">
         <el-submenu index="77" v-if="auth.check()">
           <template slot="title">
-          <img :src="auth.user.avatar" alt="">{{auth.user.name}}</template>
+            <img :src="auth.user.avatar" alt="">
+            {{auth.user.name}}
+          </template>
           <router-link :to="{name: 'UserArticles', params: {id: auth.user.id}}">
             <el-menu-item index="77-1">个人中心</el-menu-item>
           </router-link>

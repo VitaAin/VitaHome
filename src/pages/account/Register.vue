@@ -122,13 +122,6 @@ export default {
     },
     register() {
       this.$store.dispatch("accountRegister", this.params);
-      // api.register(this.params).then(res => {
-      //   if (res.data.status) {
-      //     console.log("Register ok");
-      //   } else {
-      //     console.log("Register failed");
-      //   }
-      // });
     },
     githubRegister() {
       window.location.href = "https://api/laravue.org.github";
@@ -144,21 +137,16 @@ export default {
 }
 
 .wrap {
-  margin-top: 5%;
+  margin-top: 10%;
   width: 100%;
   height: 100%;
   text-align: center;
   .container {
-    width: 32%;
-    max-width: 500px;
-    height: auto;
+    width: 64%;
+    max-width: 560px;
+    margin: auto;
     max-height: 500px;
     margin: auto;
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
     text-align: center;
     border: 1px solid #ddd;
     border-radius: 6px;

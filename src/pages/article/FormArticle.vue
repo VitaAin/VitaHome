@@ -1,9 +1,9 @@
 <template>
   <div>
     <el-row>
-      <el-col :span="12" :offset="6">
+      <el-col :span="18" :offset="3">
         <div class="grid-content">
-          <el-form status-icon :rules="rules" ref="params" :model="params" :label-position="'left'" label-width="80px">
+          <el-form status-icon :rules="rules" ref="params" :model="params" :label-position="'left'" label-width="16%">
             <el-form-item prop="title" label="标题" class="article-create">
               <el-input v-model="params.title" class="el-input" placeholder="至少4个字符"></el-input>
             </el-form-item>
@@ -29,14 +29,17 @@
               </el-upload> -->
             </el-form-item>
 
-            <el-form-item prop="is_public" label="允许评论" class="article-create">
+            <el-form-item prop="is_public" class="article-create set-is-public">
+              <el-checkbox v-model="params.is_public">公开</el-checkbox>
+            </el-form-item>
+            <!-- <el-form-item prop="is_public" label="允许评论" class="article-create">
               <el-select v-model="params.is_public" class="el-input" placeholder="请选择">
                 <el-option v-for="item in allowCommentsOptions" :key="item.value" :label="item.label" :value="item.value"></el-option>
               </el-select>
-            </el-form-item>
+            </el-form-item> -->
 
             <div>
-              <button class="article-btn" @click="submit($event, 'params')">提交</button>
+              <el-button class="article-btn" @click="submit($event, 'params')">提交</el-button>
             </div>
           </el-form>
         </div>
@@ -66,7 +69,7 @@ export default {
         title: "",
         body: "",
         category: "",
-        is_public: 1,
+        is_public: true,
         tags: []
       },
       allowCommentsOptions: [
@@ -197,14 +200,17 @@ export default {
       float: left;
     }
   }
+  .set-is-public{
+    text-align: left;
+  }
   .article-btn {
     cursor: pointer;
     width: 70%;
-    margin-left: 17%;
+    margin-left: 16%;
     background-color: #00b5ad;
     color: #fff;
-    font-size: 17px;
-    padding: 5px 10px 5px 10px;
+    font-size: 16px;
+    padding: 6px 0;
     border: 1px solid #00b5ad;
     border-radius: 100px;
     box-shadow: none;
@@ -214,7 +220,6 @@ export default {
       color: tomato;
       border: 1px solid tomato;
       box-shadow: none;
-      border-radius: 100px;
       background-color: #fff;
     }
   }

@@ -2,12 +2,14 @@
   <div class="hot-tags">
     <p>热门标签</p>
     <div style="border-bottom: 1px solid #eee; padding-top: 0px"></div>
-    <div class="tag" v-for="tag in tags">
-      <router-link :to="{name: 'Home', query: {tag: tag.name}}" id="btn-tag">
+    <div class="tags">
+      <div class="tag" v-for="tag in tags">
+      <router-link :to="{name: 'Home', query: {tag: tag.name}}" id="btn-hot-tag">
         {{tag.name}}
       </router-link>
     </div>
-    <div style="clear: both; margin-bottom: 15px"></div>
+    </div>
+    
   </div>
 </template>
 
@@ -27,12 +29,6 @@ export default {
   methods: {
     getHotTags() {
       api.getHotTags().then(res => {
-        // console.log(
-        //   "HotTags getHotTags: res:: " +
-        //     res.data.status +
-        //     ", " +
-        //     res.data.data.length
-        // );
         if (res.data.status == 1) {
           this.tags = res.data.data;
         }
@@ -52,26 +48,31 @@ export default {
     padding: 8px 0 8px 0;
     font-size: 15px;
   }
-  .tag {
-    text-align: left;
-    margin: 10px 5px 10px 10px;
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0 4px;
+    .tag {
+      // text-align: left;
+      margin: 8px 4px;
+    }
   }
 }
 
-#btn-tag {
+#btn-hot-tag {
+  display: inline-block;
   border-radius: 4px;
   font-size: 13px;
   border: 1px solid #eee;
-  padding: 5px 7px 5px;
-  font-weight: 500;
+  padding: 5px 7px;
   background-color: #eee;
   color: #00b5ad;
-  float: left;
-  margin: 5px 5px;
-  height: 17px;
+  margin: 0;
+  height: 16px;
+  line-height: 100%;
 }
 
-#btn-tag:hover {
+#btn-hot-tag:hover {
   color: orangered;
   background-color: #dedede;
   border-radius: 4px;
