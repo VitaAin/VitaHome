@@ -42,13 +42,10 @@
           </div>
 
           <div class="article-like">
-            <!-- <el-button type="submit" id="btn-like" @click.prevent="click_like()"> -->
-            <el-button type="submit" id="btn-like">
-              <span v-if="!like">
-                <i class="fa fa-thumbs-o-up"></i> 点赞 </span>
-              <span v-if="like">
-                <i class="fa fa-thumbs-up"></i> 已赞 </span>
-              <span style="padding: 0 4px 0 4px"> | </span> {{article.likes_count}}
+            <el-button type="submit" :class="[{'btn-dislike':isLike},'btn-like']" @click.prevent="clickLike()">
+              <span v-if="!isLike"><i class="fa fa-thumbs-o-up"></i> 点 赞 </span>
+              <span v-if="isLike"><i class="fa fa-thumbs-up"></i> 已 赞 </span>
+              <span class="article-likes-count"> | </span> {{likes_count}}
             </el-button>
           </div>
 
@@ -57,9 +54,8 @@
             <form action="">
               <el-input type="textarea" :rows="4" placeholder="请输入评论内容" v-model="comment">
               </el-input>
-              <!-- <el-button type="submit" @click.prevent="submit">评 论</el-button> -->
               <div class="send-comment">
-                <el-button type="submit">评 论</el-button>
+                <el-button type="submit" @click.prevent="clickComment()">评 论</el-button>
               </div>
             </form>
           </div>
@@ -71,31 +67,35 @@
               </router-link>
             </p>
           </div>
-          <div style="clear: both">
+          <div class="comments-count">
             <h4>{{article.comments_count ? article.comments_count + ' 条' : '暂无'}}评论</h4>
           </div>
 
-          <div style="border-bottom: 1px solid #ddd; padding-top: 20px"></div>
+          <div style="border-bottom: 1px solid #ddd; padding-top: 16px"></div>
           <div v-for="(comment, index) in comments">
-            <div class="comment-author">
-              <div style="float: left">
-                <router-link :to="{name: 'UserArticles', params: {slug: comment.user.id}}">
+            <div class="comment-item">
+              <div class="comment-author">
+                <router-link :to="{name: 'UserArticles', params: {id: comment.user.id}}">
                   <img :src="comment.user.avatar" alt="">
                 </router-link>
-              </div>
-              <div class="comment-author-details">
-                <div>
-                  <router-link style="padding-top: 1px; font-size: 16px; color: #555" :to="{name: 'UserArticles', params: {slug: comment.user_id}}">
-                    {{comment.user.name}}&nbsp;
-                  </router-link>
-                  <br>
-                  <span># {{index + 1}} · 评论于 {{ comment.created_at }}</span>
+
+                <div class="comment-author-details">
+                  <div class="comment-author-name">
+                    <router-link :to="{name: 'UserArticles', params: {id: comment.user_id}}">
+                      {{comment.user.name}}&nbsp;
+                    </router-link>
+                  </div>
+                  <div class="comment-time">
+                    <span>{{index + 1}}楼 · {{ comment.created_at }}</span>
+                  </div>
                 </div>
               </div>
-              <div class="comment-details">
+
+              <div class="comment-body">
                 {{comment.body}}
               </div>
-              <ChildComment :childComment="comment.id" :article_id="article.id"></ChildComment>
+              
+              <!-- <ChildComment :childComment="comment.id" :article_id="article.id"></ChildComment> -->
               <div style="border-bottom: 1px solid #eee; padding-top: 15px"></div>
             </div>
           </div>
@@ -110,24 +110,21 @@
 <script>
 // import VueMarkdown from "vue-markdown";
 import Marked from "marked";
-import HotArticles from "../../components/HotArticles";
-import HotTags from "../../components/HotTags";
 import api from "../../api";
 import { mapState } from "vuex";
 
 export default {
   components: {
     // VueMarkdown,
-    HotArticles,
-    HotTags
   },
   data() {
     return {
       article: null,
-      like: false,
+      isLike: false,
+      likes_count: 0,
       follow: false,
       comment: "",
-      comments: "",
+      comments: [],
       showPreview: false
     };
   },
@@ -141,15 +138,68 @@ export default {
       }
     });
     this.getArticle();
+    this.getIsLike();
+    this.getLikes();
+    this.getComments();
   },
   methods: {
     getArticle() {
       console.log("Show getArticle: id:: " + this.$route.params.id);
       api.getArticle(this.$route.params.id).then(res => {
         console.log("Show getArticle: res:: " + res.data.data.title);
-        if (res.data.status) {
+        if (res.data.status == 1) {
           this.article = res.data.data;
           this.article.body = Marked(res.data.data.body);
+        }
+      });
+    },
+    getIsLike() {
+      if (!this.auth.check()) {
+        return;
+      }
+
+      api.isLikeOrNot(this.$route.params.id).then(res => {
+        if (res.data.status == 1) {
+          this.isLike = res.data.data.liked;
+        }
+      });
+    },
+    getLikes() {
+      api.getArticleLikes(this.$route.params.id).then(res => {
+        if (res.data.status == 1) {
+          this.likes_count = res.data.data.likes_count;
+        }
+      });
+    },
+    getComments() {
+      api.getArticleComments(this.$route.params.id).then(res => {
+        if (res.data.status == 1) {
+          this.comments = res.data.data;
+        }
+      });
+    },
+    clickLike() {
+      if (!this.auth.check()) {
+        this.showPreview = true;
+        return;
+      }
+
+      api.like(this.$route.params.id).then(res => {
+        if (res.data.status == 1) {
+          this.isLike = res.data.data.liked;
+          this.getLikes();
+        }
+      });
+    },
+    clickComment() {
+      let params = {
+        article_id: this.article.id,
+        parent_id: 0,
+        body: this.comment
+      };
+      api.createComment(params).then(res => {
+        if (res.data.status == 1) {
+          this.comments.push(res.data.data);
         }
       });
     }
@@ -212,24 +262,42 @@ export default {
 .article-like {
   border-top: 0.8px solid #eee;
   padding-top: 32px;
-  #btn-like {
+  .article-likes-count {
+    padding: 0 4px;
+  }
+  .btn-like {
     background-color: #fff;
     color: tomato;
-    font-size: 18px;
+    font-size: 16px;
     padding: 8px 20px 8px 20px;
     border-radius: 100px;
     box-shadow: none;
     border: 1px solid tomato;
     cursor: pointer;
   }
-  #btn-like:hover,
-  #btn-like:focus,
-  #btn-like:active:focus,
-  #btn-like:active {
-    border-radius: 100px;
+  .btn-like:hover,
+  // .btn-like:focus,
+  // .btn-like:active:focus,
+  .btn-like:active {
     color: #fff;
-    box-shadow: none;
     background-color: tomato;
+  }
+  .btn-dislike {
+    color: #fff;
+    background-color: tomato;
+    font-size: 16px;
+    padding: 8px 20px 8px 20px;
+    border-radius: 100px;
+    box-shadow: none;
+    border: 1px solid tomato;
+    cursor: pointer;
+  }
+  .btn-dislike:hover,
+  // .btn-like:focus,
+  // .btn-like:active:focus,
+  .btn-dislike:active {
+    background-color: #fff;
+    color: tomato;
   }
 }
 
@@ -255,7 +323,7 @@ export default {
       background-color: #00b5ad;
       color: #fff;
       font-size: 16px;
-      padding: 4px 16px 4px 16px;
+      padding: 4px 16px;
       border-radius: 100px;
       box-shadow: none;
       border: 1px solid #00b5ad;
@@ -266,29 +334,6 @@ export default {
         border: 1px solid tomato;
       }
     }
-  }
-}
-
-.comment-author {
-  clear: both;
-  margin-top: 15px;
-  position: relative;
-  img {
-    position: absolute;
-    width: 36px;
-    border: 1px solid #aaa;
-    border-radius: 100px;
-    margin-top: 5px;
-  }
-  .comment-author-details {
-    padding-top: 6px;
-    padding-left: 50px;
-    color: #999;
-    font-size: 13px;
-  }
-  .comment-details {
-    padding: 20px 0 10px;
-    color: #555;
   }
 }
 
@@ -304,21 +349,44 @@ export default {
   }
 }
 
-.btn-define {
-  width: 90%;
-  margin: 15px 0 15px;
-  background-color: #00b5ad;
-  border-radius: 5px;
-  color: #fff;
-  font-size: 15px;
-  font-weight: bold;
-  border-color: #f1f1f1;
-  box-shadow: none;
+.comments-count {
+  h4 {
+    text-align: left;
+  }
 }
 
-.btn-define:hover,
-.btn-define:active {
-  background-color: #169e98;
-  box-shadow: none;
+.comment-item {
+  clear: both;
+  margin-top: 15px;
+  position: relative;
+  .comment-author {
+    text-align: left;
+    line-height: 100%;
+    img {
+      position: absolute;
+      width: 36px;
+      height: 36px;
+      border: 0.8px solid #ccc;
+      border-radius: 50%;
+    }
+    .comment-author-details {
+      margin-top: 6px;
+      margin-left: 48px;
+      color: #999;
+      .comment-author-name {
+        font-size: 14px;
+        color: #555;
+      }
+      .comment-time {
+        font-size: 12px;
+      }
+    }
+  }
+  .comment-body {
+    margin-top: 8px;
+    color: #555;
+    font-size: 14px;
+    text-align: left;
+  }
 }
 </style>

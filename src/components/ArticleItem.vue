@@ -55,8 +55,6 @@ export default {
   },
   data() {
     return {
-      // index: this.propIndex,
-      // article: this.propArticle
     };
   },
   mounted() {

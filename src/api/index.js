@@ -45,20 +45,32 @@ export default {
   getHotTags() {
     return Vue.http.get(API_ROOT + "hot_tags");
   },
-  getArticle(id) {
-    return Vue.http.get(API_ROOT + "articles/" + id);
-  },
   getAllTags() {
     return Vue.http.get(API_ROOT + "tags");
   },
   getAllCategories() {
     return Vue.http.get(API_ROOT + "categories");
   },
+
+  getArticle(id) {
+    return Vue.http.get(API_ROOT + "articles/" + id);
+  },
   createArticle(params) {
     return Vue.http.post(API_ROOT + "articles", params);
   },
   editArticle(id, params) {
     return Vue.http.put(API_ROOT + "articles/" + id, params);
+  },
+
+  getArticleLikes(id) {
+    return Vue.http.get(API_ROOT + "articles/" + id + "/likes");
+  },
+  getArticleComments(id) {
+    return Vue.http.get(API_ROOT + "articles/" + id + "/comments");
+  },
+
+  createComment(params) {
+    return Vue.http.post(API_ROOT + "comments", params);
   },
 
   getUser(id) {
@@ -76,17 +88,33 @@ export default {
   getUserFollowUsers(id) {
     return Vue.http.get(API_ROOT + "users/" + id + "/follow_users");
   },
-  
+
   isLikeOrNot(id) {
-    return Vue.http.get(API_ROOT + "article/is_like", { params: { id: id } });
+    return Vue.http.get(API_ROOT + "article/is_like", {
+      params: {
+        id: id
+      }
+    });
   },
   like(id) {
-    return Vue.http.get(API_ROOT + "article/like", { params: { id: id } });
+    return Vue.http.get(API_ROOT + "article/like", {
+      params: {
+        id: id
+      }
+    });
   },
   isFollowOrNot(id) {
-    return Vue.http.get(API_ROOT + "user/is_follow", { params: { id: id } });
+    return Vue.http.get(API_ROOT + "user/is_follow", {
+      params: {
+        id: id
+      }
+    });
   },
   follow(id) {
-    return Vue.http.get(API_ROOT + "user/follow", { params: { id: id } });
+    return Vue.http.get(API_ROOT + "user/follow", {
+      params: {
+        id: id
+      }
+    });
   }
 }
