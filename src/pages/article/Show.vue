@@ -73,31 +73,7 @@
 
           <div style="border-bottom: 1px solid #ddd; padding-top: 16px"></div>
           <div v-for="(comment, index) in comments">
-            <div class="comment-item">
-              <div class="comment-author">
-                <router-link :to="{name: 'UserArticles', params: {id: comment.user.id}}">
-                  <img :src="comment.user.avatar" alt="">
-                </router-link>
-
-                <div class="comment-author-details">
-                  <div class="comment-author-name">
-                    <router-link :to="{name: 'UserArticles', params: {id: comment.user_id}}">
-                      {{comment.user.name}}&nbsp;
-                    </router-link>
-                  </div>
-                  <div class="comment-time">
-                    <span>{{index + 1}}楼 · {{ comment.created_at }}</span>
-                  </div>
-                </div>
-              </div>
-
-              <div class="comment-body">
-                {{comment.body}}
-              </div>
-              
-              <!-- <ChildComment :childComment="comment.id" :article_id="article.id"></ChildComment> -->
-              <div style="border-bottom: 1px solid #eee; padding-top: 15px"></div>
-            </div>
+            <comment :index="index" :comment="comment"></comment>
           </div>
         </div>
       </el-col>
@@ -112,10 +88,12 @@
 import Marked from "marked";
 import api from "../../api";
 import { mapState } from "vuex";
+import Comment from "../../components/CommentItem";
 
 export default {
   components: {
     // VueMarkdown,
+    Comment
   },
   data() {
     return {
@@ -193,13 +171,14 @@ export default {
     },
     clickComment() {
       let params = {
-        article_id: this.article.id,
+        article_id: this.$route.params.id,
         parent_id: 0,
-        body: this.comment
+        content: this.comment
       };
       api.createComment(params).then(res => {
         if (res.data.status == 1) {
           this.comments.push(res.data.data);
+          this.comment = "";
         }
       });
     }
