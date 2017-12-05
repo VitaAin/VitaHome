@@ -109,6 +109,9 @@ export default {
     showCommentReplyBox: function(val, oldVal) {},
     repliedComment: function(val, oldval) {
       console.log("watch repliedComment: new:: " + val + ", old:: " + oldval);
+      if(val){
+        this.contentInput=`<a href="#" class="maleskine-author" target="_blank" data-user-id="52e030ab6b2e">@${this.repliedComment.user.name}</a>`;
+      }
     }
   },
   methods: {
@@ -126,7 +129,7 @@ export default {
     clickComment() {
       let params = {
         article_id: this.$route.params.id,
-        parent_id: this.repliedComment.id,
+        parent_id: this.comment.id,
         content: this.contentInput
       };
       api.createComment(params).then(res => {

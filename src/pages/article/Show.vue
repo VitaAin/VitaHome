@@ -72,7 +72,7 @@
           </div>
 
           <div style="border-bottom: 1px solid #ddd; padding-top: 16px"></div>
-          <div v-for="(comment, index) in comments">
+          <div v-for="(comment, index) in comments" :key="comment.id">
             <comment :index="index" :comment="comment"></comment>
           </div>
         </div>
