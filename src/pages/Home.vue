@@ -99,6 +99,7 @@ export default {
           this.total = Number(res.data.data.total);
           for (let index in this.articleList) {
             this.articleList[index].abstract = this.articleList[index].body
+              .trim()
               .substring(0, 150)
               .replace(/<\/?.+?>/g, "")
               .replace(/ /g, "")

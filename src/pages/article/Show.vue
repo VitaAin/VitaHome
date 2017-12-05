@@ -55,7 +55,7 @@
               <el-input type="textarea" :rows="4" placeholder="请输入评论内容" v-model="comment">
               </el-input>
               <div class="send-comment">
-                <el-button type="submit" @click.prevent="clickComment()">评 论</el-button>
+                <el-button type="submit" @click.prevent="clickComment()">发 表</el-button>
               </div>
             </form>
           </div>
