@@ -35,7 +35,7 @@
     <div class="child-comments-box">
       <div v-if="comment.children && comment.children.length > 0">
         <!-- <child-comment v-for="(child, index) in comment.children" :key="child.id" 
-           @toReply="clickChildReply" :childId="clickedChildId" :index="index" :child-comment="child"></child-comment> -->
+           @toReply="clickChildReply" :index="index" :child-comment="child"></child-comment> -->
         <div class="child-comment" v-for="(child, index) in comment.children" :key="child.id">
           <div class="child-comment-body">
             <router-link to="">
@@ -50,7 +50,7 @@
 
           <div class="child-comment-actions">
             <span class="child-comment-time">{{child.created_at}}</span>
-            <span class="count-icon" @click="clickChildReply()">
+            <span class="count-icon" @click="clickChildReply(child)">
               <i class="fa fa-comments"></i>
               回复
             </span>
@@ -67,8 +67,8 @@
     
       <div class="child-reply-box" v-if="showCommentReplyBox">
         <form action="">
-          <!-- <el-input type="textarea" :rows="4" :placeholder="'回复 '+repliedUser.name+' : '" v-model="contentInput"> -->
-          <el-input type="textarea" :rows="4" :placeholder="'回复 : '" v-model="contentInput">
+          <el-input type="textarea" :rows="4" :placeholder="'回复 '+repliedComment.user.name+' : '" v-model="contentInput">
+          <!-- <el-input type="textarea" :rows="4" :placeholder="'回复 : '" v-model="contentInput"> -->
           </el-input>
           <div class="send-comment">
             <el-button class="cancel-btn" type="submit" @click.prevent="clickCancelComment()">取 消</el-button>
@@ -98,33 +98,35 @@ export default {
   data() {
     return {
       showCommentReplyBox: false,
-      repliedUser: null, // 被回复者
-      clickedChildId: null,
-      contentInput: ""
+      contentInput: "",
+      repliedComment: null
     };
   },
   mounted() {
+    this.repliedComment = this.comment;
   },
   watch: {
-    showCommentReplyBox: function(val, oldVal) {
-      // this.repliedUser = this.showCommentReplyBox ? this.comment.user : null;
+    showCommentReplyBox: function(val, oldVal) {},
+    repliedComment: function(val, oldval) {
+      console.log("watch repliedComment: new:: " + val + ", old:: " + oldval);
     }
   },
   methods: {
-    clickChildReply() {
-      // this.comment.children.
-    },
-    clickReply(comment) {
+    clickChildReply(childComment) {
       this.showCommentReplyBox = true;
+      this.repliedComment = childComment;
+    },
+    clickReply() {
+      this.showCommentReplyBox = true;
+      this.repliedComment = this.comment;
     },
     clickCancelComment() {
       this.showCommentReplyBox = false;
-      this.repliedUser = null;
     },
     clickComment() {
       let params = {
         article_id: this.$route.params.id,
-        parent_id: this.comment.id,
+        parent_id: this.repliedComment.id,
         content: this.contentInput
       };
       api.createComment(params).then(res => {
@@ -132,7 +134,6 @@ export default {
           this.comment.children.push(res.data.data);
           this.contentInput = "";
           this.showCommentReplyBox = false;
-          this.repliedUser = null;
         }
       });
     }
@@ -235,8 +236,6 @@ export default {
     margin-left: 8px;
   }
 }
-
-
 
 .child-comment {
   border-bottom: 0.8px solid #eee;
