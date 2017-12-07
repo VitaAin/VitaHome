@@ -19,8 +19,8 @@ Vue.http.interceptors.push((request, next) => {
 });
 
 const API_ROOT_TEST = "../../static/data/";
-const API_ROOT = "http://admin.vitain.top/api/v1/";
-// const API_ROOT = "http://127.0.0.1/vitahomebackend/public/api/v1/";
+// const API_ROOT = "http://admin.vitain.top/api/v1/";
+const API_ROOT = "http://127.0.0.1/vitahomebackend/public/api/v1/";
 
 export default {
   register(params) {

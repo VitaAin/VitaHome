@@ -42,10 +42,11 @@
               <span class="child-comment-name">{{child.user.name}}</span>
             </router-link>
             : 
-            <router-link to="">
+            <!-- <router-link to="">
               <span class="child-comment-name">@{{child.parent_id}}&nbsp; </span>
-            </router-link>
-            <span class="child-comment-content">{{child.content}}</span>
+            </router-link> -->
+            <!-- <span class="child-comment-content">{{child.content}}</span> -->
+            <span class="child-comment-content" v-html="child.content"></span>
           </div>
 
           <div class="child-comment-actions">
@@ -67,7 +68,7 @@
     
       <div class="child-reply-box" v-if="showCommentReplyBox">
         <form action="">
-          <el-input type="textarea" :rows="4" :placeholder="'回复 '+repliedComment.user.name+' : '" v-model="contentInput">
+          <el-input type="textarea" :rows="4" placeholder="写下你的看法" v-model="contentInput">
           <!-- <el-input type="textarea" :rows="4" :placeholder="'回复 : '" v-model="contentInput"> -->
           </el-input>
           <div class="send-comment">
@@ -109,8 +110,9 @@ export default {
     showCommentReplyBox: function(val, oldVal) {},
     repliedComment: function(val, oldval) {
       console.log("watch repliedComment: new:: " + val + ", old:: " + oldval);
-      if(val){
-        this.contentInput=`<a href="#" class="maleskine-author" target="_blank" data-user-id="52e030ab6b2e">@${this.repliedComment.user.name}</a>`;
+      if (val) {
+        // this.contentInput=`<a href="#" class="maleskine-author" target="_blank" data-user-id="52e030ab6b2e">@${this.repliedComment.user.name}</a>`;
+        this.contentInput = "@" + this.repliedComment.user.name + " ";
       }
     }
   },
@@ -125,12 +127,14 @@ export default {
     },
     clickCancelComment() {
       this.showCommentReplyBox = false;
+      this.repliedComment = null;
     },
     clickComment() {
       let params = {
         article_id: this.$route.params.id,
         parent_id: this.comment.id,
-        content: this.contentInput
+        content: this.formatAt()
+        // content: this.contentInput
       };
       api.createComment(params).then(res => {
         if (res.data.status == 1) {
@@ -139,6 +143,15 @@ export default {
           this.showCommentReplyBox = false;
         }
       });
+    },
+    formatAt() {
+      let content = this.contentInput.trim();
+      if (!content.startsWith("@")) {
+        return content;
+      }
+      let atSb = content.substring(content.indexOf("@"), content.indexOf(" "));
+      let linkSb = `<a href="#" class="child-comment-name" target="_blank" data-user-id="52e030ab6b2e">${atSb}</a>`;
+      return content.replace(atSb, linkSb);
     }
   }
 };
@@ -248,13 +261,13 @@ export default {
   text-align: left;
   font-size: 13px;
   line-height: 20px;
-  .child-comment-name {
-    color: #00a4ff;
-    .child-comment-name:hover {
-      color: #00a4ff;
-    }
-  }
   .child-comment-content {
+  }
+}
+.child-comment-name {
+  color: #00a4ff;
+  .child-comment-name:hover {
+    color: #00a4ff;
   }
 }
 .child-comment-actions {
