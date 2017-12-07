@@ -42,10 +42,6 @@
               <span class="child-comment-name">{{child.user.name}}</span>
             </router-link>
             : 
-            <!-- <router-link to="">
-              <span class="child-comment-name">@{{child.parent_id}}&nbsp; </span>
-            </router-link> -->
-            <!-- <span class="child-comment-content">{{child.content}}</span> -->
             <span class="child-comment-content" v-html="child.content"></span>
           </div>
 
@@ -69,7 +65,6 @@
       <div class="child-reply-box" v-if="showCommentReplyBox">
         <form action="">
           <el-input type="textarea" :rows="4" placeholder="写下你的看法" v-model="contentInput">
-          <!-- <el-input type="textarea" :rows="4" :placeholder="'回复 : '" v-model="contentInput"> -->
           </el-input>
           <div class="send-comment">
             <el-button class="cancel-btn" type="submit" @click.prevent="clickCancelComment()">取 消</el-button>
