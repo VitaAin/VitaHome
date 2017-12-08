@@ -155,7 +155,7 @@ export default {
 <style lang="scss" scoped>
 .comment {
   clear: both;
-  padding-top: 15px;
+  padding-top: 16px;
   position: relative;
 }
 .comment-author {
