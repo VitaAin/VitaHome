@@ -1,7 +1,7 @@
 <template>
   <div class="user-articles">
-    <div v-if="articles">
-      <div v-for="(article, index) in articles" class="user-article">
+    <div v-if="articles" v-for="(article, index) in articles">
+      <div class="user-article">
         <router-link :to="{name: 'ArticleShow', params: {id: article.id}}">
           <span>{{article.title}}</span>
         </router-link>
@@ -14,6 +14,7 @@
       </div>
       <div class="divider"></div>
     </div>
+
     <div v-if="!articles">
       <div class="no-article">
         <p>没有任何数据~~</p>
@@ -32,20 +33,15 @@ export default {
     };
   },
   mounted() {
-    this.getUserArticles();
+    this.getUserLikeArticles();
   },
   methods: {
-    getUserArticles() {
-      api.getUserArticles(this.$route.params.id).then(res => {
-        if (res.data.status) {
+    getUserLikeArticles() {
+      api.getUserLikeArticles(this.$route.params.id).then(res => {
+        if (res.data.status == 1) {
           this.articles = res.data.data;
         }
       });
-    }
-  },
-  watch: {
-    $route(to, from) {
-      this.getUserArticles();
     }
   }
 };

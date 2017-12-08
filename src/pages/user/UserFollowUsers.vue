@@ -1,7 +1,7 @@
 <template>
-  <div class="wrap">
-    <div class="user-replies" v-if="comments">
-      <div class="user-reply" v-for="(comment, index) in comments">
+  <div class="follow-users">
+    <div v-if="comments" v-for="(comment, index) in comments">
+      <div class="user-article">
         <router-link :to="{name: 'ArticleShow', params: {id: comment.commentable.id}}">
           <span style="font-size: 15px">{{comment.commentable.title}}</span>
         </router-link>
@@ -12,7 +12,7 @@
           <span class="dex">{{comment.commentable.likes_count}} 人关注 ·</span>
         </div>
         
-        <p class="comment-content">{{comment.content}}</p>
+        <p style="padding-top: 10px; font-size: 15px">{{comment.body}}</p>
 
         <div class="divider"></div>
       </div>
@@ -51,43 +51,39 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.wrap {
+.follow-users {
   margin-top: 40px;
   border: 1px solid #ddd;
   border-radius: 4px;
-  padding: 16px 8px;
-}
-.user-reply {
-  margin: 10px;
-  text-align: left;
-  a {
-    font-size: 14px;
-    color: #00b5ad;
-    &:hover {
-      color: tomato;
+  padding: 15px 0 10px;
+  .user-article {
+    padding: 10px 10px 0 20px;
+    text-align: left;
+    a {
+      font-size: 16px;
+      color: #00b5ad;
+      &:hover {
+        color: tomato;
+      }
+    }
+    .dex {
+      color: #999;
+      font-size: 12px;
+    }
+    .create-time {
+      font-size: 12px;
+    }
+    .divider {
+      height: 0.8px;
+      background: #eee;
+      margin-top: 8px;
     }
   }
-  .dex {
-    color: #999;
-    font-size: 12px;
+  .no-article {
+    text-align: center;
+    p {
+      margin: 30px 0 30px;
+    }
   }
-  .create-time {
-    font-size: 12px;
-  }
-  .divider{
-    height: 0.8px;
-    background: #eee;
-    margin-top: 8px;
-  }
-}
-.no-article {
-  text-align: center;
-  p {
-    margin: 30px 0 30px;
-  }
-}
-.comment-content {
-  padding-top: 10px;
-  font-size: 15px;
 }
 </style>

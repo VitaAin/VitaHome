@@ -15,6 +15,8 @@ const ArticleCreate = resolve => require(["../pages/article/Create"], resolve);
 const UserOverview = resolve => require(["../pages/user/UserOverview"], resolve);
 const UserArticles = resolve => require(["../pages/user/UserArticles"], resolve);
 const UserReplies = resolve => require(["../pages/user/UserReplies"], resolve);
+const UserFollowUsers = resolve => require(["../pages/user/UserFollowUsers"], resolve);
+const UserLikeArticles = resolve => require(["../pages/user/UserLikeArticles"], resolve);
 const EditCommon = resolve => require(["../pages/user/edit/EditCommon"], resolve);
 const EditUserInfo = resolve => require(["../pages/user/edit/EditUserInfo"], resolve);
 const EditUserAvatar = resolve => require(["../pages/user/edit/EditAvatar"], resolve);
@@ -79,6 +81,14 @@ export default new Router({
               path: "replies",
               name: "UserReplies",
               component: UserReplies
+            }, {
+              path: "follows_users",
+              name: "UserFollowUsers",
+              component: UserFollowUsers
+            }, {
+              path: "likes_articles",
+              name: "UserLikeArticles",
+              component: UserLikeArticles
             }
           ]
         },

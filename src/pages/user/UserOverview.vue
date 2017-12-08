@@ -80,12 +80,12 @@
               </router-link>
             </li>
             <li>
-              <router-link :to="{name: 'UserLikesUsers', params: {id: user.id}}" :style="[path == 'likes_users' ? active : '']">
+              <router-link :to="{name: 'UserFollowUsers', params: {id: user.id}}" :style="[path == 'follow_users' ? active : '']">
                 <i class="text-md fa fa-eye"></i> Ta 关注的用户
               </router-link>
             </li>
             <li>
-              <router-link :to="{name: 'UserLikesArticles', params: {id: user.id}}" :style="[path == 'likes_articles' ? active : '']">
+              <router-link :to="{name: 'UserLikeArticles', params: {id: user.id}}" :style="[path == 'like_articles' ? active : '']">
                 <i class="text-md fa fa-thumbs-up"></i> Ta 赞过的话题
               </router-link>
             </li>
