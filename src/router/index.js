@@ -66,7 +66,6 @@ export default new Router({
         },
         {
           path: "/user/:id",
-          // name: "UserOverview",
           component: UserOverview,
           children: [{
               path: "/",

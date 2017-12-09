@@ -1,7 +1,7 @@
 <template>
   <div class="edit">
     <div class="title">
-      <p><i class="fa fa-picture-o" aria-hidden="true"></i> 更换图像</p>
+      <p><i class="fa fa-picture-o" aria-hidden="true"></i> 更换头像</p>
     </div>
 
     <div class="body">
@@ -11,7 +11,7 @@
           <img alt="">
         </div>
 
-        <div><p>更换图像：</p></div>
+        <div><p>更换头像：</p></div>
         <el-upload class="upload-demo" drag :action="uploadUrl" :on-success="uploadCallback" :show-file-list="false" :headers="headers">
           <i class="el-icon-upload"></i>
           <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>

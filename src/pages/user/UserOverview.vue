@@ -26,23 +26,36 @@
 
           <dl class="dl-horizontal">
             <div class="df">
-              <dt><label>用户名:</label></dt>
-              <dd><strong>{{ user.name }}</strong></dd>
+              <dt>
+                <label>用户名：</label>
+              </dt>
+              <dd>
+                <strong>{{ user.name }}</strong>
+              </dd>
             </div>
             <div class="df" v-if="user.real_name">
-              <dt><label>真实姓名:</label></dt>
-              <dd><span>{{ user.real_name }}</span></dd>
+              <dt>
+                <label>真实姓名：</label>
+              </dt>
+              <dd>
+                <span>{{ user.real_name }}</span>
+              </dd>
             </div>
             <div class="df" v-if="user.city">
-              <dt><label>City:</label></dt>
+              <dt>
+                <label>城市：</label>
+              </dt>
               <dd>
-                <span><i class="text-md fa fa-map-marker"></i> {{ user.city }}</span>
+                <span>
+                  <i class="text-md fa fa-map-marker"></i> {{ user.city }}</span>
               </dd>
             </div>
             <div class="df">
-              <dt><label>最近访问：</label></dt>
+              <dt>
+                <label>最近访问：</label>
+              </dt>
               <dd>
-                <span style="line-height: 24px; font-size: 15px">{{ user.last_actived_at }}</span>
+                <span style="line-height: 24px; font-size: 15px">哈哈{{ user.last_actived_at }}</span>
               </dd>
             </div>
           </dl>
@@ -55,14 +68,16 @@
                 <i class="fa fa-minus"></i> 已关注 </span>
             </el-button>
             <!-- <el-button v-if="follow" class="btn-define" style="margin-top: 0" @click.prevent="click_follow()"> -->
-            <el-button v-if="follow" class="btn-define" style="margin-top: 0" >
-              <span><i class="fa fa-envelope-o"></i> 发送私信</span>
+            <el-button v-if="follow" class="btn-define" style="margin-top: 0">
+              <span>
+                <i class="fa fa-envelope-o"></i> 发送私信</span>
             </el-button>
           </div>
 
           <div v-if="auth.id == user.id">
             <el-button class="btn-define" @click.prevent="editUserInfo()">
-              <span><i class="fa fa-plus"></i> 编辑个人资料 </span>
+              <span>
+                <i class="fa fa-plus"></i> 编辑个人资料 </span>
             </el-button>
           </div>
         </div>
@@ -187,24 +202,22 @@ export default {
     color: #00b5ad;
   }
   .dl-horizontal {
-    position: relative;
-    margin-top: 10px;
+    margin-top: 24px;
+    padding: 8px 4px;
     border-top: 1px solid #eee;
-    padding: 8px 0;
     .df {
       clear: both;
-      padding-top: 15px;
+      text-align: left;
+      margin-top: 4px;
       dt {
         color: #999;
-        width: 35%;
-        text-align: right;
-        float: left;
+        text-align: left;
         font-size: 15px;
+        display: inline;
       }
       dd {
-        width: 60%;
+        display: inline;
         text-align: left;
-        padding-left: 40%;
         color: #333;
       }
     }

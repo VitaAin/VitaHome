@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import mapState from "vuex";
+import { mapState } from "vuex";
 
 export default {
   data() {
@@ -41,7 +41,7 @@ export default {
       active: {
         color: "#00b5ad"
       },
-      // id: null,
+      id: null,
       path: ""
     };
   },

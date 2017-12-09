@@ -1,7 +1,7 @@
 <template>
   <div class="wrap">
-    <div class="user-replies" v-if="comments">
-      <div class="user-reply" v-for="(comment, index) in comments">
+    <div class="user-replies" v-if="comments && comments.length>0">
+      <div class="user-reply" v-for="(comment, index) in comments" :key="comment.id">
         <router-link :to="{name: 'ArticleShow', params: {id: comment.commentable.id}}">
           <span style="font-size: 15px">{{comment.commentable.title}}</span>
         </router-link>
@@ -18,7 +18,7 @@
       </div>
     </div>
 
-    <div v-if="!comments">
+    <div v-if="!comments || comments.length==0">
       <div class="no-article">
         <p>没有任何数据~~</p>
       </div>

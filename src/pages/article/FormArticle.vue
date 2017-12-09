@@ -192,13 +192,6 @@ export default {
   .article-create {
     margin-bottom: 20px;
     padding: auto 10px;
-    dt {
-      color: #555;
-      padding-top: 5px;
-      width: 15%;
-      text-align: right;
-      float: left;
-    }
   }
   .set-is-public{
     text-align: left;

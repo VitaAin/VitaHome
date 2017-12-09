@@ -12,7 +12,7 @@
       <el-col :span="12" :offset="3">
         <div style="border: 1px solid #fff;padding-top: 10px"></div>
 
-        <div class="content" v-for="(article, index) in articleList">
+        <div class="content" v-for="(article, index) in articleList" :key="article.id">
           <article-item v-bind:index="index" v-bind:article="article"></article-item>
         </div>
 

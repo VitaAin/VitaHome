@@ -48,7 +48,7 @@
           <router-link :to="{name: 'UserArticles', params: {id: auth.user.id}}">
             <el-menu-item index="77-1">个人中心</el-menu-item>
           </router-link>
-          <router-link :to="{name: 'UserArticles', params: {id: auth.user.id}}">
+          <router-link :to="{name: 'EditUserInfo', params: {id: auth.user.id}}">
             <el-menu-item index="77-2">编辑资料</el-menu-item>
           </router-link>
           <el-menu-item index="77-3" @click="logout()">退出</el-menu-item>

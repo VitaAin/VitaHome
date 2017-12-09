@@ -22,7 +22,7 @@
     </div>
 
     <div class="content-attr">
-      <a v-for="tag in article.tags" :href="'/#/articles?tag=' + tag.name" id="btn-tag">
+      <a v-for="tag in article.tags" :key="tag.id" :href="'/#/articles?tag=' + tag.name" id="btn-tag">
         # {{ tag.name }}
       </a>
       
@@ -120,6 +120,7 @@ export default {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    text-align: left;
   }
   .content-attr {
     text-align: left;

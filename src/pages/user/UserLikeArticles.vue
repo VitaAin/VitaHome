@@ -1,7 +1,7 @@
 <template>
   <div class="user-articles">
-    <div v-if="articles" v-for="(article, index) in articles">
-      <div class="user-article">
+    <div v-if="articles && articles.length>0">
+      <div class="user-article" v-for="(article, index) in articles" :key="article.id">
         <router-link :to="{name: 'ArticleShow', params: {id: article.id}}">
           <span>{{article.title}}</span>
         </router-link>
@@ -9,13 +9,13 @@
           
         <div>
           <span class="dex"> · {{article.comments_count}} 条回复 · </span>
-          <span class="dex">{{article.likes_count}} 人关注 ·</span>
+          <span class="dex">{{article.likes_count}} 人喜欢 ·</span>
         </div>
       </div>
       <div class="divider"></div>
     </div>
 
-    <div v-if="!articles">
+    <div v-if="!articles || articles.length==0">
       <div class="no-article">
         <p>没有任何数据~~</p>
       </div>
@@ -52,7 +52,7 @@ export default {
   margin-top: 40px;
   border: 1px solid #ddd;
   border-radius: 4px;
-  padding: 15px 0 10px;
+  padding: 16px 8px;
   .user-article {
     padding: 10px 10px 0 20px;
     text-align: left;

@@ -5,16 +5,14 @@
     </div>
 
     <div class="body">
-      <el-form label-position="'top'" action="" v-on:submit.prevent>
-        <div class="article-create">
-          <dt style="">真实姓名：</dt>
-          <el-input type="text" class="el-input" v-model="params.real_name"></el-input>
-        </div>
+      <el-form label-position="'top'" action="" label-width="70px" v-on:submit.prevent>
+        <el-form-item prop="real_name" label="真实姓名" class="input-box">
+          <el-input type="text" v-model="params.real_name" placeholder=""></el-input>
+        </el-form-item>
 
-        <div class="article-create">
-          <dt style="">所在城市：</dt>
-          <el-input type="text" class="el-input" v-model="params.city"></el-input>
-        </div>
+        <el-form-item prop="city" label="所在城市" class="input-box">
+          <el-input type="text" v-model="params.city" placeholder=""></el-input>
+        </el-form-item>
 
         <div>
           <button class="submit-button" type="submit" @click="submit()">提交修改</button>
@@ -51,28 +49,13 @@ export default {
     }
   }
   .body {
-    padding: 30px 0 30px;
-    .article-create {
-      margin-bottom: 20px;
-      dt {
-        color: #555;
-        padding-top: 5px;
-        width: 18%;
-        text-align: right;
-        float: left;
-      }
-      .el-input {
-        width: 70%;
-        margin-left: 2%;
-      }
-      #editor {
-        height: 400px;
-      }
+    padding: 24px 0;
+    .input-box {
+      margin: 16px;
     }
     .submit-button {
       cursor: pointer;
       width: 70%;
-      margin-left: 20%;
       background-color: #00b5ad;
       color: #fff;
       font-size: 16px;
