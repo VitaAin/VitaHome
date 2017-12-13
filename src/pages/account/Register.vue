@@ -122,11 +122,23 @@ export default {
     },
     register() {
       this.$store.dispatch("accountRegister", this.params).then(res => {
-        console.log("Register successfully! ");
+        console.log("Register successfully! " + JSON.stringify(res));
+        this.showRegisterRes(res.data.message);
       });
     },
     githubRegister() {
       window.location.href = "https://api/laravue.org.github";
+    },
+    showRegisterRes(msg) {
+      this.$alert(msg, "消息提示", {
+        confirmButtonText: "确定",
+        callback: action => {
+          this.$message({
+            type: "info",
+            message: `action: ${action}`
+          });
+        }
+      });
     }
   }
 };
