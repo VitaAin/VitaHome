@@ -121,7 +121,9 @@ export default {
       });
     },
     register() {
-      this.$store.dispatch("accountRegister", this.params);
+      this.$store.dispatch("accountRegister", this.params).then(res => {
+        console.log("Register successfully! ");
+      });
     },
     githubRegister() {
       window.location.href = "https://api/laravue.org.github";
