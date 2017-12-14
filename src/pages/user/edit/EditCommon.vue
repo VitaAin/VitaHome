@@ -1,9 +1,9 @@
 <template>
   <div>
     <el-row :gutter="25">
-      <el-col :span="6" :offset="3">
+      <el-col :span="5" :offset="3">
         <div class="user-info">
-          <ul class="reply">
+          <ul>
             <li>
               <router-link :to="{name: 'EditUserInfo', params: {id: id}}" :style="[path == 'edit' ? active : '']">
                 <i class="text-md fa fa-list-ul"></i> 个人信息
@@ -17,7 +17,7 @@
             </li>
 
             <li>
-              <router-link :to="{name: 'EditPassword', params: {id: id}}" :style="[path == 'edit_password' ? active : '']">
+              <router-link :to="{name: 'EditUserPassword', params: {id: id}}" :style="[path == 'edit_password' ? active : '']">
                 <i class="fa fa-lock" aria-hidden="true"></i> 修改密码
               </router-link>
             </li>
@@ -25,7 +25,7 @@
         </div>
       </el-col>
 
-      <el-col :span="12">
+      <el-col :span="13">
         <router-view></router-view>
       </el-col>
     </el-row>
@@ -41,7 +41,6 @@ export default {
       active: {
         color: "#00b5ad"
       },
-      id: null,
       path: ""
     };
   },
@@ -49,7 +48,6 @@ export default {
     id: state => state.account.auth.id
   }),
   mounted() {
-    // this.id = this.$route.params.id;
   }
 };
 </script>
@@ -57,11 +55,10 @@ export default {
 <style lang="scss" scoped>
 .user-info {
   text-align: center;
-  margin-top: 20px;
+  margin-top: 30px;
   border: 1px solid #ddd;
   border-radius: 4px;
   ul {
-    padding: 10px 0 10px;
     li {
       list-style: none;
       padding: 12px 0 12px;

@@ -1,11 +1,11 @@
 <template>
   <div>
     <el-row :gutter="25" v-if="user">
-      <el-col :span="12" :offset="3">
+      <el-col :span="13" :offset="3">
         <router-view></router-view>
       </el-col>
 
-      <el-col :span="6">
+      <el-col :span="5">
         <div class="sidebar-author" v-if="user">
           <img :src="user.avatar" alt="">
           <el-row>
@@ -202,16 +202,16 @@ export default {
   }
   .dl-horizontal {
     margin-top: 24px;
-    padding: 8px 4px;
+    padding: 8px 8px;
     border-top: 1px solid #eee;
     .df {
       clear: both;
       text-align: left;
-      margin-top: 4px;
+      margin-top: 6px;
       dt {
         color: #999;
         text-align: left;
-        font-size: 15px;
+        font-size: 14px;
         display: inline;
       }
       dd {
@@ -225,7 +225,7 @@ export default {
 
 .btn-define {
   width: 90%;
-  margin: 15px 0 15px;
+  margin: 16px 0;
   background-color: #00b5ad;
   border-radius: 5px;
   color: #fff;

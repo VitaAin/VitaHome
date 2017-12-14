@@ -4,14 +4,22 @@
       <p><i class="fa fa-lock" aria-hidden="true"></i> 修改个人信息</p>
     </div>
 
-    <div class="body">
-      <el-form label-position="'top'" action="" label-width="70px" v-on:submit.prevent>
+    <div class="body" v-if="user">
+      <el-form action="" label-width="70px" :label-position="'left'" v-on:submit.prevent>
+        <el-form-item prop="name" label="用户名" class="input-box">
+          <el-input type="text" v-model="user.name" placeholder="" disabled></el-input>
+        </el-form-item>
+        
+        <el-form-item prop="email" label="电子邮箱" class="input-box">
+          <el-input type="text" v-model="user.email" placeholder="" disabled></el-input>
+        </el-form-item>
+
         <el-form-item prop="real_name" label="真实姓名" class="input-box">
-          <el-input type="text" v-model="params.real_name" placeholder=""></el-input>
+          <el-input type="text" v-model="user.real_name" placeholder=""></el-input>
         </el-form-item>
 
         <el-form-item prop="city" label="所在城市" class="input-box">
-          <el-input type="text" v-model="params.city" placeholder=""></el-input>
+          <el-input type="text" v-model="user.city" placeholder=""></el-input>
         </el-form-item>
 
         <div>
@@ -23,29 +31,51 @@
 </template>
 
 <script>
+import api from "../../../api";
+import { mapState } from "vuex";
+
 export default {
   data() {
     return {
-      params: {
-        real_name: "",
-        city: ""
-      }
+      user: null
     };
+  },
+  computed: mapState({
+    auth: state => state.account.auth
+  }),
+  mounted() {
+    this.user = this.auth.user;
+    // this.getUser();
+  },
+  methods: {
+    // getUser() {
+    //   api.getUser(this.$route.params.id).then(res => {
+    //     if (res.data.status == 1) {
+    //       this.user = res.data.data;
+    //     }
+    //   });
+    // },
+    submit(){
+      api.editUserInfo(this.user).then((res) => {
+        this.$store.commit('ACCOUNT_EDIT_USER', res.data.data);
+        // this.open(res.data.message);
+      });
+    }
   }
 };
 </script>
 
 <style lang="scss" scoped>
 .edit {
-  margin-top: 20px;
+  margin-top: 30px;
   border: 1px solid #ddd;
   border-radius: 4px;
   color: #555;
   .title {
     border-bottom: 1px solid #ddd;
     p {
-      font-size: 26px;
-      padding: 40px 20px 20px 30px;
+      font-size: 18px;
+      padding: 20px 0;
     }
   }
   .body {

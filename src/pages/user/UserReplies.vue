@@ -20,7 +20,7 @@
 
     <div v-if="!comments || comments.length==0">
       <div class="no-article">
-        <p>没有任何数据~~</p>
+        <p>少侠，你还没有发表任何回复~~</p>
       </div>
     </div>
   </div>

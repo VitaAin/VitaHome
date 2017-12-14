@@ -20,6 +20,7 @@ const UserLikeArticles = resolve => require(["../pages/user/UserLikeArticles"], 
 const EditCommon = resolve => require(["../pages/user/edit/EditCommon"], resolve);
 const EditUserInfo = resolve => require(["../pages/user/edit/EditUserInfo"], resolve);
 const EditUserAvatar = resolve => require(["../pages/user/edit/EditAvatar"], resolve);
+const EditUserPassword = resolve => require(["../pages/user/edit/EditPassword"], resolve);
 
 export default new Router({
   routes: [{
@@ -107,6 +108,10 @@ export default new Router({
               path: "/edit_avatar",
               name: "EditUserAvatar",
               component: EditUserAvatar
+            }, {
+              path: "/edit_password",
+              name: "EditUserPassword",
+              component: EditUserPassword
             }
           ]
         },

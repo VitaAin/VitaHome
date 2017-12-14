@@ -16,7 +16,7 @@
     </div>
     <div v-if="!articles || articles.length==0">
       <div class="no-article">
-        <p>没有任何数据~~</p>
+        <p>少侠，你还没有发布过文章~~</p>
       </div>
     </div>
   </div>

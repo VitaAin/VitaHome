@@ -27,10 +27,10 @@
         <hot-tags></hot-tags>
       </el-col>
 
-      <el-col :span="18" :offset="3">
+      <el-col :span="18" :offset="3" v-if="!articleList || articleList.length==0">
         <div class="no-article">
-          <p>还没有文章哟！</p>
-          <p>少侠快去创建吧！～～</p>
+          <p>少侠，还没有文章哟！</p>
+          <p>赶快去创建吧！～～</p>
         </div>
       </el-col>
     </el-row>

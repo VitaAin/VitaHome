@@ -18,7 +18,6 @@ Vue.http.interceptors.push((request, next) => {
   next();
 });
 
-const API_ROOT_TEST = "../../static/data/";
 const API_ROOT = "http://admin.vitain.top/api/v1/";
 // const API_ROOT = "http://127.0.0.1/vitahomebackend/public/api/v1/";
 
@@ -87,6 +86,13 @@ export default {
   },
   getUserFollowUsers(id) {
     return Vue.http.get(API_ROOT + "users/" + id + "/follow_users");
+  },
+
+  editUserInfo(params) {
+    return Vue.http.post(API_ROOT + "edit_user_info", params);
+  },
+  uploadAvatar(params) {
+    return Vue.http.post(API_ROOT + "avatar/upload", params);
   },
 
   isLikeOrNot(id) {
