@@ -1,5 +1,5 @@
 <template>
-  <div class="content">
+  <div class="article-item">
     <router-link class="content-title" :to="{name: 'ArticleShow', params: {id: article.id}}">
       <h4>{{article.title}}</h4>
     </router-link>
@@ -65,9 +65,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.content {
+.article-item {
   width: 100%;
-  margin-top: 30px;
+  // margin-top: 30px;
   a {
     color: #bbb;
     &:hover {
@@ -124,6 +124,7 @@ export default {
   }
   .content-attr {
     text-align: left;
+    margin-top: 8px;
     .content-count {
       display: inline-block;
       height: 100%;
@@ -132,7 +133,7 @@ export default {
       color: #999;
       text-align: left;
       .count-icon {
-        margin-left: 8px;
+        margin-right: 8px;
       }
     }
   }
@@ -140,7 +141,7 @@ export default {
     width: 100%;
     height: 1px;
     background: #ddd;
-    margin-top: 16px;
+    margin-top: 8px;
   }
 }
 #btn-tag {

@@ -7,12 +7,12 @@
         <div class="title">
           <span>
             <!-- <router-link to="/user/login" class="title-text">登录</router-link> -->
-            <router-link :to="{name: 'Login'}" class="title-text">登录</router-link>
+            <router-link :to="{name: 'Login'}" class="title-text title-login">登录</router-link>
           </span>
           <span class="title-divider"> / </span>
           <span>
             <!-- <router-link to="/user/register" class="title-text">注册</router-link> -->
-            <router-link :to="{name: 'Register'}" class="title-text">注册</router-link>
+            <router-link :to="{name: 'Register'}" class="title-text title-register">注册</router-link>
           </span>
         </div>
 
@@ -93,10 +93,16 @@ export default {
     },
     successWatcher(val, oldVal) {
       if (val && !oldVal) {
+        this.message();
         let redirectUrl = this.$route.query.redirect_url || "/";
-        console.log("Login redirectUrl: " + redirectUrl);
-        this.$router.push(redirectUrl);
+        this.$router.push('/');
       }
+    },
+    message() {
+      this.$notify.success({
+        title: "登录成功",
+        message: "欢迎来到 Vita's Home ～～"
+      });
     },
     githubLogin() {
       window.location.href = "https://api.laravue.org/github";
@@ -133,8 +139,13 @@ export default {
     padding: 0 20px;
   }
   .title-text {
-    color: #00b5ad;
     font-weight: bold;
+  }
+  .title-login{
+    color: #00b5ad;
+  }
+  .title-register{
+    color: #999;
   }
 }
 

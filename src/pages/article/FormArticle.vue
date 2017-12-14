@@ -4,23 +4,23 @@
       <el-col :span="18" :offset="3">
         <div class="grid-content">
           <el-form status-icon :rules="rules" ref="params" :model="params" :label-position="'left'" label-width="16%">
-            <el-form-item prop="title" label="标题" class="article-create">
-              <el-input v-model="params.title" class="el-input" placeholder="至少4个字符"></el-input>
+            <el-form-item prop="title" label="标题" class="form-item">
+              <el-input v-model="params.title" placeholder="至少4个字符"></el-input>
             </el-form-item>
 
-            <el-form-item prop="category" label="文章类别" class="article-create">
-              <el-select v-model="params.category" class="el-input" placeholder="请选择">
+            <el-form-item prop="category" label="文章类别" class="form-item">
+              <el-select v-model="params.category" clearable filterable allow-create class="el-input select-sth" placeholder="请选择">
                 <el-option v-for="category in allCategories" :key="category.id" :label="category.name" :value="category.id"></el-option>
               </el-select>
             </el-form-item>
 
-            <el-form-item prop="tags" label="文章标签" class="article-create">
-              <el-select v-model="params.tags" multiple filterable allow-create class="el-input" placeholder="请选择">
+            <el-form-item prop="tags" label="文章标签" class="form-item">
+              <el-select v-model="params.tags" multiple clearable filterable allow-create class="el-input select-sth" placeholder="请选择">
                 <el-option v-for="tag in allTags" :key="tag.if" :label="tag.name" :value="tag.id"></el-option>
               </el-select>
             </el-form-item>
 
-            <el-form-item prop="body" label="内容" class="article-create">
+            <el-form-item prop="body" label="内容" class="form-item">
               <markdown-editor v-model="params.body" class="md-editor" ref="markdownEditor" :configs="configs" :highlight="true" :custom-theme="true"></markdown-editor>
               <!-- <el-upload drag :action="uploadUrl" :on-success="uploadCallback" :show-file-list="true" list-type="picture-card" :multiple="true" :headers="headers">
                 <i class="el-icon-upload"></i>
@@ -29,14 +29,9 @@
               </el-upload> -->
             </el-form-item>
 
-            <el-form-item prop="is_public" class="article-create set-is-public">
+            <el-form-item prop="is_public" class="form-item set-is-public">
               <el-checkbox v-model="params.is_public">公开</el-checkbox>
             </el-form-item>
-            <!-- <el-form-item prop="is_public" label="允许评论" class="article-create">
-              <el-select v-model="params.is_public" class="el-input" placeholder="请选择">
-                <el-option v-for="item in allowCommentsOptions" :key="item.value" :label="item.label" :value="item.value"></el-option>
-              </el-select>
-            </el-form-item> -->
 
             <div>
               <el-button class="article-btn" @click="submit($event, 'params')">提交</el-button>
@@ -189,11 +184,10 @@ export default {
 .grid-content {
   width: 100%;
   margin-top: 60px;
-  .article-create {
+  .form-item {
     margin-bottom: 20px;
-    padding: auto 10px;
   }
-  .set-is-public{
+  .set-is-public {
     text-align: left;
   }
   .article-btn {
@@ -216,5 +210,7 @@ export default {
       background-color: #fff;
     }
   }
+}
+.select-sth {
 }
 </style>

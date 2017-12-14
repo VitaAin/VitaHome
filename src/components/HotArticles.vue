@@ -1,5 +1,5 @@
 <template>
-  <div class="hot-topics">
+  <div class="hot-topics" v-if="articles && articles.length>0">
     <p>热门话题</p>
     <div style="border-bottom: 1px solid #eee;"></div>
     <ul v-for="article in articles">

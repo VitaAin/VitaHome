@@ -9,22 +9,29 @@
     </el-carousel>
 
     <el-row :gutter="25">
-      <el-col :span="12" :offset="3">
+      <el-col :span="12" :offset="3" v-if="articleList && articleList.length>0">
         <div style="border: 1px solid #fff;padding-top: 10px"></div>
 
         <div class="content" v-for="(article, index) in articleList" :key="article.id">
           <article-item v-bind:index="index" v-bind:article="article"></article-item>
         </div>
 
-        <div style="text-align: right; margin-top: 20px">
-          <el-pagination layout="prev, pager, next" :total="total" :page-size="page_size" @current-change="handleCurrentChange">
+        <div class="pagination-box" v-if="total">
+          <el-pagination layout="prev, pager, next" :total="total" :page-size="pageSize" @current-change="handleCurrentChange">
           </el-pagination>
         </div>
       </el-col>
       
-      <el-col :span="6" style="margin-top: 20px;">
+      <el-col :span="6" class="side-bar" v-if="articleList && articleList.length>0">
         <hot-articles></hot-articles>
         <hot-tags></hot-tags>
+      </el-col>
+
+      <el-col :span="18" :offset="3">
+        <div class="no-article">
+          <p>还没有文章哟！</p>
+          <p>少侠快去创建吧！～～</p>
+        </div>
       </el-col>
     </el-row>
   </div>
@@ -54,7 +61,7 @@ export default {
       articleList: [],
       total: null,
       tagName: "",
-      page_size: 15
+      pageSize: 15
     };
   },
   // beforeRouteUpdate(to, from, next) {
@@ -125,12 +132,24 @@ export default {
   line-height: 200px;
   margin: 0;
 }
-
 .el-carousel__item:nth-child(2n) {
   background-color: #99a9bf;
 }
-
 .el-carousel__item:nth-child(2n + 1) {
   background-color: #d3dce6;
+}
+
+.no-article{
+  font-size: 24px;
+  color: #888;
+  margin-top: 30%;
+  text-align: center;
+}
+.pagination-box {
+  text-align: right;
+  margin-top: 20px;
+}
+.side-bar {
+  margin-top: 20px;
 }
 </style>

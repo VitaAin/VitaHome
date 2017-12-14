@@ -7,12 +7,12 @@
         <div class="title">
           <span>
             <!-- <router-link to="/user/login" class="title-text">登录</router-link> -->
-            <router-link :to="{name: 'Login'}" class="title-text">登录</router-link>
+            <router-link :to="{name: 'Login'}" class="title-text title-login">登录</router-link>
           </span>
           <span class="title-divider"> / </span>
           <span>
             <!-- <router-link to="/user/register" class="title-text">注册</router-link> -->
-            <router-link :to="{naem: 'Register'}" class="title-text">注册</router-link>
+            <router-link :to="{naem: 'Register'}" class="title-text title-register">注册</router-link>
           </span>
         </div>
 
@@ -121,25 +121,29 @@ export default {
       });
     },
     register() {
-      this.$store.dispatch("accountRegister", this.params).then(res => {
-        console.log("Register successfully! " + JSON.stringify(res));
-        this.showRegisterRes(res.data.message);
+      this.$store.dispatch("accountRegister", this.params);
+    },
+    successWatcher(val, oldVal) {
+      if (val && !oldVal) {
+        this.message();
+        let self = this;
+        setTimeout(function() {
+          self.$router.push("/");
+        }, 2000);
+      }
+    },
+    message() {
+      this.$notify.success({
+        title: "注册成功",
+        message: "感谢您对 Vita's Home 的支持，请先前往您的邮箱激活账号～～"
       });
     },
     githubRegister() {
       window.location.href = "https://api/laravue.org.github";
     },
-    showRegisterRes(msg) {
-      this.$alert(msg, "消息提示", {
-        confirmButtonText: "确定",
-        callback: action => {
-          this.$message({
-            type: "info",
-            message: `action: ${action}`
-          });
-        }
-      });
-    }
+  },
+  watch: {
+    success: "successWatcher"
   }
 };
 </script>
@@ -176,8 +180,13 @@ export default {
     padding: 0 20px;
   }
   .title-text {
-    color: #00b5ad;
     font-weight: bold;
+  }
+  .title-login {
+    color: #999;
+  }
+  .title-register {
+    color: #00b5ad;
   }
 }
 

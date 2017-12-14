@@ -7,7 +7,6 @@
 
       <el-col :span="6">
         <div class="sidebar-author" v-if="user">
-          <p>作者：{{user.name}}</p>
           <img :src="user.avatar" alt="">
           <el-row>
             <el-col :span="8">
@@ -83,7 +82,7 @@
         </div>
 
         <div class="user-info">
-          <ul class="reply">
+          <ul>
             <li>
               <router-link :to="{name: 'UserArticles', params: {id: user.id}}" :style="[path == 'articles' ? active : '']">
                 <i class="text-md fa fa-list-ul"></i> Ta 发布的话题
@@ -248,7 +247,6 @@ export default {
   border: 1px solid #ddd;
   border-radius: 4px;
   ul {
-    padding: 10px 0 10px;
     li {
       list-style: none;
       padding: 12px 0 12px;

@@ -1,5 +1,5 @@
 <template>
-  <div class="hot-tags">
+  <div class="hot-tags" v-if="tags && tags.length>0">
     <p>热门标签</p>
     <div style="border-bottom: 1px solid #eee; padding-top: 0px"></div>
     <div class="tags">
