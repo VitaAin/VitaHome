@@ -76,7 +76,7 @@ export default {
   }),
   data() {
     return {
-      headTitle: "Vita's Home",
+      headTitle: "苍澜阁",
       colorDialogVisible: false,
       color: "#409EFF"
     };
@@ -122,6 +122,7 @@ export default {
   img {
     margin-right: 8px;
     width: 40px;
+    height: 40px;
     border: 0.8px solid #aaa;
     border-radius: 50%;
   }

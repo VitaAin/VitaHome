@@ -66,6 +66,12 @@ export default {
       user.city = data.city;
       localStorage.removeItem(AUTH_USER);
       localStorage.setItem(AUTH_USER, JSON.stringify(user));
+    },
+    ACCOUNT_AVATAR_UPLOAD: (state, data) => {
+      let user = JSON.parse(localStorage.getItem(AUTH_USER));
+      user.avatar = data;
+      localStorage.removeItem(AUTH_USER);
+      localStorage.setItem(AUTH_USER, JSON.stringify(user));
     }
   },
   actions: {

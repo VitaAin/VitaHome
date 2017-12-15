@@ -23,7 +23,7 @@
         </el-form-item>
 
         <div>
-          <button class="submit-button" type="submit" @click="submit()">提交修改</button>
+          <el-button class="submit-button" type="submit" @click="submit()">提交修改</el-button>
         </div>
       </el-form>
     </div>
@@ -58,7 +58,6 @@ export default {
     submit(){
       api.editUserInfo(this.user).then((res) => {
         this.$store.commit('ACCOUNT_EDIT_USER', res.data.data);
-        // this.open(res.data.message);
       });
     }
   }

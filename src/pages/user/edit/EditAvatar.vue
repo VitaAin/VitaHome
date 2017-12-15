@@ -50,6 +50,10 @@ export default {
       console.log(
         "EditAvatar onUploadSuccess: response:: " + JSON.stringify(response)
       );
+      if (response.status == 1) {
+        this.user.avatar = response.data.url;
+        this.$store.commit("ACCOUNT_AVATAR_UPLOAD", response.data.url);
+      }
     }
   }
 };
@@ -75,6 +79,7 @@ export default {
       margin-bottom: 30px;
       img {
         width: 100px;
+        height: 100px;
         border: 0.6px solid #ddd;
         border-radius: 50%;
       }
