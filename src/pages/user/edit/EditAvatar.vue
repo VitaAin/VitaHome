@@ -10,9 +10,10 @@
           <img :src="auth.user.avatar" alt="">
         </div>
 
-        <div class="upload-failed" v-if="failure">{{failure}}</div>
-        <el-upload class="upload-avatar" drag :action="uploadUrl" 
-          :on-success="onAvatarUploadSuccess" :before-upload="beforeAvatarUpload" :show-file-list="false" :headers="headers">
+        <div class="upload-avatar-failed" v-if="failure">{{failure}}</div>
+        <el-upload class="upload-avatar" drag :action="uploadAvatarUrl"  :headers="headers" :show-file-list="false"
+          :on-success="onAvatarUploadSuccess" 
+          :before-upload="beforeAvatarUpload">
           <i class="el-icon-upload"></i>
           <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
           <div class="el-upload__tip" slot="tip">只能上传jpg/png/gif文件，且不超过500KB</div>
@@ -33,8 +34,8 @@ export default {
   data() {
     return {
       user: null,
-      // uploadUrl: this.$http.options.root + "avatar/upload",
-      uploadUrl: "http://admin.vitain.top/api/v1/" + "avatar/upload",
+      // uploadAvatarUrl: this.$http.options.root + "avatar/upload",
+      uploadAvatarUrl: "http://admin.vitain.top/api/v1/" + "avatar/upload",
       headers: {
         Authorization: `Bearer ${accessToken}`
       },
@@ -46,7 +47,7 @@ export default {
   }),
   mounted() {
     this.user = this.auth.user;
-    console.log("uploadUrl:: " + this.uploadUrl);
+    console.log("uploadAvatarUrl:: " + this.uploadAvatarUrl);
   },
   methods: {
     beforeAvatarUpload(file) {
@@ -110,7 +111,7 @@ export default {
     }
   }
 }
-.upload-failed {
+.upload-avatar-failed {
   font-size: 14px;
   color: red;
   margin: 8px;

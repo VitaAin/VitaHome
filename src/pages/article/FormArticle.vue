@@ -2,7 +2,7 @@
   <div>
     <el-row>
       <el-col :span="18" :offset="3">
-        <div class="grid-content">
+        <div class="form-article-content">
           <el-form status-icon :rules="rules" ref="params" :model="params" :label-position="'left'" label-width="16%">
             <el-form-item prop="title" label="标题" class="form-item">
               <el-input v-model="params.title" placeholder="至少4个字符"></el-input>
@@ -22,15 +22,24 @@
 
             <el-form-item prop="body" label="内容" class="form-item">
               <markdown-editor v-model="params.body" class="md-editor" ref="markdownEditor" :configs="configs" :highlight="true" :custom-theme="true"></markdown-editor>
-              <!-- <el-upload drag :action="uploadUrl" :on-success="uploadCallback" :show-file-list="true" list-type="picture-card" :multiple="true" :headers="headers">
-                <i class="el-icon-upload"></i>
-                <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-                <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
-              </el-upload> -->
             </el-form-item>
 
             <el-form-item prop="is_public" class="form-item set-is-public">
               <el-checkbox v-model="params.is_public">公开</el-checkbox>
+            </el-form-item>
+
+            <el-form-item prop="images" label="插入图片" class="form-item upload-images">
+              <div class="upload-images-failed" v-if="failure">{{failure}}</div>
+              <el-upload class="upload-image" :action="uploadImageUrl" :headers="headers" 
+                :show-file-list="true" :list-type="'picture-card'"
+                :on-success="onUploadImageSuccess" 
+                :on-preview="onImagePreview" 
+                :on-remove="onImageRemove">
+                <i class="el-icon-plus"></i>
+              </el-upload>
+              <el-dialog :visible.sync="dialogVisible" size="tiny">
+                <img width="100%" :src="dialogImageUrl" alt="">
+              </el-dialog>
             </el-form-item>
 
             <div>
@@ -46,6 +55,9 @@
 <script>
 import { markdownEditor } from "vue-simplemde";
 import api from "../../api";
+import store from "../../store";
+
+const accessToken = store.state.account.auth.access_token;
 
 export default {
   components: {
@@ -65,7 +77,8 @@ export default {
         body: "",
         category: "",
         is_public: true,
-        tags: []
+        tags: [],
+        images: []
       },
       allowCommentsOptions: [
         { value: 1, label: "是" },
@@ -81,7 +94,15 @@ export default {
           codeSyntaxHighlighting: true,
           highlightingTheme: "tomorrow"
         }
-      }
+      },
+      uploadImageUrl:
+        "http://admin.vitain.top/api/v1/" + "article_image/upload",
+      headers: {
+        Authorization: `Bearer ${accessToken}`
+      },
+      dialogImageUrl: "",
+      dialogVisible: false,
+      imageList: null
     };
   },
   mounted() {
@@ -141,13 +162,14 @@ export default {
       if (this.type == "create_article") {
         this.createArticle();
       } else {
-        let form = {
-          tag: this.params.tags,
-          is_public: this.params.is_public,
-          title: this.params.title,
-          body: this.params.body,
-          category: this.params.category
-        };
+        // let form = {
+        //   tags: this.params.tags,
+        //   is_public: this.params.is_public,
+        //   title: this.params.title,
+        //   body: this.params.body,
+        //   category: this.params.category,
+        //   images: this.params.images
+        // };
         this.editArticle();
       }
     },
@@ -164,7 +186,7 @@ export default {
       });
     },
     editArticle() {
-      api.editArticle(this.$route.params.id, this.$refs.params).then(res => {
+      api.editArticle(this.$route.params.id, this.params).then(res => {
         if (res.data.status == 1) {
           this.$router.push({
             name: "ArticleShow",
@@ -174,6 +196,56 @@ export default {
           this.failure = res.data;
         }
       });
+    },
+    onImageRemove(file, fileList) {
+      console.log("************** onImageRemove start ****************");
+      console.log(JSON.stringify(file));
+      console.log("-----------");
+      console.log(JSON.stringify(fileList));
+      // this.params.images = fileList;
+      this.params.images = this.formatImageFileList(fileList);
+      console.log(JSON.stringify(this.params.images));
+      console.log("************** onImageRemove end ****************");
+      api.deleteArticleImage({ url: file.response.data.url }).then(res => {
+        console.log("delete:: " + JSON.stringify(res));
+      });
+    },
+    onImagePreview(file) {
+      this.dialogImageUrl = file.url;
+      this.dialogVisible = true;
+    },
+    onUploadImageSuccess(response, file, fileList) {
+      console.log("************** onUploadImageSuccess start ****************");
+      console.log(
+        "FormArticle onUploadImageSuccess: reponse:: " +
+          JSON.stringify(response)
+      );
+      console.log("--------------");
+      console.log(file);
+      console.log("--------------");
+      console.log(fileList);
+      console.log("************** onUploadImageSuccess end ****************");
+      if (response.status == 1) {
+        // this.params.images = fileList;
+        this.params.images = this.formatImageFileList(fileList);
+        console.log(this.params.images);
+        console.log("************** onUploadImageSuccess end ****************");
+        this.params.body += `![${file.name}](${response.data.url})`;
+      }
+    },
+    formatImageFileList(fileList) {
+      let imageList = [];
+      fileList.forEach(function(afile) {
+        imageList.push({
+          type: "ArticleImage",
+          article_id: this.$route.params.id,
+          uid: afile.uid,
+          name: afile.name,
+          url: afile.response.data.url,
+          size: afile.size
+        });
+      }, this);
+      return imageList;
     }
   }
 };
@@ -181,13 +253,16 @@ export default {
 
 <style lang="scss">
 @import "~simplemde/dist/simplemde.min.css";
-.grid-content {
+.form-article-content {
   width: 100%;
   margin-top: 60px;
   .form-item {
-    margin-bottom: 20px;
+    margin-bottom: 16px;
   }
   .set-is-public {
+    text-align: left;
+  }
+  .upload-image {
     text-align: left;
   }
   .article-btn {
@@ -211,6 +286,12 @@ export default {
     }
   }
 }
-.select-sth {
+.upload-images-failed {
+  font-size: 14px;
+  color: red;
+  margin: 8px;
+}
+.upload-image {
+  margin: 16px;
 }
 </style>

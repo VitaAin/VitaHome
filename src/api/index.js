@@ -60,6 +60,9 @@ export default {
   editArticle(id, params) {
     return Vue.http.put(API_ROOT + "articles/" + id, params);
   },
+  deleteArticleImage(file) {
+    return Vue.http.post(API_ROOT + "article_image/delete", file);
+  },
 
   getArticleLikes(id) {
     return Vue.http.get(API_ROOT + "articles/" + id + "/likes");
@@ -67,7 +70,6 @@ export default {
   getArticleComments(id) {
     return Vue.http.get(API_ROOT + "articles/" + id + "/comments");
   },
-
   createComment(params) {
     return Vue.http.post(API_ROOT + "comments", params);
   },
@@ -90,9 +92,6 @@ export default {
 
   editUserInfo(params) {
     return Vue.http.post(API_ROOT + "edit_user_info", params);
-  },
-  uploadAvatar(params) {
-    return Vue.http.post(API_ROOT + "avatar/upload", params);
   },
 
   isLikeOrNot(id) {
