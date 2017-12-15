@@ -16,11 +16,11 @@
               </router-link>
             </li>
 
-            <li>
+            <!-- <li>
               <router-link :to="{name: 'EditUserPassword', params: {id: id}}" :style="[path == 'edit_password' ? active : '']">
                 <i class="fa fa-lock" aria-hidden="true"></i> 修改密码
               </router-link>
-            </li>
+            </li> -->
           </ul>
         </div>
       </el-col>

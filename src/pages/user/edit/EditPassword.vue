@@ -1,21 +1,21 @@
 <template>
   <div class="edit">
     <div class="title">
-      <p><i class="fa fa-lock" aria-hidden="true"></i> 修改个人信息</p>
+      <p><i class="fa fa-lock" aria-hidden="true"></i> 修改密码</p>
     </div>
 
     <div class="body">
-      <el-form label-position="'top'" action="" label-width="70px" v-on:submit.prevent>
-        <el-form-item prop="real_name" label="真实姓名" class="input-box">
-          <el-input type="text" v-model="params.real_name" placeholder=""></el-input>
+      <el-form action="" label-width="70px" :label-position="'left'" v-on:submit.prevent>
+        <el-form-item prop="old_pwd" label="旧密码" class="input-box">
+          <el-input type="text" v-model="params.old_pwd" placeholder=""></el-input>
         </el-form-item>
 
-        <el-form-item prop="city" label="所在城市" class="input-box">
-          <el-input type="text" v-model="params.city" placeholder=""></el-input>
+        <el-form-item prop="new_pwd" label="新密码" class="input-box">
+          <el-input type="text" v-model="params.new_pwd" placeholder=""></el-input>
         </el-form-item>
 
         <div>
-          <button class="submit-button" type="submit" @click="submit()">提交修改</button>
+          <button class="submit-button" type="submit" @click="submit()">确认修改</button>
         </div>
       </el-form>
     </div>
@@ -27,8 +27,8 @@ export default {
   data() {
     return {
       params: {
-        real_name: "",
-        city: ""
+        old_pwd: "",
+        new_pwd: ""
       }
     };
   }
@@ -44,8 +44,8 @@ export default {
   .title {
     border-bottom: 1px solid #ddd;
     p {
-      font-size: 26px;
-      padding: 40px 20px 20px 30px;
+      font-size: 18px;
+      padding: 20px 0;
     }
   }
   .body {

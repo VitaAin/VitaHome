@@ -10,10 +10,12 @@
           <img :src="auth.user.avatar" alt="">
         </div>
 
-        <el-upload class="upload-avatar" drag :action="uploadUrl" :on-success="onUploadSuccess" :show-file-list="false" :headers="headers">
+        <div class="upload-failed" v-if="failure">{{failure}}</div>
+        <el-upload class="upload-avatar" drag :action="uploadUrl" 
+          :on-success="onAvatarUploadSuccess" :before-upload="beforeAvatarUpload" :show-file-list="false" :headers="headers">
           <i class="el-icon-upload"></i>
           <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-          <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
+          <div class="el-upload__tip" slot="tip">只能上传jpg/png/gif文件，且不超过500KB</div>
         </el-upload>
       </div>
     </div>
@@ -35,7 +37,8 @@ export default {
       uploadUrl: "http://admin.vitain.top/api/v1/" + "avatar/upload",
       headers: {
         Authorization: `Bearer ${accessToken}`
-      }
+      },
+      failure: null
     };
   },
   computed: mapState({
@@ -46,13 +49,34 @@ export default {
     console.log("uploadUrl:: " + this.uploadUrl);
   },
   methods: {
-    onUploadSuccess(response, file, fileList) {
+    beforeAvatarUpload(file) {
+      const expectedTypes = [
+        "image/jpg",
+        "image/jpeg",
+        "image/png",
+        "image/gif"
+      ];
+      const isExpectedType = expectedTypes.includes(file.type);
+      const isLt2M = file.size / 1024 < 500;
+
+      if (!isExpectedType) {
+        this.failure = "上传头像图片格式错误！";
+      }
+      if (!isLt2M) {
+        this.$message.error("上传头像图片大小不能超过 500KB ！");
+      }
+      return isExpectedType && isLt2M;
+    },
+    onAvatarUploadSuccess(response, file, fileList) {
       console.log(
         "EditAvatar onUploadSuccess: response:: " + JSON.stringify(response)
       );
       if (response.status == 1) {
         this.user.avatar = response.data.url;
         this.$store.commit("ACCOUNT_AVATAR_UPLOAD", response.data.url);
+        this.failure = null;
+      } else {
+        this.failure = response.message;
       }
     }
   }
@@ -85,5 +109,10 @@ export default {
       }
     }
   }
+}
+.upload-failed {
+  font-size: 14px;
+  color: red;
+  margin: 8px;
 }
 </style>
