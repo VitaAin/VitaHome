@@ -102,17 +102,36 @@ export default {
       },
       dialogImageUrl: "",
       dialogVisible: false,
-      imageList: null
     };
   },
   mounted() {
-    this.getAllTags();
-    this.getAllCategories();
-
     console.log("FormArticle type: " + this.type);
-    if (this.type != "create_article") {
-      this.getArticle();
+    if (this.type == "create_article") {
+      this.getAllTags();
+      this.getAllCategories();
+    }else{
+      api.getAllTags().then((res) => {
+        this.allTags = res.data.data;
+        api.getAllCategories().then((res) => {
+          this.allCategories = res.data.data;
+          api.getArticle(this.$route.params.id).then((res) => {
+            for (let index in res.data.data.tags) {
+              this.params.tags.push(res.data.data.tags[index].id);
+            }
+            this.params = res.data.data;
+            this.params.category = res.data.data.category_id;
+          });
+        });
+      });
     }
+
+    // this.getAllTags();
+    // this.getAllCategories();
+
+    // console.log("FormArticle type: " + this.type);
+    // if (this.type != "create_article") {
+    //   this.getArticle();
+    // }
   },
   methods: {
     getAllTags() {
@@ -268,7 +287,7 @@ export default {
   .article-btn {
     cursor: pointer;
     width: 70%;
-    margin-left: 16%;
+    margin: 16px 0 56px 16%;
     background-color: #00b5ad;
     color: #fff;
     font-size: 16px;

@@ -12,7 +12,7 @@
 
             <li>
               <router-link :to="{name: 'EditUserAvatar', params: {id: id}}" :style="[path == 'edit_avatar' ? active : '']">
-                <i class="fa fa-picture-o" aria-hidden="true"></i> 更换图像
+                <i class="fa fa-picture-o" aria-hidden="true"></i> 更换头像
               </router-link>
             </li>
 

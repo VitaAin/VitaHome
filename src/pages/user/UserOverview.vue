@@ -192,6 +192,7 @@ export default {
   }
   img {
     width: 100px;
+    height: 100px;
     border: 1px solid #aaa;
     border-radius: 100px;
     margin-top: 20px;
