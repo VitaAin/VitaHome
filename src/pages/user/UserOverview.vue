@@ -1,5 +1,55 @@
 <template>
-  <div>
+  <div v-if="user">
+    <div class="user-show">
+      <div class="user-box-wrap">
+        <div class="user-box">
+          <div class="under-avatar">
+            <img class="avatar" :src="user.avatar" alt="">
+          </div>
+          <div class="user">
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="tabs-box">
+      <el-tabs class="tabs" v-model="activeName" @tab-click="handleClick">
+        <el-tab-pane class="tab first-tab" label="用户管理" name="first"></el-tab-pane>
+        <el-tab-pane class="tab" label="配置管理" name="second"></el-tab-pane>
+        <el-tab-pane class="tab" label="角色管理" name="third"></el-tab-pane>
+        <el-tab-pane class="tab" label="定时任务补偿" name="fourth"></el-tab-pane>
+      </el-tabs>
+    </div> -->
+    <div class="tabs-box">
+      <ul>
+        <li>
+          <router-link :to="{name: 'UserArticles', params: {id: user.id}}" :style="[path == 'articles' ? active : '']">
+            文章
+          </router-link>
+        </li>
+        <li>
+          <router-link :to="{name: 'UserReplies', params: {id: user.id}}" :style="[path == 'replies' ? active : '']">
+            评论
+          </router-link>
+        </li>
+        <li>
+          <router-link :to="{name: 'UserFollowUsers', params: {id: user.id}}" :style="[path == 'follow_users' ? active : '']">
+            关注
+          </router-link>
+        </li>
+        <li>
+          <router-link :to="{name: 'UserLikeArticles', params: {id: user.id}}" :style="[path == 'like_articles' ? active : '']">
+            喜欢
+          </router-link>
+        </li>
+      </ul>
+    </div>
+    <el-row :gutter="25">
+      <el-col :span="18" :offset="3">
+        <router-view></router-view>
+      </el-col>
+    </el-row>
+
+<!-- ================================= -->
     <el-row :gutter="25" v-if="user">
       <el-col :span="13" :offset="3">
         <router-view></router-view>
@@ -163,13 +213,13 @@ export default {
     message() {
       if (this.follow) {
         this.$message({
-          message: '已关注',
-          type: 'success'
+          message: "已关注",
+          type: "success"
         });
       } else {
         this.$message({
-          message: '已取消关注',
-          type: 'success'
+          message: "已取消关注",
+          type: "success"
         });
       }
     },
@@ -181,6 +231,81 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.user-show {
+  height: 320px;
+  background: url(../../assets/user_show_bg.jpg) no-repeat;
+  background-size: cover;
+  text-align: center;
+  .user-box-wrap {
+    width: 80%;
+    margin: 0 auto;
+    border: 1px solid red;
+    height: 100%;
+    .user-box {
+      display: flex;
+      border: 1px solid green;
+      margin: 50px 0 100px 0;
+    }
+  }
+}
+.under-avatar {
+  width: 180px;
+  height: 180px;
+  min-width: 180px;
+  min-height: 180px;
+  background: white;
+  background-color: rgba(255, 255, 255, 0.5);
+  border: 0.5px solid white;
+  border-radius: 50%;
+  text-align: center;
+  .avatar {
+    margin: 8px auto;
+    width: 156px;
+    height: 156px;
+    border: 4px solid white;
+    border-radius: 50%;
+  }
+}
+.user {
+  border: 1px solid white;
+  width: 100%;
+  max-width: 100%;
+  margin-left: 32px;
+}
+// .tabs-box {
+//   position: absolute;
+//   width: 70%;
+//   margin-left: 15%;
+//   top: 320px;
+//   .tabs {
+//     .first-tab{
+//       margin-left: 100px;
+//     }
+//     .tab {
+
+//       color: white;
+//     }
+//   }
+// }
+.tabs-box {
+  position: absolute;
+  width: 70%;
+  margin-left: 15%;
+  top: 340px;
+  ul {
+    width: 100%;
+    list-style: none;
+    li {
+      width: 20%;
+      display: inline-block;
+      * {
+        color: white;
+      }
+    }
+  }
+}
+
+// -------------------------------
 .sidebar-author {
   text-align: center;
   margin-top: 40px;
