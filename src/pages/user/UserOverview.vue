@@ -6,19 +6,46 @@
           <div class="under-avatar">
             <img class="avatar" :src="user.avatar" alt="">
           </div>
+
           <div class="user">
+            <p class="text-shadow user-name">{{user.name}}</p>
+            <p class="text-shadow user-email">邮箱：{{user.email}}</p>
+
+            <div class="statistics-and-operation">
+              <ul class="statistics-box">
+                <li>
+                  <p>{{user.articles_count}}</p>
+                  <p>文章</p>
+                </li>
+                <span class="statistics-divider"> | </span>
+                <li>
+                  <p>{{user.comments_count}}</p>
+                  <p>评论</p>
+                </li>
+                <span class="statistics-divider"> | </span>
+                <li>
+                  <p>{{user.followings_count}}</p>
+                  <p>关注</p>
+                </li>
+                <span class="statistics-divider"> | </span>
+                <li>
+                  <p>{{user.followers_count}}</p>
+                  <p>人气</p>
+                </li>
+              </ul>
+
+              <div class="operation-box"  v-if="auth.id !== user.id">
+                <el-button class="oper-btn follow-btn" v-if="!follow" @click.prevent="clickFollow()">+ 关注</el-button>
+                <el-button class="oper-btn follow-btn" v-if="follow" @click.prevent="clickFollow()">已关注</el-button>
+                <el-button class="oper-btn send-msg-btn">发私信</el-button>
+              </div>
+            </div>
+            
           </div>
         </div>
       </div>
     </div>
-    <!-- <div class="tabs-box">
-      <el-tabs class="tabs" v-model="activeName" @tab-click="handleClick">
-        <el-tab-pane class="tab first-tab" label="用户管理" name="first"></el-tab-pane>
-        <el-tab-pane class="tab" label="配置管理" name="second"></el-tab-pane>
-        <el-tab-pane class="tab" label="角色管理" name="third"></el-tab-pane>
-        <el-tab-pane class="tab" label="定时任务补偿" name="fourth"></el-tab-pane>
-      </el-tabs>
-    </div> -->
+
     <div class="tabs-box">
       <ul>
         <li>
@@ -240,66 +267,122 @@ export default {
     width: 80%;
     margin: 0 auto;
     border: 1px solid red;
-    height: 100%;
+    padding: 50px 0 100px 0;
     .user-box {
       display: flex;
       border: 1px solid green;
-      margin: 50px 0 100px 0;
     }
   }
 }
 .under-avatar {
-  width: 180px;
-  height: 180px;
-  min-width: 180px;
-  min-height: 180px;
+  width: 168px;
+  height: 168px;
+  min-width: 168px;
+  min-height: 168px;
   background: white;
-  background-color: rgba(255, 255, 255, 0.5);
-  border: 0.5px solid white;
+  background-color: rgba(255, 255, 255, 0.4);
+  border: 0.4px solid lightblue;
   border-radius: 50%;
   text-align: center;
   .avatar {
-    margin: 8px auto;
-    width: 156px;
-    height: 156px;
+    margin: 5px auto;
+    width: 150px;
+    height: 150px;
     border: 4px solid white;
     border-radius: 50%;
   }
+}
+.text-shadow {
+  text-shadow: 1px 1px 1px black;
 }
 .user {
   border: 1px solid white;
   width: 100%;
   max-width: 100%;
-  margin-left: 32px;
+  margin-left: 24px;
+  * {
+    text-align: left;
+    color: #eee;
+  }
+  .user-name {
+    font-size: 24px;
+  }
+  .user-email {
+    font-size: 12px;
+    margin-top: 10px;
+  }
 }
-// .tabs-box {
-//   position: absolute;
-//   width: 70%;
-//   margin-left: 15%;
-//   top: 320px;
-//   .tabs {
-//     .first-tab{
-//       margin-left: 100px;
-//     }
-//     .tab {
-
-//       color: white;
-//     }
-//   }
-// }
+.statistics-and-operation {
+  margin-top: 32px;
+}
+.statistics-box {
+  list-style: none;
+  display: inline-block;
+  li {
+    text-align: center;
+    display: inline-block;
+    p {
+      font-size: 14px;
+      text-align: center;
+    }
+  }
+  .statistics-divider {
+    display: inline-block;
+    height: 100%;
+    margin: auto 2px;
+    color: #ccc;
+  }
+}
+.operation-box {
+  float: right;
+  .oper-btn {
+    color: white;
+    border: 0.2px solid whitesmoke;
+    border-radius: 0;
+    margin: auto 2px;
+    padding: 8px 16px;
+  }
+  .follow-btn {
+    background: #f49000;
+    &:hover {
+      background: #faa80b;
+    }
+  }
+  .send-msg-btn {
+    background: #5ba90b;
+    &:hover {
+      background: #64b215;
+    }
+  }
+}
 .tabs-box {
   position: absolute;
-  width: 70%;
-  margin-left: 15%;
+  width: 100%;
   top: 340px;
   ul {
-    width: 100%;
     list-style: none;
+    width: 100%;
+    height: 40px;
+    background: black;
+    background-color: rgba(0, 0, 0, 0.5);
+    text-align: left;
+    padding: 0 15%;
     li {
-      width: 20%;
+      width: 10%;
+      height: 20px;
+      line-height: 20px;
+      margin-top: 10px;
       display: inline-block;
       * {
+        font-size: 15px;
         color: white;
+        letter-spacing: 2px;
+        &:hover {
+          color: #eee;
+        }
+        // &:focus {
+        //   color: #64b215;
+        // }
       }
     }
   }
