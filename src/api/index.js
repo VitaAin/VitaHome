@@ -51,6 +51,13 @@ export default {
     return Vue.http.get(API_ROOT + "categories");
   },
 
+  createCategory(params) {
+    return Vue.http.post(API_ROOT + "categories", params);
+  },
+  createTag(params) {
+    return Vue.http.post(API_ROOT + "tags", params);
+  },
+
   getArticle(id) {
     return Vue.http.get(API_ROOT + "articles/" + id);
   },
@@ -70,7 +77,7 @@ export default {
   getArticleComments(id) {
     return Vue.http.get(API_ROOT + "articles/" + id + "/comments");
   },
-  getArticleImages(id){
+  getArticleImages(id) {
     return Vue.http.get(API_ROOT + "articles/" + id + "/article_images");
   },
   createComment(params) {

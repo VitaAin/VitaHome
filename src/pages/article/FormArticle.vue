@@ -9,15 +9,23 @@
             </el-form-item>
 
             <el-form-item prop="category" label="文章类别" class="form-item">
-              <el-select v-model="params.category" clearable filterable allow-create class="el-input select-sth" placeholder="请选择">
+              <!-- <el-select v-model="params.category" clearable filterable allow-create class="el-input select-sth" placeholder="请选择"> -->
+              <el-select v-model="params.category" clearable filterable class="el-input select-sth" placeholder="请选择">
                 <el-option v-for="category in allCategories" :key="category.id" :label="category.name" :value="category.id"></el-option>
               </el-select>
+              <div class="create-new-btn-box">
+                <el-button type="text" class="create-new-btn" @click="showCreateCategoryDialog=true">创建</el-button>
+              </div>
             </el-form-item>
 
             <el-form-item prop="tags" label="文章标签" class="form-item">
-              <el-select v-model="params.tags" multiple clearable filterable allow-create class="el-input select-sth" placeholder="请选择">
+              <!-- <el-select v-model="params.tags" multiple clearable filterable allow-create class="el-input select-sth" placeholder="请选择"> -->
+              <el-select v-model="params.tags" multiple clearable filterable class="el-input select-sth" placeholder="请选择">
                 <el-option v-for="tag in allTags" :key="tag.id" :label="tag.name" :value="tag.id"></el-option>
               </el-select>
+              <div class="create-new-btn-box">
+                <el-button type="text" class="create-new-btn" @click="showCreateTagDialog=true">创建</el-button>
+              </div>
             </el-form-item>
 
             <el-form-item prop="body" label="内容" class="form-item">
@@ -28,17 +36,25 @@
               <el-checkbox v-model="params.is_public">公开</el-checkbox>
             </el-form-item>
 
+
             <el-form-item prop="images" label="插入图片" class="form-item upload-images">
               <div class="upload-images-failed" v-if="failure">{{failure}}</div>
-              <el-upload class="upload-image" :action="uploadImageUrl" :headers="headers" 
-                :show-file-list="true" :list-type="'picture-card'"  
-                :on-success="onUploadImageSuccess" 
-                :on-preview="onImagePreview" 
-                :on-remove="onImageRemove">
-                <i class="el-icon-plus"></i>
-              </el-upload>
-              <el-dialog :visible.sync="dialogVisible" size="tiny">
-                <img width="100%" :src="dialogImageUrl" alt="">
+              <div class="article-images-box">
+                <ul class="article-images-list">
+                  <li v-for="image in params.images" :key="image.id">
+                    <img class="article-image" :src="image.url" :title="image.name" :alt="image.name">
+                  </li>
+                </ul>
+                <el-upload class="upload-image" :action="uploadImageUrl" :headers="headers" 
+                  :show-file-list="true" :list-type="'picture-card'"  
+                  :on-success="onUploadImageSuccess" 
+                  :on-preview="onImagePreview" 
+                  :on-remove="onImageRemove">
+                  <i class="el-icon-plus"></i>
+                </el-upload>
+              </div>
+              <el-dialog :visible.sync="showBigImageDialog" size="tiny">
+                <img width="100%" :src="bigImageUrl" alt="">
               </el-dialog>
             </el-form-item>
 
@@ -49,6 +65,36 @@
         </div>
       </el-col>
     </el-row>
+
+    <el-dialog title="创建新分类" :visible.sync="showCreateCategoryDialog" center>
+      <el-form ref="categoryForm" :model="newCategory" :label-width="'90px'" :label-position="'left'">
+        <el-form-item label="分类名称">
+          <el-input v-model="newCategory.name"></el-input>
+        </el-form-item>
+        <el-form-item label="分类描述">
+          <el-input v-model="newCategory.description"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="showCreateCategoryDialog=false">取 消</el-button>
+        <el-button type="primary" @click="createNewCategoryOrTag('category')">确 定</el-button>
+      </div>
+    </el-dialog>
+
+    <el-dialog title="创建新标签" :visible.sync="showCreateTagDialog" center>
+      <el-form ref="tagForm" :model="newTag" :label-width="'90px'" :label-position="'left'">
+        <el-form-item label="标签名称">
+          <el-input v-model="newTag.name"></el-input>
+        </el-form-item>
+        <el-form-item label="标签描述">
+          <el-input v-model="newTag.description"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="showCreateTagDialog=false">取 消</el-button>
+        <el-button type="primary" @click="createNewCategoryOrTag('tag')">确 定</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -100,8 +146,18 @@ export default {
       headers: {
         Authorization: `Bearer ${accessToken}`
       },
-      dialogImageUrl: "",
-      dialogVisible: false
+      bigImageUrl: "",
+      showBigImageDialog: false,
+      showCreateCategoryDialog: false,
+      showCreateTagDialog: false,
+      newCategory: {
+        name: "",
+        description: ""
+      },
+      newTag: {
+        name: "",
+        description: ""
+      }
     };
   },
   mounted() {
@@ -161,6 +217,25 @@ export default {
           this.params.images = res.data.data;
         }
       });
+    },
+    createNewCategoryOrTag(type) {
+      if (type == "category") {
+        this.showCreateCategoryDialog = false;
+        console.log("newCategory: " + JSON.stringify(this.newCategory));
+        api.createCategory(this.newCategory).then(res => {
+          if (res.data.status == 1) {
+            this.allCategories.push(res.data.data);
+          }
+        });
+      } else if (type == "tag") {
+        this.showCreateTagDialog = false;
+        console.log("newTag: " + JSON.stringify(this.newTag));
+        api.createTag(this.newTag).then(res => {
+          if (res.data.status == 1) {
+            this.allTags.push(res.data.data);
+          }
+        });
+      }
     },
     submit(ev, formName) {
       // 判断是否为按了Enter键，防止在输入标签时被提交
@@ -225,8 +300,8 @@ export default {
       });
     },
     onImagePreview(file) {
-      this.dialogImageUrl = file.url;
-      this.dialogVisible = true;
+      this.bigImageUrl = file.url;
+      this.showBigImageDialog = true;
     },
     onUploadImageSuccess(response, file, fileList) {
       console.log("************** onUploadImageSuccess start ****************");
@@ -300,12 +375,32 @@ export default {
     }
   }
 }
+.create-new-btn-box {
+  text-align: right;
+  .create-new-btn {
+    padding: 4px;
+    margin: 0;
+  }
+}
 .upload-images-failed {
   font-size: 14px;
   color: red;
   margin: 8px;
 }
 .upload-image {
-  margin: 16px;
+  // margin: 16px;
+}
+.article-images-box{
+  border: blueviolet 1px solid;
+  display: flex;
+  .article-images-list{
+    list-style: none;
+  }
+  .article-image{
+    width: 140px;
+    // max-width: 240px;
+    height: 140px;
+    margin: 4px;
+  }
 }
 </style>
