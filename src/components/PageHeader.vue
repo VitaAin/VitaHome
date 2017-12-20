@@ -28,7 +28,7 @@
         </router-link>
       </div>
       
-      <div class="operate-nav">
+      <!-- <div class="operate-nav">
         <el-menu-item index="100" @click="colorDialogVisible = true">换肤</el-menu-item>
         <el-dialog title="换肤" :visible.sync="colorDialogVisible" width="30%" center>
           <el-color-picker v-model="color"></el-color-picker>
@@ -37,7 +37,7 @@
             <el-button type="primary" @click="changeColor()">确 定</el-button>
           </span>
         </el-dialog>
-      </div>
+      </div> -->
       
       <div class="user-nav">
         <el-submenu index="77" v-if="auth.check()">

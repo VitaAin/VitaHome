@@ -16,7 +16,7 @@
 
             <el-form-item prop="tags" label="文章标签" class="form-item">
               <el-select v-model="params.tags" multiple clearable filterable allow-create class="el-input select-sth" placeholder="请选择">
-                <el-option v-for="tag in allTags" :key="tag.if" :label="tag.name" :value="tag.id"></el-option>
+                <el-option v-for="tag in allTags" :key="tag.id" :label="tag.name" :value="tag.id"></el-option>
               </el-select>
             </el-form-item>
 
@@ -31,7 +31,7 @@
             <el-form-item prop="images" label="插入图片" class="form-item upload-images">
               <div class="upload-images-failed" v-if="failure">{{failure}}</div>
               <el-upload class="upload-image" :action="uploadImageUrl" :headers="headers" 
-                :show-file-list="true" :list-type="'picture-card'"
+                :show-file-list="true" :list-type="'picture-card'"  
                 :on-success="onUploadImageSuccess" 
                 :on-preview="onImagePreview" 
                 :on-remove="onImageRemove">
@@ -101,7 +101,7 @@ export default {
         Authorization: `Bearer ${accessToken}`
       },
       dialogImageUrl: "",
-      dialogVisible: false,
+      dialogVisible: false
     };
   },
   mounted() {
@@ -109,18 +109,12 @@ export default {
     if (this.type == "create_article") {
       this.getAllTags();
       this.getAllCategories();
-    }else{
-      api.getAllTags().then((res) => {
+    } else {
+      api.getAllTags().then(res => {
         this.allTags = res.data.data;
-        api.getAllCategories().then((res) => {
+        api.getAllCategories().then(res => {
           this.allCategories = res.data.data;
-          api.getArticle(this.$route.params.id).then((res) => {
-            for (let index in res.data.data.tags) {
-              this.params.tags.push(res.data.data.tags[index].id);
-            }
-            this.params = res.data.data;
-            this.params.category = res.data.data.category_id;
-          });
+          this.getArticle();
         });
       });
     }
@@ -151,11 +145,20 @@ export default {
     getArticle() {
       api.getArticle(this.$route.params.id).then(res => {
         if (res.data.status == 1) {
-          for (var index in res.data.data.tags) {
-            this.params.tags.push(res.data.data.tags[index].id);
-          }
+          // for (var index in res.data.data.tags) {
+          //   this.params.tags.push(res.data.data.tags[index].id);
+          // }
           this.params = res.data.data;
           this.params.category = res.data.data.category_id;
+
+          this.getArticleImages();
+        }
+      });
+    },
+    getArticleImages() {
+      api.getArticleImages(this.$route.params.id).then(res => {
+        if (res.data.status == 1) {
+          this.params.images = res.data.data;
         }
       });
     },
@@ -181,14 +184,6 @@ export default {
       if (this.type == "create_article") {
         this.createArticle();
       } else {
-        // let form = {
-        //   tags: this.params.tags,
-        //   is_public: this.params.is_public,
-        //   title: this.params.title,
-        //   body: this.params.body,
-        //   category: this.params.category,
-        //   images: this.params.images
-        // };
         this.editArticle();
       }
     },

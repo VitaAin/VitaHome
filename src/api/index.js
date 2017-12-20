@@ -70,6 +70,9 @@ export default {
   getArticleComments(id) {
     return Vue.http.get(API_ROOT + "articles/" + id + "/comments");
   },
+  getArticleImages(id){
+    return Vue.http.get(API_ROOT + "articles/" + id + "/article_images");
+  },
   createComment(params) {
     return Vue.http.post(API_ROOT + "comments", params);
   },
