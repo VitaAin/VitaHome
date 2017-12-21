@@ -44,20 +44,6 @@
                 <i class="el-icon-plus"></i>
               </el-upload>
 
-              <div class="article-images-box" v-if="params.images">
-                <ul class="article-images-list">
-                  <!-- <li class="article-image-item">
-                    <img class="article-image" :src="'http://admin.vitain.top/storage/articleImages/1/92abdfc632bbd6816172ceb33c257986.png'">
-                  </li>
-                  <li  class="article-image-item">
-                    <img class="article-image" :src="'http://admin.vitain.top/storage/articleImages/1/cd2c5f01898dce7b5df8ed4ef97a4aa3.png'">
-                  </li> -->
-                  <li class="article-image-item" v-for="image in params.images" :key="image.id">
-                    <img class="article-image" :src="image.url" :title="image.name" :alt="image.name">
-                  </li>
-                </ul>
-              </div>
-
               <el-dialog :visible.sync="showBigImageDialog" size="tiny">
                 <img width="100%" :src="bigImageUrl" alt="">
               </el-dialog>
@@ -321,8 +307,9 @@ export default {
       console.log(fileList);
       console.log("************** onUploadImageSuccess end ****************");
       if (response.status == 1) {
-        // this.params.images = fileList;
-        this.params.images.push(this.formatImageFileList(fileList),0);
+        this.formatImageFileList(fileList).forEach(element => {
+          this.params.images.unshift(element);
+        });
         console.log(this.params.images);
         console.log("************** onUploadImageSuccess end ****************");
         this.params.body += `![${file.name}](${response.data.url})`;
@@ -395,32 +382,5 @@ export default {
 }
 .upload-image {
   // margin: 16px;
-}
-.article-images-box {
-  border: blueviolet 1px solid;
-  display: flex;
-  .article-images-list {
-    list-style: none;
-    padding: 0;
-    .article-image-item {
-      border: 0.1px solid salmon;
-      display: inline-block;
-      width: auto;
-      height: 100px;
-      min-width: 50px;
-      max-width: 200px;
-      margin: 2px;
-      overflow: hidden;
-    }
-  }
-  .article-image {
-    display: block;
-    max-height: 100%;
-  }
-  .img-mask {
-    width: 100%;
-    height: 100%;
-    background: red;
-  }
 }
 </style>
