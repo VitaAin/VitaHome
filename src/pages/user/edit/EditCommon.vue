@@ -6,7 +6,7 @@
           <ul>
             <li>
               <router-link :to="{name: 'EditUserInfo', params: {id: id}}" :style="[path == 'edit' ? active : '']">
-                <i class="text-md fa fa-list-ul"></i> 个人信息
+                <i class="text-md fa fa-list-ul"></i> 个人资料
               </router-link>
             </li>
 
@@ -15,6 +15,12 @@
                 <i class="fa fa-picture-o" aria-hidden="true"></i> 更换头像
               </router-link>
             </li>
+
+            <!-- <li>
+              <router-link :to="{name: 'EditUserAvatar', params: {id: id}}" :style="[path == 'edit_avatar' ? active : '']">
+                <i class="fa fa-picture-o" aria-hidden="true"></i> 账号安全
+              </router-link>
+            </li> -->
 
             <!-- <li>
               <router-link :to="{name: 'EditUserPassword', params: {id: id}}" :style="[path == 'edit_password' ? active : '']">

@@ -106,6 +106,8 @@ export default {
 <style lang="scss">
 .header {
   border-bottom: #ddd solid 1px;
+  padding-left: 10%;
+  padding-right: 10%;
   .header-title {
     font-size: 24px;
     font-weight: bold;

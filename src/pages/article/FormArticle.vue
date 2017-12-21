@@ -9,7 +9,6 @@
             </el-form-item>
 
             <el-form-item prop="category" label="文章类别" class="form-item">
-              <!-- <el-select v-model="params.category" clearable filterable allow-create class="el-input select-sth" placeholder="请选择"> -->
               <el-select v-model="params.category" clearable filterable class="el-input select-sth" placeholder="请选择">
                 <el-option v-for="category in allCategories" :key="category.id" :label="category.name" :value="category.id"></el-option>
               </el-select>
@@ -19,7 +18,6 @@
             </el-form-item>
 
             <el-form-item prop="tags" label="文章标签" class="form-item">
-              <!-- <el-select v-model="params.tags" multiple clearable filterable allow-create class="el-input select-sth" placeholder="请选择"> -->
               <el-select v-model="params.tags" multiple clearable filterable class="el-input select-sth" placeholder="请选择">
                 <el-option v-for="tag in allTags" :key="tag.id" :label="tag.name" :value="tag.id"></el-option>
               </el-select>
@@ -36,23 +34,30 @@
               <el-checkbox v-model="params.is_public">公开</el-checkbox>
             </el-form-item>
 
-
             <el-form-item prop="images" label="插入图片" class="form-item upload-images">
               <div class="upload-images-failed" v-if="failure">{{failure}}</div>
-              <div class="article-images-box">
+              <el-upload class="upload-image" :action="uploadImageUrl" :headers="headers" 
+                :show-file-list="true" :list-type="'picture-card'"  
+                :on-success="onUploadImageSuccess" 
+                :on-preview="onImagePreview" 
+                :on-remove="onImageRemove">
+                <i class="el-icon-plus"></i>
+              </el-upload>
+
+              <div class="article-images-box" v-if="params.images">
                 <ul class="article-images-list">
-                  <li v-for="image in params.images" :key="image.id">
+                  <!-- <li class="article-image-item">
+                    <img class="article-image" :src="'http://admin.vitain.top/storage/articleImages/1/92abdfc632bbd6816172ceb33c257986.png'">
+                  </li>
+                  <li  class="article-image-item">
+                    <img class="article-image" :src="'http://admin.vitain.top/storage/articleImages/1/cd2c5f01898dce7b5df8ed4ef97a4aa3.png'">
+                  </li> -->
+                  <li class="article-image-item" v-for="image in params.images" :key="image.id">
                     <img class="article-image" :src="image.url" :title="image.name" :alt="image.name">
                   </li>
                 </ul>
-                <el-upload class="upload-image" :action="uploadImageUrl" :headers="headers" 
-                  :show-file-list="true" :list-type="'picture-card'"  
-                  :on-success="onUploadImageSuccess" 
-                  :on-preview="onImagePreview" 
-                  :on-remove="onImageRemove">
-                  <i class="el-icon-plus"></i>
-                </el-upload>
               </div>
+
               <el-dialog :visible.sync="showBigImageDialog" size="tiny">
                 <img width="100%" :src="bigImageUrl" alt="">
               </el-dialog>
@@ -149,6 +154,7 @@ export default {
       bigImageUrl: "",
       showBigImageDialog: false,
       showCreateCategoryDialog: false,
+      showImgMask: false,
       showCreateTagDialog: false,
       newCategory: {
         name: "",
@@ -316,7 +322,7 @@ export default {
       console.log("************** onUploadImageSuccess end ****************");
       if (response.status == 1) {
         // this.params.images = fileList;
-        this.params.images = this.formatImageFileList(fileList);
+        this.params.images.push(this.formatImageFileList(fileList),0);
         console.log(this.params.images);
         console.log("************** onUploadImageSuccess end ****************");
         this.params.body += `![${file.name}](${response.data.url})`;
@@ -390,17 +396,31 @@ export default {
 .upload-image {
   // margin: 16px;
 }
-.article-images-box{
+.article-images-box {
   border: blueviolet 1px solid;
   display: flex;
-  .article-images-list{
+  .article-images-list {
     list-style: none;
+    padding: 0;
+    .article-image-item {
+      border: 0.1px solid salmon;
+      display: inline-block;
+      width: auto;
+      height: 100px;
+      min-width: 50px;
+      max-width: 200px;
+      margin: 2px;
+      overflow: hidden;
+    }
   }
-  .article-image{
-    width: 140px;
-    // max-width: 240px;
-    height: 140px;
-    margin: 4px;
+  .article-image {
+    display: block;
+    max-height: 100%;
+  }
+  .img-mask {
+    width: 100%;
+    height: 100%;
+    background: red;
   }
 }
 </style>

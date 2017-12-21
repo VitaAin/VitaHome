@@ -8,28 +8,31 @@
           </div>
 
           <div class="user">
-            <p class="text-shadow user-name">{{user.name}}</p>
+            <p class="text-shadow user-name">{{user.name}}
+              <i class="fa fa-pencil" aria-hidden="true"  @click="editUserInfo()"></i>
+            </p>
             <p class="text-shadow user-email">邮箱：{{user.email}}</p>
+            <p class="user-introduction">该侠士还没有自我介绍～</p>
 
             <div class="statistics-and-operation">
               <ul class="statistics-box">
                 <li>
-                  <p>{{user.articles_count}}</p>
+                  <p class="digit">{{user.articles_count}}</p>
                   <p>文章</p>
                 </li>
                 <span class="statistics-divider"> | </span>
                 <li>
-                  <p>{{user.comments_count}}</p>
+                  <p class="digit">{{user.comments_count}}</p>
                   <p>评论</p>
                 </li>
                 <span class="statistics-divider"> | </span>
                 <li>
-                  <p>{{user.followings_count}}</p>
+                  <p class="digit">{{user.followings_count}}</p>
                   <p>关注</p>
                 </li>
                 <span class="statistics-divider"> | </span>
                 <li>
-                  <p>{{user.followers_count}}</p>
+                  <p class="digit">{{user.followers_count}}</p>
                   <p>人气</p>
                 </li>
               </ul>
@@ -75,9 +78,10 @@
         <router-view></router-view>
       </el-col>
     </el-row>
+    <!-- <popup v-show="showPreview" @closePreview="closePreview"></popup> -->
 
 <!-- ================================= -->
-    <el-row :gutter="25" v-if="user">
+    <!-- <el-row :gutter="25" v-if="user">
       <el-col :span="13" :offset="3">
         <router-view></router-view>
       </el-col>
@@ -143,7 +147,6 @@
               <span v-if="follow">
                 <i class="fa fa-minus"></i> 已关注 </span>
             </el-button>
-            <!-- <el-button v-if="follow" class="btn-define" style="margin-top: 0" @click.prevent="click_follow()"> -->
             <el-button v-if="follow" class="btn-define" style="margin-top: 0">
               <span>
                 <i class="fa fa-envelope-o"></i> 发送私信</span>
@@ -184,8 +187,8 @@
         </div>
       </el-col>
 
-      <!-- <popup v-show="showPreview" @closePreview="closePreview"></popup> -->
-    </el-row>
+      <popup v-show="showPreview" @closePreview="closePreview"></popup>
+    </el-row> -->
   </div>
 </template>
 
@@ -284,6 +287,7 @@ export default {
   border: 0.4px solid lightblue;
   border-radius: 50%;
   text-align: center;
+  box-shadow: 1px 1px 1px 0.5px #222;
   .avatar {
     margin: 5px auto;
     width: 150px;
@@ -306,10 +310,27 @@ export default {
   }
   .user-name {
     font-size: 24px;
+    i {
+      cursor: pointer;
+      font-size: 14px;
+      margin-left: 4px;
+      color: yellow;
+    }
   }
   .user-email {
     font-size: 12px;
     margin-top: 10px;
+  }
+  .user-introduction {
+    border: 0.2px solid greenyellow;
+    font-size: 12px;
+    margin-top: 20px;
+    max-width: 60%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box; /** 对象作为伸缩盒子模型显示 **/
+    -webkit-box-orient: vertical; /** 设置或检索伸缩盒对象的子元素的排列方式 **/
+    -webkit-line-clamp: 2; /** 显示的行数 **/
   }
 }
 .statistics-and-operation {
@@ -331,6 +352,13 @@ export default {
     height: 100%;
     margin: auto 2px;
     color: #ccc;
+  }
+  .digit {
+    font-size: 16px;
+    color: #f15a24;
+    // &:hover{
+    //   text-decoration: underline;
+    // }
   }
 }
 .operation-box {
@@ -389,82 +417,82 @@ export default {
 }
 
 // -------------------------------
-.sidebar-author {
-  text-align: center;
-  margin-top: 40px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  p {
-    padding: 8px 0 8px 0;
-    font-size: 15px;
-  }
-  img {
-    width: 100px;
-    height: 100px;
-    border: 1px solid #aaa;
-    border-radius: 100px;
-    margin-top: 20px;
-    margin-bottom: 20px;
-  }
-  h2 {
-    color: #00b5ad;
-  }
-  .dl-horizontal {
-    margin-top: 24px;
-    padding: 8px 8px;
-    border-top: 1px solid #eee;
-    .df {
-      clear: both;
-      text-align: left;
-      margin-top: 6px;
-      dt {
-        color: #999;
-        text-align: left;
-        font-size: 14px;
-        display: inline;
-      }
-      dd {
-        display: inline;
-        text-align: left;
-        color: #333;
-      }
-    }
-  }
-}
+// .sidebar-author {
+//   text-align: center;
+//   margin-top: 40px;
+//   border: 1px solid #ddd;
+//   border-radius: 4px;
+//   p {
+//     padding: 8px 0 8px 0;
+//     font-size: 15px;
+//   }
+//   img {
+//     width: 100px;
+//     height: 100px;
+//     border: 1px solid #aaa;
+//     border-radius: 100px;
+//     margin-top: 20px;
+//     margin-bottom: 20px;
+//   }
+//   h2 {
+//     color: #00b5ad;
+//   }
+//   .dl-horizontal {
+//     margin-top: 24px;
+//     padding: 8px 8px;
+//     border-top: 1px solid #eee;
+//     .df {
+//       clear: both;
+//       text-align: left;
+//       margin-top: 6px;
+//       dt {
+//         color: #999;
+//         text-align: left;
+//         font-size: 14px;
+//         display: inline;
+//       }
+//       dd {
+//         display: inline;
+//         text-align: left;
+//         color: #333;
+//       }
+//     }
+//   }
+// }
 
-.btn-define {
-  width: 90%;
-  margin: 16px 0;
-  background-color: #00b5ad;
-  border-radius: 5px;
-  color: #fff;
-  font-size: 15px;
-  font-weight: bold;
-  border-color: #f1f1f1;
-  box-shadow: none;
-}
+// .btn-define {
+//   width: 90%;
+//   margin: 16px 0;
+//   background-color: #00b5ad;
+//   border-radius: 5px;
+//   color: #fff;
+//   font-size: 15px;
+//   font-weight: bold;
+//   border-color: #f1f1f1;
+//   box-shadow: none;
+// }
 
-.btn-define:hover,
-.btn-define:active {
-  background-color: #169e98;
-  box-shadow: none;
-}
+// .btn-define:hover,
+// .btn-define:active {
+//   background-color: #169e98;
+//   box-shadow: none;
+// }
 
-.user-info {
-  text-align: center;
-  margin-top: 20px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  ul {
-    li {
-      list-style: none;
-      padding: 12px 0 12px;
-      border-bottom: 1px solid #eee;
-      a {
-        color: #333;
-        font-size: 14px;
-      }
-    }
-  }
-}
+// .user-info {
+//   text-align: center;
+//   margin-top: 20px;
+//   border: 1px solid #ddd;
+//   border-radius: 4px;
+//   ul {
+//     li {
+//       list-style: none;
+//       padding: 12px 0 12px;
+//       border-bottom: 1px solid #eee;
+//       a {
+//         color: #333;
+//         font-size: 14px;
+//       }
+//     }
+//   }
+// }
 </style>
