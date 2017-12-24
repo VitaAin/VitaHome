@@ -4,15 +4,15 @@
       <div class="user-box-wrap">
         <div class="user-box">
           <div class="under-avatar">
-            <img class="avatar" :src="user.avatar" alt="">
+            <img class="avatar" :src="user.avatar" alt="" @click="editUserAvatar()">
           </div>
 
           <div class="user">
             <p class="text-shadow user-name">{{user.name}}
-              <i class="fa fa-pencil" aria-hidden="true"  @click="editUserInfo()"></i>
+              <i class="fa fa-pencil" aria-hidden="true"  v-if="auth.id == user.id" @click="editUserInfo()"></i>
             </p>
             <p class="text-shadow user-email">邮箱：{{user.email}}</p>
-            <p class="user-introduction">该侠士还没有自我介绍～</p>
+            <p class="user-introduction">这位少侠还没有自我介绍～</p>
 
             <div class="statistics-and-operation">
               <ul class="statistics-box">
@@ -253,6 +253,11 @@ export default {
         });
       }
     },
+    editUserAvatar() {
+      if (this.auth.id == this.user.id) {
+        this.$router.push({ name: "EditUserAvatar", params: { id: this.user.id } });
+      }
+    },
     editUserInfo() {
       this.$router.push({ name: "EditUserInfo", params: { id: this.user.id } });
     }
@@ -269,11 +274,11 @@ export default {
   .user-box-wrap {
     width: 80%;
     margin: 0 auto;
-    border: 1px solid red;
+    // border: 1px solid red;
     padding: 50px 0 100px 0;
     .user-box {
       display: flex;
-      border: 1px solid green;
+      // border: 1px solid green;
     }
   }
 }
@@ -289,6 +294,7 @@ export default {
   text-align: center;
   box-shadow: 1px 1px 1px 0.5px #222;
   .avatar {
+    cursor: pointer;
     margin: 5px auto;
     width: 150px;
     height: 150px;
@@ -300,7 +306,7 @@ export default {
   text-shadow: 1px 1px 1px black;
 }
 .user {
-  border: 1px solid white;
+  // border: 1px solid white;
   width: 100%;
   max-width: 100%;
   margin-left: 24px;
@@ -322,7 +328,7 @@ export default {
     margin-top: 10px;
   }
   .user-introduction {
-    border: 0.2px solid greenyellow;
+    // border: 0.2px solid greenyellow;
     font-size: 12px;
     margin-top: 20px;
     max-width: 60%;
@@ -343,7 +349,7 @@ export default {
     text-align: center;
     display: inline-block;
     p {
-      font-size: 14px;
+      font-size: 15px;
       text-align: center;
     }
   }
@@ -354,7 +360,7 @@ export default {
     color: #ccc;
   }
   .digit {
-    font-size: 16px;
+    font-size: 18px;
     color: #f15a24;
     // &:hover{
     //   text-decoration: underline;

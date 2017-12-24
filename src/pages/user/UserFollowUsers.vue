@@ -1,26 +1,19 @@
 <template>
   <div class="follow-users">
-    <div v-if="comments && comments.length>0">
-      <div class="user-article" v-for="(comment, index) in comments" :key="comment.id">
-        <router-link :to="{name: 'ArticleShow', params: {id: comment.commentable.id}}">
-          <span style="font-size: 15px">{{comment.commentable.title}}</span>
+    <div v-if="followUsers && followUsers.length>0">
+      <div class="follow-user" v-for="followUser in followUsers" :key="followUser.id">
+        <router-link class="follow-user-info" :to="{name: 'UserArticles', params: {id: followUser.id}}">
+          <img class="follow-user-avatar" :src="followUser.avatar" alt="">
+          <span class="follow-user-name">{{followUser.name}}</span>
         </router-link>
-        <span class="dex create-time">&nbsp;&nbsp;{{comment.created_at}}</span>
-
-        <div>
-          <span class="dex"> · {{comment.commentable.comments_count}} 条回复 ·</span>
-          <span class="dex">{{comment.commentable.likes_count}} 人关注 ·</span>
-        </div>
-        
-        <p style="padding-top: 10px; font-size: 15px">{{comment.body}}</p>
 
         <div class="divider"></div>
       </div>
     </div>
 
-    <div v-if="!comments || comments.length==0">
-      <div class="no-article">
-        <p>少侠，你还没有关注任何侠士~~</p>
+    <div v-if="!followUsers || followUsers.length==0">
+      <div class="no-follow-users">
+        <p>少侠还没有关注任何人~~</p>
       </div>
     </div>
   </div>
@@ -32,17 +25,17 @@ import api from "../../api";
 export default {
   data() {
     return {
-      comments: []
+      followUsers: []
     };
   },
   mounted() {
-    this.getUserReplies();
+    this.getFollowUsers();
   },
   methods: {
-    getUserReplies() {
-      api.getUserReplies(this.$route.params.id).then(res => {
+    getFollowUsers() {
+      api.getUserFollowUsers(this.$route.params.id).then(res => {
         if (res.data.status == 1) {
-          this.comments = res.data.data;
+          this.followUsers = res.data.data;
         }
       });
     }
@@ -56,8 +49,8 @@ export default {
   border: 1px solid #ddd;
   border-radius: 4px;
   padding: 16px 8px;
-  .user-article {
-    padding: 10px 10px 0 20px;
+  .follow-user {
+    padding: 10px;
     text-align: left;
     a {
       font-size: 16px;
@@ -66,24 +59,28 @@ export default {
         color: tomato;
       }
     }
-    .dex {
-      color: #999;
-      font-size: 12px;
-    }
-    .create-time {
-      font-size: 12px;
-    }
     .divider {
       height: 0.8px;
       background: #eee;
       margin-top: 8px;
     }
   }
-  .no-article {
-    text-align: center;
-    p {
-      margin: 30px 0 30px;
-    }
+}
+.follow-user-info {
+  display: flex;
+  .follow-user-avatar {
+    width: 60px;
+    height: 60px;
+  }
+  .follow-user-name {
+    margin: auto 16px;
+    font-size: 18px;
+  }
+}
+.no-follow-users {
+  text-align: center;
+  p {
+    margin: 30px 0 30px;
   }
 }
 </style>

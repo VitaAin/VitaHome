@@ -18,7 +18,7 @@
             </el-form-item>
 
             <el-form-item prop="tags" label="文章标签" class="form-item">
-              <el-select v-model="params.tags" multiple clearable filterable class="el-input select-sth" placeholder="请选择">
+              <el-select v-model="tags" multiple clearable filterable class="el-input select-sth" placeholder="请选择">
                 <el-option v-for="tag in allTags" :key="tag.id" :label="tag.name" :value="tag.id"></el-option>
               </el-select>
               <div class="create-new-btn-box">
@@ -117,6 +117,7 @@ export default {
         tags: [],
         images: []
       },
+      tags: [],
       allowCommentsOptions: [
         { value: 1, label: "是" },
         { value: 0, label: "否" }
@@ -193,11 +194,11 @@ export default {
     getArticle() {
       api.getArticle(this.$route.params.id).then(res => {
         if (res.data.status == 1) {
-          // for (var index in res.data.data.tags) {
-          //   this.params.tags.push(res.data.data.tags[index].id);
-          // }
           this.params = res.data.data;
           this.params.category = res.data.data.category_id;
+          for (let index in res.data.data.tags) {
+            this.tags.push(res.data.data.tags[index].id);
+          }
 
           this.getArticleImages();
         }
@@ -248,6 +249,7 @@ export default {
       // });
     },
     afterSubmit() {
+      this.params.tags = this.tags;
       if (this.type == "create_article") {
         this.createArticle();
       } else {

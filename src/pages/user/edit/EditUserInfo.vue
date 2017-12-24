@@ -18,6 +18,13 @@
           <el-input type="text" v-model="user.real_name" placeholder=""></el-input>
         </el-form-item>
 
+        <el-form-item prop="sex" label="性别" class="input-box">
+          <el-radio-group v-model="user.sex">
+            <el-radio :label="1">男</el-radio>
+            <el-radio :label="0">女</el-radio>
+          </el-radio-group>
+        </el-form-item>
+
         <el-form-item prop="city" label="所在城市" class="input-box">
           <el-input type="text" v-model="user.city" placeholder=""></el-input>
         </el-form-item>
@@ -81,6 +88,7 @@ export default {
     padding: 24px 0;
     .input-box {
       margin: 16px;
+      text-align: left;
     }
     .submit-button {
       cursor: pointer;
@@ -88,13 +96,11 @@ export default {
       background-color: #00b5ad;
       color: #fff;
       font-size: 16px;
-      padding: 5px 10px 5px 10px;
+      padding: 8px 10px;
       border: 1px solid #00b5ad;
       border-radius: 100px;
       box-shadow: none;
-      &:hover,
-      &:focus,
-      &:active {
+      &:hover {
         color: tomato;
         border: 1px solid tomato;
         box-shadow: none;

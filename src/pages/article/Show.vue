@@ -179,8 +179,12 @@ export default {
         if (res.data.status == 1) {
           this.comments.push(res.data.data);
           this.comment = "";
+          this.addArticleCommentsCount();
         }
       });
+    },
+    addArticleCommentsCount() {
+      this.article.comments_count++;
     }
   }
 };

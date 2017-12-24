@@ -12,7 +12,7 @@
           <span class="dex">{{comment.commentable.likes_count}} 人关注 ·</span>
         </div>
         
-        <p class="comment-content">{{comment.content}}</p>
+        <p class="comment-content" v-html="comment.content"></p>
 
         <div class="divider"></div>
       </div>
@@ -20,7 +20,7 @@
 
     <div v-if="!comments || comments.length==0">
       <div class="no-article">
-        <p>少侠，你还没有发表任何回复~~</p>
+        <p>少侠还没有发表任何回复~~</p>
       </div>
     </div>
   </div>

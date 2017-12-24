@@ -133,11 +133,18 @@ export default {
       };
       api.createComment(params).then(res => {
         if (res.data.status == 1) {
+          if (!this.comment.children) {
+            this.comment.children = [];
+          }
           this.comment.children.push(res.data.data);
           this.contentInput = "";
           this.showCommentReplyBox = false;
+          this.addCommentsCount();
         }
       });
+    },
+    addCommentsCount() {
+      this.$emit("addArticleCommentsCount");
     },
     formatAt() {
       let content = this.contentInput.trim();
