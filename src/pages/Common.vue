@@ -1,7 +1,7 @@
 <template>
   <div id="common">
     <page-header></page-header>
-    <router-view></router-view>
+    <router-view id="common-body"></router-view>
     <page-footer></page-footer>
   </div>
 </template>
@@ -20,5 +20,12 @@ export default {
 </script>
 
 <style>
-
+#common {
+  position: relative;
+  min-height: 100%;
+}
+#common-body {
+  height: 100%;
+  padding-bottom: 100px;
+}
 </style>
