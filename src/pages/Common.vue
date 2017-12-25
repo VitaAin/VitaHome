@@ -26,6 +26,6 @@ export default {
 }
 #common-body {
   height: 100%;
-  padding-bottom: 100px;
+  padding-bottom: 150px;
 }
 </style>

@@ -107,7 +107,8 @@ export default {
     return {
       rules: {
         title: [{ required: true, message: "请输入文章标题", trigger: "blur" }],
-        body: [{ required: true, message: "请输入文章内容", trigger: "blur" }]
+        body: [{ required: true, message: "请输入文章内容", trigger: "blur" }],
+        category: [{ required: true, message: "请选择分类", trigger: "blur" }]
       },
       params: {
         title: "",

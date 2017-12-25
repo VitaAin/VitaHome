@@ -24,103 +24,101 @@ const EditUserPassword = resolve => require(["../pages/user/edit/EditPassword"],
 
 export default new Router({
   routes: [{
-      path: "/",
-      name: "Home",
-      component: Home
-    },
-    {
-      path: "/user/login",
-      name: "Login",
-      component: Login
-    },
-    {
-      path: "/user/register",
-      name: "Register",
-      component: Register
-    },
-    {
-      path: "/",
-      component: Common,
-      children: [{
-          path: "/",
-          component: Home
-        },
-        {
-          path: "/article",
-          name: "Articles",
-          component: Home
-        },
-        {
-          path: "/article/create",
-          name: "ArticleCreate",
-          component: ArticleCreate
-        },
-        {
-          path: "/article/:id",
-          name: "ArticleShow",
-          component: ArticleShow
-        },
-        {
-          path: "/article/:id/edit",
-          name: "ArticleEdit",
-          component: ArticleEdit
-        },
-        {
-          path: "/user/:id",
-          component: UserOverview,
-          children: [{
-              path: "/",
-              component: UserArticles
-            },
-            {
-              path: "articles",
-              name: "UserArticles",
-              component: UserArticles
-            },
-            {
-              path: "replies",
-              name: "UserReplies",
-              component: UserReplies
-            }, {
-              path: "follows_users",
-              name: "UserFollowUsers",
-              component: UserFollowUsers
-            }, {
-              path: "likes_articles",
-              name: "UserLikeArticles",
-              component: UserLikeArticles
-            }
-          ]
-        },
-        {
-          path: "/user/:id",
-          component: EditCommon,
-          children: [{
-              path: "/",
-              component: EditUserInfo
-            },
-            {
-              path: "/edit_info",
-              name: "EditUserInfo",
-              component: EditUserInfo
-            },
-            {
-              path: "/edit_avatar",
-              name: "EditUserAvatar",
-              component: EditUserAvatar
-            }, {
-              path: "/edit_password",
-              name: "EditUserPassword",
-              component: EditUserPassword
-            }
-          ]
-        },
-        {
-          path: "/about",
-          name: "About",
-          component: About
-        }
-      ]
-    }
-  ]
+    path: "/",
+    component: Common,
+    children: [{
+        path: "/",
+        name: "Home",
+        component: Home
+      },
+      {
+        path: "/user/login",
+        name: "Login",
+        component: Login
+      },
+      {
+        path: "/user/register",
+        name: "Register",
+        component: Register
+      }, {
+        path: "/",
+        component: Home
+      },
+      {
+        path: "/article",
+        name: "Articles",
+        component: Home
+      },
+      {
+        path: "/article/create",
+        name: "ArticleCreate",
+        component: ArticleCreate
+      },
+      {
+        path: "/article/:id",
+        name: "ArticleShow",
+        component: ArticleShow
+      },
+      {
+        path: "/article/:id/edit",
+        name: "ArticleEdit",
+        component: ArticleEdit
+      },
+      {
+        path: "/user/:id",
+        component: UserOverview,
+        children: [{
+            path: "/",
+            component: UserArticles
+          },
+          {
+            path: "articles",
+            name: "UserArticles",
+            component: UserArticles
+          },
+          {
+            path: "replies",
+            name: "UserReplies",
+            component: UserReplies
+          }, {
+            path: "follows_users",
+            name: "UserFollowUsers",
+            component: UserFollowUsers
+          }, {
+            path: "likes_articles",
+            name: "UserLikeArticles",
+            component: UserLikeArticles
+          }
+        ]
+      },
+      {
+        path: "/user/:id",
+        component: EditCommon,
+        children: [{
+            path: "/",
+            component: EditUserInfo
+          },
+          {
+            path: "/edit_info",
+            name: "EditUserInfo",
+            component: EditUserInfo
+          },
+          {
+            path: "/edit_avatar",
+            name: "EditUserAvatar",
+            component: EditUserAvatar
+          }, {
+            path: "/edit_password",
+            name: "EditUserPassword",
+            component: EditUserPassword
+          }
+        ]
+      },
+      {
+        path: "/about",
+        name: "About",
+        component: About
+      }
+    ]
+  }]
 })

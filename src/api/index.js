@@ -35,8 +35,8 @@ export default {
   getHomeBanners() {
     return Vue.http.get(API_ROOT_TEST + "HomeBanner.json");
   },
-  getArticles() {
-    return Vue.http.get(API_ROOT + "articles");
+  getArticles(params) {
+    return Vue.http.get(API_ROOT + "articles", params);
   },
   getHotArticles() {
     return Vue.http.get(API_ROOT + "hot_articles");

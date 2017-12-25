@@ -1,7 +1,5 @@
 <template>
   <div>
-    <page-header></page-header>
-
     <el-carousel :interval="4000" height="300px" v-if="bannerList && bannerList.length > 0">
       <el-carousel-item v-for="banner in bannerList" :key="banner.title">
         <p>{{ banner.desc }}</p>
@@ -29,7 +27,7 @@
 
       <el-col :span="18" :offset="3" v-if="!articleList || articleList.length==0">
         <div class="no-article">
-          <p>少侠，还没有文章哟！</p>
+          <p>少侠，还没有文章呐！</p>
           <p>赶快去创建吧！～～</p>
         </div>
       </el-col>
@@ -61,7 +59,7 @@ export default {
       articleList: [],
       total: null,
       tagName: "",
-      pageSize: 15
+      pageSize: 10
     };
   },
   // beforeRouteUpdate(to, from, next) {
@@ -100,7 +98,7 @@ export default {
         page: page,
         tag: this.tagName.tag
       };
-      api.getArticles().then(res => {
+      api.getArticles(params).then(res => {
         if (res.data.status == 1) {
           this.articleList = res.data.data.data;
           this.total = Number(res.data.data.total);
@@ -119,6 +117,11 @@ export default {
     },
     handleCurrentChange(page) {
       this.getArticles(page);
+    }
+  },
+  watch: {
+    tagName: function() {
+      this.getArticles(null);
     }
   }
 };
@@ -139,7 +142,7 @@ export default {
   background-color: #d3dce6;
 }
 
-.no-article{
+.no-article {
   font-size: 24px;
   color: #888;
   margin-top: 30%;

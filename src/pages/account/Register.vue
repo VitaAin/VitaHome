@@ -1,7 +1,5 @@
 <template>
   <div>
-    <page-header></page-header>
-
     <div id="register" class='wrap'>
       <div class="container">
         <div class="title">

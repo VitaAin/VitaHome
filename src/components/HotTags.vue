@@ -3,7 +3,7 @@
     <p>热门标签</p>
     <div style="border-bottom: 1px solid #eee; padding-top: 0px"></div>
     <div class="tags">
-      <div class="tag" v-for="tag in tags">
+      <div class="tag" v-for="tag in tags" :key="tag.id">
       <router-link :to="{name: 'Home', query: {tag: tag.name}}" id="btn-hot-tag">
         {{tag.name}}
       </router-link>
