@@ -135,7 +135,8 @@ export default {
         }
       },
       uploadImageUrl:
-        "http://admin.vitain.top/api/v1/" + "article_image/upload",
+        // "http://admin.vitain.top/api/v1/" + "article_image/upload",
+        "http://admin.vitain.top/api/v1/" + "user_image/upload",
       headers: {
         Authorization: `Bearer ${accessToken}`
       },
@@ -200,15 +201,6 @@ export default {
           for (let index in res.data.data.tags) {
             this.tags.push(res.data.data.tags[index].id);
           }
-
-          this.getArticleImages();
-        }
-      });
-    },
-    getArticleImages() {
-      api.getArticleImages(this.$route.params.id).then(res => {
-        if (res.data.status == 1) {
-          this.params.images = res.data.data;
         }
       });
     },
@@ -290,7 +282,7 @@ export default {
       this.params.images = this.formatImageFileList(fileList);
       console.log(JSON.stringify(this.params.images));
       console.log("************** onImageRemove end ****************");
-      api.deleteArticleImage({ url: file.response.data.url }).then(res => {
+      api.deleteUserImage({ url: file.response.data.url }).then(res => {
         console.log("delete:: " + JSON.stringify(res));
       });
     },

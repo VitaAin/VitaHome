@@ -22,12 +22,15 @@ const API_ROOT = "http://admin.vitain.top/api/v1/";
 // const API_ROOT = "http://127.0.0.1/vitahomebackend/public/api/v1/";
 
 export default {
+  // 注册
   register(params) {
     return Vue.http.post(API_ROOT + "user/register", params);
   },
+  // 登录
   login(params) {
     return Vue.http.post(API_ROOT + "user/login", params);
   },
+  // 登出
   logout() {
     return Vue.http.get(API_ROOT + "user/logout");
   },
@@ -35,75 +38,97 @@ export default {
   getHomeBanners() {
     return Vue.http.get(API_ROOT_TEST + "HomeBanner.json");
   },
+  // 获取所有文章
   getArticles(params) {
     return Vue.http.get(API_ROOT + "articles", params);
   },
+  // 获取热门文章
   getHotArticles() {
     return Vue.http.get(API_ROOT + "hot_articles");
   },
+  // 获取热门标签
   getHotTags() {
     return Vue.http.get(API_ROOT + "hot_tags");
   },
+  // 获取所有标签
   getAllTags() {
     return Vue.http.get(API_ROOT + "tags");
   },
+  // 获取所有分类
   getAllCategories() {
     return Vue.http.get(API_ROOT + "categories");
   },
 
+  // 创建分类
   createCategory(params) {
     return Vue.http.post(API_ROOT + "categories", params);
   },
+  // 创建标签
   createTag(params) {
     return Vue.http.post(API_ROOT + "tags", params);
   },
 
+  // 获取单个文章
   getArticle(id) {
     return Vue.http.get(API_ROOT + "articles/" + id);
   },
+  // 创建文章
   createArticle(params) {
     return Vue.http.post(API_ROOT + "articles", params);
   },
+  // 编辑文章
   editArticle(id, params) {
     return Vue.http.put(API_ROOT + "articles/" + id, params);
   },
-  deleteArticleImage(file) {
-    return Vue.http.post(API_ROOT + "article_image/delete", file);
-  },
 
+  // 获取文章点赞
   getArticleLikes(id) {
     return Vue.http.get(API_ROOT + "articles/" + id + "/likes");
   },
+  // 获取文章评论
   getArticleComments(id) {
     return Vue.http.get(API_ROOT + "articles/" + id + "/comments");
   },
-  getArticleImages(id) {
-    return Vue.http.get(API_ROOT + "articles/" + id + "/article_images");
-  },
+  // 发表评论
   createComment(params) {
     return Vue.http.post(API_ROOT + "comments", params);
   },
 
+  // 获取用户
   getUser(id) {
     return Vue.http.get(API_ROOT + "users/" + id);
   },
+  // 获取用户文章
   getUserArticles(id) {
     return Vue.http.get(API_ROOT + "users/" + id + "/articles");
   },
+  // 获取用户评论
   getUserReplies(id) {
     return Vue.http.get(API_ROOT + "users/" + id + "/replies");
   },
+  // 获取用户点赞的文章
   getUserLikeArticles(id) {
     return Vue.http.get(API_ROOT + "users/" + id + "/like_articles");
   },
+  // 获取用户关注的用户
   getUserFollowUsers(id) {
     return Vue.http.get(API_ROOT + "users/" + id + "/follow_users");
   },
+  // 获取用户图片
+  getUserImages(id) {
+    return Vue.http.get(API_ROOT + "user/" + id + "/images");
+  },
 
+  // 编辑用户资料
   editUserInfo(params) {
     return Vue.http.post(API_ROOT + "edit_user_info", params);
   },
+  // 删除用户图片
+  deleteUserImage(file) {
+    return Vue.http.post(API_ROOT + "user_image/delete", file);
+  },
 
+  // 是否点赞
   isLikeOrNot(id) {
     return Vue.http.get(API_ROOT + "article/is_like", {
       params: {
@@ -111,6 +136,7 @@ export default {
       }
     });
   },
+  // 点赞文章
   like(id) {
     return Vue.http.get(API_ROOT + "article/like", {
       params: {
@@ -118,6 +144,7 @@ export default {
       }
     });
   },
+  // 是否关注
   isFollowOrNot(id) {
     return Vue.http.get(API_ROOT + "user/is_follow", {
       params: {
@@ -125,6 +152,7 @@ export default {
       }
     });
   },
+  // 关注用户
   follow(id) {
     return Vue.http.get(API_ROOT + "user/follow", {
       params: {

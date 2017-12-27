@@ -27,8 +27,7 @@
 
       <el-col :span="18" :offset="3" v-if="!articleList || articleList.length==0">
         <div class="no-article">
-          <p>少侠，还没有文章呐！</p>
-          <p>赶快去创建吧！～～</p>
+          少侠，还没有文章呐！<br>赶快去创建吧！～～
         </div>
       </el-col>
     </el-row>

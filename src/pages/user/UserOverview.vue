@@ -71,6 +71,11 @@
             喜欢
           </router-link>
         </li>
+        <li>
+          <router-link :to="{name: 'UserImages', params: {id: user.id}}" :style="[path == 'images' ? active : '']">
+            图册
+          </router-link>
+        </li>
       </ul>
     </div>
     <el-row :gutter="25">
