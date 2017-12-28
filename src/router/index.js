@@ -22,6 +22,7 @@ const EditCommon = resolve => require(["../pages/user/edit/EditCommon"], resolve
 const EditUserInfo = resolve => require(["../pages/user/edit/EditUserInfo"], resolve);
 const EditUserAvatar = resolve => require(["../pages/user/edit/EditAvatar"], resolve);
 const EditUserPassword = resolve => require(["../pages/user/edit/EditPassword"], resolve);
+const Search = resolve => require(["../pages/Search"], resolve);
 
 export default new Router({
   routes: [{
@@ -41,9 +42,10 @@ export default new Router({
         path: "/user/register",
         name: "Register",
         component: Register
-      }, {
-        path: "/",
-        component: Home
+      },{
+        path: '/search',
+        name: 'Search',
+        component: Search,
       },
       {
         path: "/article",

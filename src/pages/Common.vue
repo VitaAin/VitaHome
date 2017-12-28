@@ -23,6 +23,7 @@ export default {
 #common {
   position: relative;
   min-height: 100%;
+  min-width: 900px;
 }
 #common-body {
   height: 100%;

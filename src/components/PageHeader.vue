@@ -25,6 +25,16 @@
           <el-menu-item index="3" class="head-item">关于</el-menu-item>
         </router-link>
       </div>
+
+      <div class="search-bar">
+        <el-menu-item class="head-item" index="55">
+          <el-form method="GET" action="/search" accept-charset="UTF-8">
+            <el-input placeholder="请输入搜索内容" name="content" type="text" v-model="searchText">
+              <i slot="prefix" class="el-input__icon el-icon-search" @click="search()"></i>
+            </el-input>
+          </el-form>
+        </el-menu-item>
+      </div>
       
       <!-- <div class="operate-nav">
         <el-menu-item index="100" @click="colorDialogVisible = true">换肤</el-menu-item>
@@ -39,7 +49,7 @@
       
       <div class="user-nav">
         <el-submenu index="77" v-if="auth.check()">
-          <template slot="title" class="user-nav-item">
+          <template slot="title">
             <img :src="auth.user.avatar" alt="">
             {{auth.user.name}}
           </template>
@@ -76,7 +86,8 @@ export default {
     return {
       homeName: "苍澜阁",
       colorDialogVisible: false,
-      color: "#409EFF"
+      color: "#409EFF",
+      searchText: ""
     };
   },
   methods: {
@@ -91,6 +102,9 @@ export default {
       this.$store.dispatch("accountLogout").then(res => {
         this.$router.push("/");
       });
+    },
+    search() {
+      this.$router.push({ path: '/search', query: { content: this.searchText }});
     }
   },
   watch: {
@@ -103,11 +117,11 @@ export default {
 
 <style lang="scss">
 .header {
-  background: #1f2122;
+  background: #333;
   color: white;
   border-bottom: #ddd solid 1px;
-  padding-left: 10%;
-  padding-right: 10%;
+  padding-left: 5%;
+  padding-right: 5%;
   * {
     color: white;
   }
@@ -133,11 +147,16 @@ export default {
     color: #0371cb;
   }
 }
+.search-bar {
+  * {
+    color: #333 !important;
+  }
+}
 .user-nav {
-  .user-nav-item {
+  * {
     &:hover {
-      background: black !important;
-      color: black;
+      background: transparent !important;
+      color: #ebe8e8;
     }
   }
   img {
@@ -150,7 +169,7 @@ export default {
   .user-item {
     color: #333;
     &:hover {
-      background: #ebe8e8;
+      background: #ebe8e8 !important;
       color: #0371cb;
     }
   }

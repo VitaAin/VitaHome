@@ -134,9 +134,8 @@ export default {
           highlightingTheme: "tomorrow"
         }
       },
-      uploadImageUrl:
-        // "http://admin.vitain.top/api/v1/" + "article_image/upload",
-        "http://admin.vitain.top/api/v1/" + "user_image/upload",
+      // "http://admin.vitain.top/api/v1/" + "article_image/upload",
+      uploadImageUrl: "http://admin.vitain.top/api/v1/" + "user_image/upload",
       headers: {
         Authorization: `Bearer ${accessToken}`
       },
@@ -169,14 +168,6 @@ export default {
         });
       });
     }
-
-    // this.getAllTags();
-    // this.getAllCategories();
-
-    // console.log("FormArticle type: " + this.type);
-    // if (this.type != "create_article") {
-    //   this.getArticle();
-    // }
   },
   methods: {
     getAllTags() {
@@ -198,6 +189,7 @@ export default {
         if (res.data.status == 1) {
           this.params = res.data.data;
           this.params.category = res.data.data.category_id;
+          this.params.images = [];
           for (let index in res.data.data.tags) {
             this.tags.push(res.data.data.tags[index].id);
           }
@@ -274,14 +266,7 @@ export default {
       });
     },
     onImageRemove(file, fileList) {
-      console.log("************** onImageRemove start ****************");
-      console.log(JSON.stringify(file));
-      console.log("-----------");
-      console.log(JSON.stringify(fileList));
-      // this.params.images = fileList;
       this.params.images = this.formatImageFileList(fileList);
-      console.log(JSON.stringify(this.params.images));
-      console.log("************** onImageRemove end ****************");
       api.deleteUserImage({ url: file.response.data.url }).then(res => {
         console.log("delete:: " + JSON.stringify(res));
       });
@@ -291,22 +276,9 @@ export default {
       this.showBigImageDialog = true;
     },
     onUploadImageSuccess(response, file, fileList) {
-      console.log("************** onUploadImageSuccess start ****************");
-      console.log(
-        "FormArticle onUploadImageSuccess: reponse:: " +
-          JSON.stringify(response)
-      );
-      console.log("--------------");
-      console.log(file);
-      console.log("--------------");
-      console.log(fileList);
-      console.log("************** onUploadImageSuccess end ****************");
       if (response.status == 1) {
-        this.formatImageFileList(fileList).forEach(element => {
-          this.params.images.unshift(element);
-        });
+        this.params.images=this.formatImageFileList(fileList);
         console.log(this.params.images);
-        console.log("************** onUploadImageSuccess end ****************");
         this.params.body += `![${file.name}](${response.data.url})`;
       }
     },
@@ -314,8 +286,6 @@ export default {
       let imageList = [];
       fileList.forEach(function(afile) {
         imageList.push({
-          type: "ArticleImage",
-          article_id: this.$route.params.id,
           uid: afile.uid,
           name: afile.name,
           url: afile.response.data.url,

@@ -116,7 +116,7 @@ export default {
   },
   // 获取用户图片
   getUserImages(id) {
-    return Vue.http.get(API_ROOT + "user/" + id + "/images");
+    return Vue.http.get(API_ROOT + "users/" + id + "/images");
   },
 
   // 编辑用户资料
@@ -159,5 +159,10 @@ export default {
         id: id
       }
     });
+  },
+
+  // 搜索
+  search(params) {
+    return Vue.http.get(API_ROOT + 'search', { params: { content: params } });
   }
 }

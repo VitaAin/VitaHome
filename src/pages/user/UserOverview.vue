@@ -272,7 +272,7 @@ export default {
 
 <style lang="scss" scoped>
 .user-show {
-  height: 320px;
+  height: 300px;
   background: url(../../assets/user_show_bg.jpg) no-repeat;
   background-size: cover;
   text-align: center;
@@ -397,10 +397,9 @@ export default {
 .tabs-box {
   position: absolute;
   width: 100%;
-  top: 340px;
+  top: 320px;
   ul {
     list-style: none;
-    width: 100%;
     height: 40px;
     background: black;
     background-color: rgba(0, 0, 0, 0.5);
@@ -410,7 +409,7 @@ export default {
       width: 10%;
       height: 20px;
       line-height: 20px;
-      margin-top: 10px;
+      margin: 10px 4px 0 4px;
       display: inline-block;
       * {
         font-size: 15px;

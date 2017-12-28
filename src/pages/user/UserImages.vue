@@ -1,17 +1,12 @@
 <template>
-  <div class="user-images">
-    <div v-if="followUsers && followUsers.length>0">
-      <div class="follow-user" v-for="followUser in followUsers" :key="followUser.id">
-        <router-link class="follow-user-info" :to="{name: 'UserArticles', params: {id: followUser.id}}">
-          <img class="follow-user-avatar" :src="followUser.avatar" alt="">
-          <span class="follow-user-name">{{followUser.name}}</span>
-        </router-link>
-
-        <div class="divider"></div>
+  <div class="user-images-wrap">
+    <div class="user-images" v-if="userImages && userImages.length>0">
+      <div class="user-image" v-for="image in userImages" :key="image.id">
+          <img class="user-image-show" :src="image.url" :alt="image.name" :title="image.name">
       </div>
     </div>
 
-    <div v-if="!followUsers || followUsers.length==0">
+    <div v-if="!userImages || userImages.length==0">
       <div class="no-user-images">
         <p>少侠还没有上传过图片~~</p>
       </div>
@@ -25,17 +20,17 @@ import api from "../../api";
 export default {
   data() {
     return {
-      followUsers: []
+      userImages: []
     };
   },
   mounted() {
-    this.getFollowUsers();
+    this.getUserImages();
   },
   methods: {
-    getFollowUsers() {
-      api.getUserFollowUsers(this.$route.params.id).then(res => {
+    getUserImages() {
+      api.getUserImages(this.$route.params.id).then(res => {
         if (res.data.status == 1) {
-          this.followUsers = res.data.data;
+          this.userImages = res.data.data;
         }
       });
     }
@@ -44,37 +39,25 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.user-images {
+.user-images-wrap {
   margin-top: 40px;
   border: 1px solid #ddd;
   border-radius: 4px;
   padding: 16px 8px;
-  .follow-user {
-    padding: 10px;
-    text-align: left;
-    a {
-      font-size: 16px;
-      color: #00b5ad;
-      &:hover {
-        color: tomato;
-      }
-    }
-    .divider {
-      height: 0.8px;
-      background: #eee;
-      margin-top: 8px;
-    }
+  .user-images {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    align-content: space-between;
   }
 }
-.follow-user-info {
-  display: flex;
-  .follow-user-avatar {
-    width: 60px;
-    height: 60px;
-  }
-  .follow-user-name {
-    margin: auto 16px;
-    font-size: 18px;
+.user-image {
+  margin: 4px;
+  display: inline-block;
+  text-align: center;
+  .user-image-show {
+    max-width: 160px;
+    max-height: 100px;
   }
 }
 .no-user-images {
