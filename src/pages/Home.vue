@@ -61,18 +61,23 @@ export default {
       pageSize: 10
     };
   },
-  // beforeRouteUpdate(to, from, next) {
-  //   this.tagName = to.query;
-  //   console.log("Home beforeRouteUpdate tagName: " + JSON.stringify(tagName));
-  //   next();
-  // },
-  // beforeRouteLeave(to, from, next) {
-  //   this.tagName = to.query;
-  //   console.log("Home beforeRouteLeave tagName: " + JSON.stringify(tagName));
-  //   next();
-  // },
+  beforeRouteUpdate(to, from, next) {
+    this.tagName = to.query.tag;
+    console.log(
+      "Home beforeRouteUpdate tagName: " + JSON.stringify(this.tagName)
+    );
+    next();
+  },
+  beforeRouteLeave(to, from, next) {
+    this.tagName = to.query.tag;
+    console.log(
+      "Home beforeRouteLeave tagName: " + JSON.stringify(this.tagName)
+    );
+    next();
+  },
   mounted() {
     console.log("Home mounted");
+    this.checkUserValidate();
 
     let options = {
       target: document.querySelector("#app"),
@@ -84,6 +89,25 @@ export default {
     this.getArticles();
   },
   methods: {
+    checkUserValidate() {
+      let validateUser = this.$route.query.validate;
+      if (validateUser) {
+        if (validateUser == "yes") {
+          this.message(true);
+        } else {
+          this.message(false);
+        }
+      }
+    },
+    message(isOk) {
+      this.$notify.success({
+        title: isOk ? "激活成功" : "激活失败",
+        message: isOk
+          ? "感谢您支持 苍澜阁，祝您使用愉快！"
+          : "请联系管理员(service@www.vitain.top)激活用户！",
+        offset: 100
+      });
+    },
     getBanners() {
       api.getHomeBanners().then(res => {
         console.log("Home getBanners: res:: " + JSON.stringify(res.data));
@@ -93,10 +117,14 @@ export default {
       });
     },
     getArticles(page = null) {
+      if (this.$route.query.tag) {
+        this.tagName = this.$route.query.tag;
+      }
       let params = {
         page: page,
-        tag: this.tagName.tag
+        tag: this.tagName
       };
+      console.log("params:: " + JSON.stringify(params));
       api.getArticles(params).then(res => {
         if (res.data.status == 1) {
           this.articleList = res.data.data.data;

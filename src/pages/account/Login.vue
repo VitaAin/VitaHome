@@ -35,9 +35,9 @@
             </div>
           </el-form>
 
-          <div class="github-login-btn">
+          <!-- <div class="github-login-btn">
             <el-button @click="githubLogin()">GitHub 登录</el-button>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
@@ -93,7 +93,7 @@ export default {
       if (val && !oldVal) {
         this.message();
         let redirectUrl = this.$route.query.redirect_url || "/";
-        this.$router.push('/');
+        this.$router.push(redirectUrl);
       }
     },
     message() {
@@ -103,7 +103,7 @@ export default {
       });
     },
     githubLogin() {
-      window.location.href = "https://api.laravue.org/github";
+      window.location.href = "https://admin.vitain.top/api/v1/github";
     }
   },
   watch: {
@@ -202,6 +202,7 @@ export default {
 .btn-define:hover,
 .btn-define:active {
   background-color: #169e98;
+  color: #f1f1f1;
   box-shadow: none;
 }
 </style>

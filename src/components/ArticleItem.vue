@@ -117,7 +117,6 @@ export default {
     margin-top: 14px;
     line-height: 25px;
     font-size: 12px;
-    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     text-align: left;

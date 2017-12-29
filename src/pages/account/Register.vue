@@ -44,9 +44,9 @@
             </div>
           </el-form>
 
-          <div class="github-register">
+          <!-- <div class="github-register">
             <el-button class="github-register-btn" @click="githubRegister()">GitHub 账号注册</el-button>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>

@@ -40,7 +40,9 @@ export default {
   },
   // 获取所有文章
   getArticles(params) {
-    return Vue.http.get(API_ROOT + "articles", params);
+    return Vue.http.get(API_ROOT + "articles", {
+      params: params
+    });
   },
   // 获取热门文章
   getHotArticles() {
@@ -163,6 +165,10 @@ export default {
 
   // 搜索
   search(params) {
-    return Vue.http.get(API_ROOT + 'search', { params: { content: params } });
+    return Vue.http.get(API_ROOT + 'search', {
+      params: {
+        content: params
+      }
+    });
   }
 }
