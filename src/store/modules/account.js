@@ -63,7 +63,10 @@ export default {
     ACCOUNT_EDIT_USER: (state, data) => {
       let user = JSON.parse(localStorage.getItem(AUTH_USER));
       user.real_name = data.real_name;
+      user.sex = data.sex;
+      user.qq = data.qq;
       user.city = data.city;
+      user.introduction = data.introduction;
       localStorage.removeItem(AUTH_USER);
       localStorage.setItem(AUTH_USER, JSON.stringify(user));
     },

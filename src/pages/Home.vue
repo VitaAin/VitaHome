@@ -81,7 +81,7 @@ export default {
 
     let options = {
       target: document.querySelector("#app"),
-      text: "玩儿命加载中......"
+      text: "我正在玩儿命加载中......"
     };
     loadingInstance = Loading.service(options);
 
@@ -103,7 +103,7 @@ export default {
       this.$notify.success({
         title: isOk ? "激活成功" : "激活失败",
         message: isOk
-          ? "感谢您支持 苍澜阁，祝您使用愉快！"
+          ? "感谢支持 苍澜阁，祝少侠玩得愉快！"
           : "请联系管理员(service@www.vitain.top)激活用户！",
         offset: 100
       });

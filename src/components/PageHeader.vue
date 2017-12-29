@@ -47,6 +47,13 @@
         </el-dialog>
       </div> -->
       
+      <div class="message-nav">
+        <el-menu-item class="head-item" index="88" @click="colorDialogVisible = true">
+          <i class="fa fa-envelope" aria-hidden="true"></i> 
+          消息
+        </el-menu-item>
+      </div>
+      
       <div class="user-nav">
         <el-submenu index="77" v-if="auth.check()">
           <template slot="title">
@@ -104,7 +111,10 @@ export default {
       });
     },
     search() {
-      this.$router.push({ path: '/search', query: { content: this.searchText }});
+      this.$router.push({
+        path: "/search",
+        query: { content: this.searchText }
+      });
     }
   },
   watch: {
@@ -139,6 +149,12 @@ export default {
   }
   .operate-nav {
     float: right;
+  }
+  .message-nav {
+    float: right;
+    i {
+      margin-right: 2px;
+    }
   }
 }
 .head-item {

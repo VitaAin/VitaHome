@@ -19,14 +19,23 @@
         </el-form-item>
 
         <el-form-item prop="sex" label="性别" class="input-box">
-          <el-radio-group v-model="user.sex">
-            <el-radio :label="1">男</el-radio>
-            <el-radio :label="0">女</el-radio>
+          <el-radio-group v-model="user.sex" :disabled="user.sex!=null">
+            <el-radio label="男">男</el-radio>
+            <el-radio label="女">女</el-radio>
           </el-radio-group>
+          <p class="sex-hint">提示：性别选定后，将无法更改</p>
+        </el-form-item>
+
+        <el-form-item prop="qq" label="QQ" class="input-box">
+          <el-input type="text" v-model="user.qq" placeholder=""></el-input>
         </el-form-item>
 
         <el-form-item prop="city" label="所在城市" class="input-box">
           <el-input type="text" v-model="user.city" placeholder=""></el-input>
+        </el-form-item>
+
+        <el-form-item prop="introduction" label="个人介绍" class="input-box">
+          <el-input type="textarea" v-model="user.introduction" placeholder=""></el-input>
         </el-form-item>
 
         <div>
@@ -62,9 +71,20 @@ export default {
     //     }
     //   });
     // },
-    submit(){
-      api.editUserInfo(this.user).then((res) => {
-        this.$store.commit('ACCOUNT_EDIT_USER', res.data.data);
+    submit() {
+      // console.log(this.user);
+      api.editUserInfo(this.user).then(res => {
+        if (res.data.status == 1) {
+          this.$store.commit("ACCOUNT_EDIT_USER", res.data.data);
+          this.message();
+        }
+      });
+    },
+    message() {
+      this.$notify.success({
+        title: "修改成功",
+        message: "少侠的资料已送往藏书阁～",
+        offset: 100
       });
     }
   }
@@ -109,5 +129,8 @@ export default {
       }
     }
   }
+}
+.sex-hint{
+  font-size: 10px;
 }
 </style>

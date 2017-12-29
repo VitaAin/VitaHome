@@ -76,9 +76,17 @@ export default {
         this.user.avatar = response.data.url;
         this.$store.commit("ACCOUNT_AVATAR_UPLOAD", response.data.url);
         this.failure = null;
+        this.message();
       } else {
         this.failure = response.message;
       }
+    },
+    message() {
+      this.$notify.success({
+        title: "修改成功",
+        message: "少侠您已成功改头换面！快去浪吧！～",
+        offset: 100
+      });
     }
   }
 };

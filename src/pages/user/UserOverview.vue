@@ -11,8 +11,14 @@
             <p class="text-shadow user-name">{{user.name}}
               <i class="fa fa-pencil" aria-hidden="true"  v-if="auth.id == user.id" @click="editUserInfo()"></i>
             </p>
-            <p class="text-shadow user-email">邮箱：{{user.email}}</p>
-            <p class="user-introduction">这位少侠还没有自我介绍～</p>
+            <p class="text-shadow user-base-info">
+              <i v-if="user.sex=='男'" class="text-md fa fa-mars user-sex-male" aria-hidden="true"></i>
+              <i v-if="user.sex=='女'" class="text-md fa fa-venus user-sex-female" aria-hidden="true"></i>
+              <i class="text-md fa fa-map-marker user-city">{{ user.city }}</i> 
+              邮箱：{{user.email}}
+            </p>
+            <p class="user-introduction" v-if="user.introduction">介绍：{{user.introduction}}</p>
+            <p class="user-introduction" v-else>这位少侠还没有自我介绍～</p>
 
             <div class="statistics-and-operation">
               <ul class="statistics-box">
@@ -260,7 +266,10 @@ export default {
     },
     editUserAvatar() {
       if (this.auth.id == this.user.id) {
-        this.$router.push({ name: "EditUserAvatar", params: { id: this.user.id } });
+        this.$router.push({
+          name: "EditUserAvatar",
+          params: { id: this.user.id }
+        });
       }
     },
     editUserInfo() {
@@ -328,9 +337,21 @@ export default {
       color: yellow;
     }
   }
-  .user-email {
+  .user-base-info {
     font-size: 12px;
     margin-top: 10px;
+    i {
+      margin-right: 8px;
+    }
+    .user-city {
+      color: #ffc66d;
+    }
+    .user-sex-male{
+      color: #0dbc79;
+    }
+    .user-sex-female{
+      color: #ff00cc;
+    }
   }
   .user-introduction {
     // border: 0.2px solid greenyellow;

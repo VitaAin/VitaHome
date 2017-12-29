@@ -99,7 +99,7 @@ export default {
     message() {
       this.$notify.success({
         title: "登录成功",
-        message: "欢迎来到 Vita's Home ～～"
+        message: "欢迎来到 苍澜阁 ～～"
       });
     },
     githubLogin() {

@@ -133,7 +133,7 @@ export default {
     message() {
       this.$notify.success({
         title: "注册成功",
-        message: "感谢您对 Vita's Home 的支持，请先前往您的邮箱激活账号～～"
+        message: "感谢少侠对 苍澜阁 的支持，请先前往您的邮箱激活账号～～"
       });
     },
     githubRegister() {
