@@ -103,7 +103,7 @@ export default {
       this.$notify.success({
         title: isOk ? "激活成功" : "激活失败",
         message: isOk
-          ? "感谢支持 苍澜阁，祝少侠玩得愉快！"
+          ? "感谢支持 苍澜阁，少侠快去登录吧！"
           : "请联系管理员(service@www.vitain.top)激活用户！",
         offset: 100
       });
@@ -172,7 +172,7 @@ export default {
 .no-article {
   font-size: 24px;
   color: #888;
-  margin-top: 30%;
+  margin-top: 20%;
   text-align: center;
 }
 .pagination-box {

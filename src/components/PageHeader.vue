@@ -47,7 +47,7 @@
         </el-dialog>
       </div> -->
       
-      <div class="message-nav">
+      <div class="message-nav" v-if="auth.check()">
         <el-menu-item class="head-item" index="88" @click="colorDialogVisible = true">
           <i class="fa fa-envelope" aria-hidden="true"></i> 
           消息
