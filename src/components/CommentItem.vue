@@ -153,6 +153,7 @@ export default {
       }
       let atSb = content.substring(content.indexOf("@"), content.indexOf(" "));
       let linkSb = `<a href="#" class="child-comment-name" target="_blank" data-user-id="52e030ab6b2e">${atSb}</a>`;
+      // let linkSb = `<router-link :to="{name: 'UserArticles', params: {id: ${this.repliedComment.user.id}}}">${atSb}</router-link>`;
       return content.replace(atSb, linkSb);
     }
   }
