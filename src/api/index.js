@@ -18,7 +18,7 @@ Vue.http.interceptors.push((request, next) => {
   next();
 });
 
-const API_ROOT = "http://admin.vitain.top/api/v1/";
+const API_ROOT = "http://api.vitain.top/api/v1/";
 // const API_ROOT = "http://127.0.0.1/vitahomebackend/public/api/v1/";
 
 export default {
@@ -33,6 +33,10 @@ export default {
   // 登出
   logout() {
     return Vue.http.get(API_ROOT + "user/logout");
+  },
+  // 邮箱验证
+  verifyEmail(params) {
+    return Vue.http.get(API_ROOT + 'verify_email', params);
   },
 
   getHomeBanners() {

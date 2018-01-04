@@ -81,7 +81,7 @@ export default {
 
     let options = {
       target: document.querySelector("#app"),
-      text: "我正在玩儿命加载中......"
+      text: "我正在玩儿命加载......"
     };
     loadingInstance = Loading.service(options);
 

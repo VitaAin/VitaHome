@@ -7,6 +7,7 @@ Vue.use(Router)
 const Home = resolve => require(["../pages/Home"], resolve);
 const Login = resolve => require(["../pages/account/Login"], resolve);
 const Register = resolve => require(["../pages/account/Register"], resolve);
+const VerifyEmail = resolve => require(["../pages/account/VerifyEmail"], resolve);
 const About = resolve => require(["../pages/About"], resolve);
 const Common = resolve => require(["../pages/Common"], resolve);
 const ArticleShow = resolve => require(["../pages/article/Show"], resolve);
@@ -42,7 +43,13 @@ export default new Router({
         path: "/user/register",
         name: "Register",
         component: Register
-      },{
+      },
+      {
+        path: '/verify_email/:slug',
+        name: 'VerifyEmail',
+        component: VerifyEmail
+      }, 
+      {
         path: '/search',
         name: 'Search',
         component: Search,
