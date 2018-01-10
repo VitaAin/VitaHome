@@ -14,7 +14,7 @@
             <p class="text-shadow user-base-info">
               <i v-if="user.sex=='男'" class="text-md fa fa-mars user-sex-male" aria-hidden="true"></i>
               <i v-if="user.sex=='女'" class="text-md fa fa-venus user-sex-female" aria-hidden="true"></i>
-              <i class="text-md fa fa-map-marker user-city">{{ user.city }}</i> 
+              <i v-if="user.city" class="text-md fa fa-map-marker user-city">{{ user.city }}</i> 
               邮箱：{{user.email}}
             </p>
             <p class="user-introduction" v-if="user.introduction">介绍：{{user.introduction}}</p>

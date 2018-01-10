@@ -26,6 +26,18 @@
               </div>
             </el-form-item>
 
+            <el-form-item prop="cover" label="封面图片" class="form-item">
+              <div class="upload-images-failed" v-if="failure">{{failure}}</div>
+              <el-upload class="upload-cover"
+                        :action="uploadImageUrl" :headers="headers"
+                        style="padding-left: 17%;"
+                        :show-file-list="false"
+                        :on-success="onUploadCoverSuccess">
+                <img v-if="params.article_url" :src="params.article_url" class="avatar">
+                <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+              </el-upload>
+            </el-form-item>
+
             <el-form-item prop="body" label="内容" class="form-item">
               <markdown-editor v-model="params.body" class="md-editor" ref="markdownEditor" :configs="configs" :highlight="true" :custom-theme="true"></markdown-editor>
             </el-form-item>
@@ -36,7 +48,8 @@
 
             <el-form-item prop="images" label="插入图片" class="form-item upload-images">
               <div class="upload-images-failed" v-if="failure">{{failure}}</div>
-              <el-upload class="upload-image" :action="uploadImageUrl" :headers="headers" 
+              <el-upload class="upload-image" 
+                :action="uploadImageUrl" :headers="headers" 
                 :show-file-list="true" :list-type="'picture-card'"  
                 :on-success="onUploadImageSuccess" 
                 :on-preview="onImagePreview" 
@@ -134,8 +147,8 @@ export default {
           highlightingTheme: "tomorrow"
         }
       },
-      // "http://admin.vitain.top/api/v1/" + "article_image/upload",
-      uploadImageUrl: "http://admin.vitain.top/api/v1/" + "user_image/upload",
+      // "http://api.vitain.top/api/v1/" + "article_image/upload",
+      uploadImageUrl: "http://api.vitain.top/api/v1/" + "user_image/upload",
       headers: {
         Authorization: `Bearer ${accessToken}`
       },
@@ -277,9 +290,13 @@ export default {
     },
     onUploadImageSuccess(response, file, fileList) {
       if (response.status == 1) {
-        this.params.images=this.formatImageFileList(fileList);
+        this.params.images = this.formatImageFileList(fileList);
         console.log(this.params.images);
         this.params.body += `![${file.name}](${response.data.url})`;
+      }
+    },
+    onUploadCoverSuccess(response, file, fileList) {
+      if (response.status == 1) {
       }
     },
     formatImageFileList(fileList) {
