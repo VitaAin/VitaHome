@@ -28,12 +28,13 @@
 
             <el-form-item prop="cover" label="封面图片" class="form-item">
               <div class="upload-images-failed" v-if="failure">{{failure}}</div>
-              <el-upload class="upload-cover"
+              <el-upload class="upload-image"
                         :action="uploadImageUrl" :headers="headers"
-                        style="padding-left: 17%;"
-                        :show-file-list="false"
-                        :on-success="onUploadCoverSuccess">
-                <img v-if="params.article_url" :src="params.article_url" class="avatar">
+                        :show-file-list="true" :list-type="'picture-card'"
+                        :on-success="onUploadCoverSuccess"
+                        :on-preview="onImagePreview" 
+                        :on-remove="onImageRemove">
+                <img v-if="params.cover_url" :src="params.cover_url" class="avatar">
                 <i v-else class="el-icon-plus avatar-uploader-icon"></i>
               </el-upload>
             </el-form-item>
@@ -125,6 +126,7 @@ export default {
       },
       params: {
         title: "",
+        cover_url: "",
         body: "",
         category: "",
         is_public: true,
@@ -296,7 +298,20 @@ export default {
       }
     },
     onUploadCoverSuccess(response, file, fileList) {
+      console.log("------------------");
+      console.log(fileList);
       if (response.status == 1) {
+        this.params.cover_url = response.data.url;
+        let img = {
+          uid: file.uid,
+          name: file.name,
+          url: file.response.data.url,
+          size: file.size,
+          is_cover: true
+        };
+        api.addUserImage({ image: img }).then(res => {
+          console.log("add:: " + JSON.stringify(res));
+        });
       }
     },
     formatImageFileList(fileList) {

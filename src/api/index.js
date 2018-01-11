@@ -129,6 +129,10 @@ export default {
   editUserInfo(params) {
     return Vue.http.post(API_ROOT + "edit_user_info", params);
   },
+  // 添加用户图片
+  addUserImage(file) {
+    return Vue.http.post(API_ROOT + "user_image/add", file);
+  },
   // 删除用户图片
   deleteUserImage(file) {
     return Vue.http.post(API_ROOT + "user_image/delete", file);
