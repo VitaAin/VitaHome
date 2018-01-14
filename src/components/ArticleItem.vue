@@ -1,44 +1,51 @@
 <template>
   <div class="article-item">
-    <router-link class="content-title" :to="{name: 'ArticleShow', params: {id: article.id}}">
-      <h4>{{article.title}}</h4>
-    </router-link>
+    <div class="article-item-content">
+      <div class="content-left">
+        <router-link class="content-title" :to="{name: 'ArticleShow', params: {id: article.id}}">
+          <h4>{{article.title}}</h4>
+        </router-link>
 
-    <div class="content-from">
-      <img :src="article.user.avatar" alt="">
-      <div class="info">
-        <router-link class="author-name" :to="{name: 'UserArticles', params: {id: article.user.id}}">
-          {{article.user.name}}
-        </router-link> 
-        <span class="created-at">
-          {{article.created_at}}
-        </span>
+        <div class="content-from">
+          <img :src="article.user.avatar" alt="">
+          <div class="info">
+            <router-link class="author-name" :to="{name: 'UserArticles', params: {id: article.user.id}}">
+              {{article.user.name}}
+            </router-link> 
+            <span class="created-at">
+              {{article.created_at}}
+            </span>
+          </div>
+        </div>
+
+        <div class="content-body">
+          {{ article.abstract }} 
+        </div>
+
+        <div class="content-attr">
+          <a v-for="tag in article.tags" :key="tag.id" :href="'/#/articles?tag=' + tag.name" id="btn-tag">
+            # {{ tag.name }}
+          </a>
+          
+          <div class="content-count">
+            <span class="count-icon">
+              <i class="fa fa-eye"></i>
+              {{ article.view_count }}
+            </span>
+            <span class="count-icon">
+              <i class="fa fa-comments"></i>
+              {{ article.comments_count }}
+            </span>
+            <span class="count-icon">
+              <i class="fa fa-heart"></i>
+              {{ article.likes_count }}
+            </span>
+          </div>
+        </div>
       </div>
-      
-    </div>
 
-    <div class="content-body">
-       {{ article.abstract }} 
-    </div>
-
-    <div class="content-attr">
-      <a v-for="tag in article.tags" :key="tag.id" :href="'/#/articles?tag=' + tag.name" id="btn-tag">
-        # {{ tag.name }}
-      </a>
-      
-      <div class="content-count">
-        <span class="count-icon">
-          <i class="fa fa-eye"></i>
-           {{ article.view_count }}
-        </span>
-        <span class="count-icon">
-          <i class="fa fa-comments"></i>
-           {{ article.comments_count }}
-        </span>
-        <span class="count-icon">
-          <i class="fa fa-heart"></i>
-           {{ article.likes_count }}
-        </span>
+      <div class="content-right" v-if="article.cover_url">
+        <img :src="article.cover_url" alt="">
       </div>
     </div>
 
@@ -54,8 +61,7 @@ export default {
     article: null
   },
   data() {
-    return {
-    };
+    return {};
   },
   mounted() {
     // console.log("index: " + this.index + ", article: " + this.article.title);
@@ -72,6 +78,20 @@ export default {
     color: #bbb;
     &:hover {
       color: orangered;
+    }
+  }
+  .article-item-content {
+    display: flex;
+  }
+  .content-left {
+    width: 70%;
+  }
+  .content-right {
+    width: 30%;
+    img {
+      height: 120px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
     }
   }
   .content-title {
@@ -95,7 +115,7 @@ export default {
       border-radius: 50%;
       border: 0.6px solid #ccc;
     }
-    .info{
+    .info {
       margin-left: 8px;
       display: inline-block;
       margin-top: 10px;
@@ -113,7 +133,7 @@ export default {
     }
   }
   .content-body {
-    width: 100%;
+    // width: 100%;
     margin-top: 14px;
     line-height: 25px;
     font-size: 12px;

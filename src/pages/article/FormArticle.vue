@@ -34,9 +34,12 @@
                         :on-success="onUploadCoverSuccess"
                         :on-preview="onImagePreview" 
                         :on-remove="onImageRemove">
-                <img v-if="params.cover_url" :src="params.cover_url" class="avatar">
-                <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                <i class="el-icon-plus"></i>
               </el-upload>
+
+              <el-dialog :visible.sync="showBigImageDialog" size="tiny">
+                <img width="100%" :src="bigImageUrl" alt="">
+              </el-dialog>
             </el-form-item>
 
             <el-form-item prop="body" label="内容" class="form-item">
