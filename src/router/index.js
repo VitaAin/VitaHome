@@ -24,6 +24,7 @@ const EditUserInfo = resolve => require(["../pages/user/edit/EditUserInfo"], res
 const EditUserAvatar = resolve => require(["../pages/user/edit/EditAvatar"], resolve);
 const EditUserPassword = resolve => require(["../pages/user/edit/EditPassword"], resolve);
 const Search = resolve => require(["../pages/Search"], resolve);
+const NotificationsShow = resolve => require(["../pages/communication/NotificationsShow"], resolve);
 
 export default new Router({
   routes: [{
@@ -48,7 +49,7 @@ export default new Router({
         path: '/verify_email/:slug',
         name: 'VerifyEmail',
         component: VerifyEmail
-      }, 
+      },
       {
         path: '/search',
         name: 'Search',
@@ -132,6 +133,11 @@ export default new Router({
         path: "/about",
         name: "About",
         component: About
+      },
+      {
+        path: "/user/:id/notifications",
+        name: "NotificationsShow",
+        component: NotificationsShow
       }
     ]
   }]

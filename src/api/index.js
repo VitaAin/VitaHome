@@ -178,5 +178,10 @@ export default {
         content: params
       }
     });
+  },
+
+  // 获取用户通知
+  getNotifications() {
+    return Vue.http.get(API_ROOT + 'notifications');
   }
 }
