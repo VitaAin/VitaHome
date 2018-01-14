@@ -28,13 +28,15 @@
 
             <el-form-item prop="cover" label="封面图片" class="form-item">
               <div class="upload-images-failed" v-if="failure">{{failure}}</div>
-              <el-upload class="upload-image"
+              <el-upload class="upload-image upload-cover"
                         :action="uploadImageUrl" :headers="headers"
-                        :show-file-list="true" :list-type="'picture-card'"
+                        :show-file-list="false" :list-type="'picture-card'"
                         :on-success="onUploadCoverSuccess"
                         :on-preview="onImagePreview" 
                         :on-remove="onImageRemove">
-                <i class="el-icon-plus"></i>
+                <!-- <i class="el-icon-plus"></i> -->
+                <img v-if="params.cover_url" :src="params.cover_url" class="cover">
+                <i v-else class="el-icon-plus cover-uploader-icon"></i>
               </el-upload>
 
               <el-dialog :visible.sync="showBigImageDialog" size="tiny">
@@ -380,7 +382,19 @@ export default {
   color: red;
   margin: 8px;
 }
-.upload-image {
-  // margin: 16px;
+.upload-cover .el-upload {
+  border: 1px solid #aaa;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  width: 182px;
+  height: 122px;
+}
+.cover {
+  width: 180px;
+  height: 120px;
+  display: inline-block;
+  border-radius: 6px;
 }
 </style>
