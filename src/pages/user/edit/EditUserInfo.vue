@@ -26,6 +26,10 @@
           <p class="sex-hint">提示：性别选定后，将无法更改</p>
         </el-form-item>
 
+        <el-form-item prop="phone" label="手机号" class="input-box">
+          <el-input v-model="user.phone" placeholder=""></el-input>
+        </el-form-item>
+
         <el-form-item prop="qq" label="QQ" class="input-box">
           <el-input type="text" v-model="user.qq" placeholder=""></el-input>
         </el-form-item>
@@ -130,7 +134,7 @@ export default {
     }
   }
 }
-.sex-hint{
+.sex-hint {
   font-size: 10px;
 }
 </style>
