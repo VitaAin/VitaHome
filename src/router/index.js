@@ -24,7 +24,10 @@ const EditUserInfo = resolve => require(["../pages/user/edit/EditUserInfo"], res
 const EditUserAvatar = resolve => require(["../pages/user/edit/EditAvatar"], resolve);
 const EditUserPassword = resolve => require(["../pages/user/edit/EditPassword"], resolve);
 const Search = resolve => require(["../pages/Search"], resolve);
-const NotificationsShow = resolve => require(["../pages/communication/NotificationsShow"], resolve);
+const NotificationsShow = resolve => require(["../pages/notification/NotificationsShow"], resolve);
+const NoticeReply = resolve => require(["../pages/notification/NoticeReply"], resolve);
+const NoticeFollow = resolve => require(["../pages/notification/NoticeFollow"], resolve);
+const NoticeLike = resolve => require(["../pages/notification/NoticeLike"], resolve);
 
 export default new Router({
   routes: [{
@@ -135,9 +138,27 @@ export default new Router({
         component: About
       },
       {
-        path: "/user/:id/notifications",
-        name: "NotificationsShow",
-        component: NotificationsShow
+        path: "/user/:id",
+        component: NotificationsShow,
+        children: [{
+            path: "/",
+            component: NoticeReply
+          },
+          {
+            path: "notice_reply",
+            name: "NoticeReply",
+            component: NoticeReply
+          },
+          {
+            path: "notice_follow",
+            name: "NoticeFollow",
+            component: NoticeFollow
+          }, {
+            path: "notice_like",
+            name: "NoticeLike",
+            component: NoticeLike
+          }
+        ]
       }
     ]
   }]

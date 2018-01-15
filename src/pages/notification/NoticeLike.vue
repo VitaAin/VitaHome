@@ -1,22 +1,22 @@
 <template>
-  <div class="user-articles">
-    <div v-if="articles && articles.length>0">
-      <div v-for="(article, index) in articles" class="user-article" :key="article.id">
-        <router-link :to="{name: 'ArticleShow', params: {id: article.id}}">
-          <span>{{article.title}}</span>
+  <div class="notice-like-box">
+    <div v-if="likes && likes.length>0">
+      <div v-for="like in likes" class="notice-reply" :key="like.id">
+        <router-link :to="{name: 'ArticleShow', params: {id: like.id}}">
+          <span>{{like.title}}</span>
         </router-link>
-        <span class="dex create-time">&nbsp;&nbsp;{{article.created_at}}</span>
+        <span class="dex create-time">&nbsp;&nbsp;{{like.created_at}}</span>
           
         <div>
-          <span class="dex"> · {{article.comments_count}} 条回复 · </span>
-          <span class="dex">{{article.likes_count}} 人喜欢 ·</span>
+          <span class="dex"> · {{like.comments_count}} 条回复 · </span>
+          <span class="dex">{{like.likes_count}} 人喜欢 ·</span>
         </div>
       </div>
       <div class="divider"></div>
     </div>
-    <div v-if="!articles || articles.length==0">
-      <div class="no-article">
-        <p>少侠还没有发布过文章~~</p>
+    <div v-if="!likes || likes.length==0">
+      <div class="no-notice-like">
+        <p>少侠，当前还没有人为你点赞，快去结交更多侠士吧~~</p>
       </div>
     </div>
   </div>
@@ -28,36 +28,35 @@ import api from "../../api";
 export default {
   data() {
     return {
-      articles: []
+      likes: []
     };
   },
   mounted() {
-    this.getUserArticles();
+    this.getNoticeLike();
   },
   methods: {
-    getUserArticles() {
-      api.getUserArticles(this.$route.params.id).then(res => {
+    getNoticeLike() {
+      api.getNoticeLike().then(res => {
         if (res.data.status == 1) {
-          this.articles = res.data.data;
+          this.likes = res.data.data;
         }
       });
     }
   },
   watch: {
     $route(to, from) {
-      this.getUserArticles();
+      this.getNoticeLike();
     }
   }
 };
 </script>
 
 <style lang="scss" scoped>
-.user-articles {
-  margin-top: 40px;
+.notice-like-box {
   border: 1px solid #ddd;
   border-radius: 4px;
   padding: 16px 8px;
-  .user-article {
+  .notice-reply {
     padding: 10px 10px 0 20px;
     text-align: left;
     a {
@@ -80,7 +79,7 @@ export default {
       margin-top: 8px;
     }
   }
-  .no-article {
+  .no-notice-like {
     text-align: center;
     p {
       margin: 30px 0 30px;

@@ -46,7 +46,7 @@
               <div class="operation-box"  v-if="auth.id !== user.id">
                 <el-button class="oper-btn follow-btn" v-if="!follow" @click.prevent="clickFollow()">+ 关注</el-button>
                 <el-button class="oper-btn follow-btn" v-if="follow" @click.prevent="clickFollow()">已关注</el-button>
-                <el-button class="oper-btn send-msg-btn">发私信</el-button>
+                <!-- <el-button class="oper-btn send-msg-btn">发私信</el-button> -->
               </div>
             </div>
             

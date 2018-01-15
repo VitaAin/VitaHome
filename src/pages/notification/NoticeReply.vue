@@ -1,22 +1,22 @@
 <template>
-  <div class="user-articles">
-    <div v-if="articles && articles.length>0">
-      <div v-for="(article, index) in articles" class="user-article" :key="article.id">
-        <router-link :to="{name: 'ArticleShow', params: {id: article.id}}">
-          <span>{{article.title}}</span>
+  <div class="notice-reply-box">
+    <div v-if="replies && replies.length>0">
+      <div v-for="reply in replies" class="notice-reply" :key="reply.id">
+        <router-link :to="{name: 'ArticleShow', params: {id: reply.id}}">
+          <span>{{reply.title}}</span>
         </router-link>
-        <span class="dex create-time">&nbsp;&nbsp;{{article.created_at}}</span>
+        <span class="dex create-time">&nbsp;&nbsp;{{reply.created_at}}</span>
           
         <div>
-          <span class="dex"> · {{article.comments_count}} 条回复 · </span>
-          <span class="dex">{{article.likes_count}} 人喜欢 ·</span>
+          <span class="dex"> · {{reply.comments_count}} 条回复 · </span>
+          <span class="dex">{{reply.likes_count}} 人喜欢 ·</span>
         </div>
       </div>
       <div class="divider"></div>
     </div>
-    <div v-if="!articles || articles.length==0">
-      <div class="no-article">
-        <p>少侠还没有发布过文章~~</p>
+    <div v-if="!replies || replies.length==0">
+      <div class="no-notice-reply">
+        <p>少侠，当前还没有人回复你，快去结交更多侠士吧~~</p>
       </div>
     </div>
   </div>
@@ -28,36 +28,35 @@ import api from "../../api";
 export default {
   data() {
     return {
-      articles: []
+      replies: []
     };
   },
   mounted() {
-    this.getUserArticles();
+    this.getNoticeReply();
   },
   methods: {
-    getUserArticles() {
-      api.getUserArticles(this.$route.params.id).then(res => {
+    getNoticeReply() {
+      api.getNoticeReply().then(res => {
         if (res.data.status == 1) {
-          this.articles = res.data.data;
+          this.replies = res.data.data;
         }
       });
     }
   },
   watch: {
     $route(to, from) {
-      this.getUserArticles();
+      this.getNoticeReply();
     }
   }
 };
 </script>
 
 <style lang="scss" scoped>
-.user-articles {
-  margin-top: 40px;
+.notice-reply-box {
   border: 1px solid #ddd;
   border-radius: 4px;
   padding: 16px 8px;
-  .user-article {
+  .notice-reply {
     padding: 10px 10px 0 20px;
     text-align: left;
     a {
@@ -80,7 +79,7 @@ export default {
       margin-top: 8px;
     }
   }
-  .no-article {
+  .no-notice-reply {
     text-align: center;
     p {
       margin: 30px 0 30px;

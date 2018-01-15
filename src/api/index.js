@@ -173,7 +173,7 @@ export default {
 
   // 搜索
   search(params) {
-    return Vue.http.get(API_ROOT + 'search', {
+    return Vue.http.get(API_ROOT + "search", {
       params: {
         content: params
       }
@@ -182,6 +182,15 @@ export default {
 
   // 获取用户通知
   getNotifications() {
-    return Vue.http.get(API_ROOT + 'notifications');
+    return Vue.http.get(API_ROOT + "notifications");
+  },
+  getNoticeReply() {
+    return Vue.http.get(API_ROOT + "notice_reply");
+  },
+  getNoticeFollow() {
+    return Vue.http.get(API_ROOT + "notice_follow");
+  },
+  getNoticeLike() {
+    return Vue.http.get(API_ROOT + "notice_like");
   }
 }

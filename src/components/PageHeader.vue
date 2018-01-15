@@ -48,10 +48,10 @@
       </div> -->
       
       <div class="message-nav" v-if="auth.check()">
-        <router-link :to="{name: 'NotificationsShow'}">
+        <router-link :to="{name: 'NoticeReply', params: {id: auth.user.id}}">
           <el-menu-item class="head-item" index="88">
             <i class="fa fa-envelope" aria-hidden="true"></i> 
-            消息
+            &nbsp;消息
           </el-menu-item>
         </router-link>
       </div>
