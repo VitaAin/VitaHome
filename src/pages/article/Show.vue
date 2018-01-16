@@ -15,6 +15,18 @@
             </div>
           </div>
 
+          <div class="article-category">
+            > 分类：
+            <span>{{article.category.name}}</span>
+          </div>
+
+          <div class="article-tags" v-if="article.tags && article.tags.length>0">
+            > 标签：
+            <span v-for="tag in article.tags" :key="tag.id">
+              {{tag.name}}; 
+            </span>
+          </div>
+
           <div class="article-author">
             <router-link :to="{name: 'UserArticles', params: {slug: article.user.id}}">
               <img :src="article.user.avatar" alt="">
@@ -22,7 +34,7 @@
 
             <div class="author-details">
               <div>
-                <router-link class="author-name" :to="{name: 'UserArticles', params: {slug: article.user.id}}">
+                <router-link class="author-name" :to="{name: 'UserArticles', params: {id: article.user.id}}">
                   <span>{{article.user.name}}</span>
                 </router-link>
               </div>
@@ -211,6 +223,17 @@ export default {
     display: inline-block;
     font-size: 12px;
   }
+}
+
+.article-category {
+  text-align: left;
+  font-size: 11px;
+  margin: 8px 0 2px 0;
+}
+
+.article-tags {
+  text-align: left;
+  font-size: 11px;
 }
 
 .article-author {

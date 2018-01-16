@@ -31,6 +31,7 @@
               <el-upload class="upload-image upload-cover"
                         :action="uploadImageUrl" :headers="headers"
                         :show-file-list="false" :list-type="'picture-card'"
+                        :before-upload="beforeImageUpload" 
                         :on-success="onUploadCoverSuccess"
                         :on-preview="onImagePreview" 
                         :on-remove="onImageRemove">
@@ -56,7 +57,8 @@
               <div class="upload-images-failed" v-if="failure">{{failure}}</div>
               <el-upload class="upload-image" 
                 :action="uploadImageUrl" :headers="headers" 
-                :show-file-list="true" :list-type="'picture-card'"  
+                :show-file-list="true" :list-type="'picture-card'" 
+                :before-upload="beforeImageUpload" 
                 :on-success="onUploadImageSuccess" 
                 :on-preview="onImagePreview" 
                 :on-remove="onImageRemove">
@@ -284,6 +286,14 @@ export default {
           this.failure = res.data;
         }
       });
+    },
+    beforeImageUpload(file) {
+      const isLt2M = file.size / 1024 / 1024 < 2;
+
+      if (!isLt2M) {
+        this.$message.error("上传的图片大小不能超过 2MB!");
+      }
+      return isLt2M;
     },
     onImageRemove(file, fileList) {
       this.params.images = this.formatImageFileList(fileList);
