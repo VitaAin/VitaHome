@@ -11,7 +11,9 @@
         </div>
 
         <div class="upload-avatar-failed" v-if="failure">{{failure}}</div>
-        <el-upload class="upload-avatar" drag :action="uploadAvatarUrl"  :headers="headers" :show-file-list="false"
+        <el-upload class="upload-avatar" drag 
+          :action="uploadAvatarUrl"  :headers="headers" 
+          :show-file-list="false"
           :on-success="onAvatarUploadSuccess" 
           :before-upload="beforeAvatarUpload">
           <i class="el-icon-upload"></i>
@@ -58,15 +60,15 @@ export default {
         "image/gif"
       ];
       const isExpectedType = expectedTypes.includes(file.type);
-      const isLt2M = file.size / 1024 < 500;
+      const isLt = file.size / 1024 < 500;
 
       if (!isExpectedType) {
         this.failure = "上传头像图片格式错误！";
       }
-      if (!isLt2M) {
+      if (!isLt) {
         this.$message.error("上传头像图片大小不能超过 500KB ！");
       }
-      return isExpectedType && isLt2M;
+      return isExpectedType && isLt;
     },
     onAvatarUploadSuccess(response, file, fileList) {
       console.log(

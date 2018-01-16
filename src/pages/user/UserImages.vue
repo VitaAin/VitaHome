@@ -1,14 +1,20 @@
 <template>
   <div class="user-images-wrap">
-    <div class="user-images" v-if="userImages && userImages.length>0">
-      <div class="user-image" v-for="image in userImages" :key="image.id">
-          <img class="user-image-show" :src="image.url" :alt="image.name" :title="image.name">
-      </div>
+    <div class="images-manager">
+      <el-button type="primary">批量管理</el-button>
     </div>
 
-    <div v-if="!userImages || userImages.length==0">
-      <div class="no-user-images">
-        <p>少侠还没有上传过图片~~</p>
+    <div class="user-images-box">
+      <div class="user-images" v-if="userImages && userImages.length>0">
+        <div class="user-image" v-for="image in userImages" :key="image.id">
+            <img class="user-image-show" :src="image.url" :alt="image.name" :title="image.name">
+        </div>
+      </div>
+
+      <div v-if="!userImages || userImages.length==0">
+        <div class="no-user-images">
+          <p>少侠还没有上传过图片~~</p>
+        </div>
       </div>
     </div>
   </div>
@@ -33,7 +39,8 @@ export default {
           this.userImages = res.data.data;
         }
       });
-    }
+    },
+    openManage() {}
   }
 };
 </script>
@@ -41,6 +48,12 @@ export default {
 <style lang="scss" scoped>
 .user-images-wrap {
   margin-top: 40px;
+}
+.images-manager {
+  text-align: left;
+}
+.user-images-box {
+  margin-top: 16px;
   border: 1px solid #ddd;
   border-radius: 4px;
   padding: 16px 8px;
