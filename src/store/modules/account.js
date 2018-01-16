@@ -64,6 +64,7 @@ export default {
       let user = JSON.parse(localStorage.getItem(AUTH_USER));
       user.real_name = data.real_name;
       user.sex = data.sex;
+      user.phone = data.phone;
       user.qq = data.qq;
       user.city = data.city;
       user.introduction = data.introduction;
