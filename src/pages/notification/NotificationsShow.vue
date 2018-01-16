@@ -7,11 +7,6 @@
             :label="tab.name" :name="tab.route"></el-tab-pane>
         </el-tabs>
         <router-view></router-view>
-        <!-- <div class="notifications-show">
-          <div class="notification" v-for="item in notifications" :key="item.id">
-            {{ item }}
-          </div>
-        </div> -->
       </el-col>
     </el-row>
   </div>
@@ -68,12 +63,4 @@ export default {
 .notification-tabs {
   margin-top: 32px;
 }
-
-// .notifications-show {
-//   margin-top: 32px;
-// }
-// .notification{
-//   border: 1px solid lightblue;
-//   margin: 16px 0;
-// }
 </style>
