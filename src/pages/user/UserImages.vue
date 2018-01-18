@@ -1,13 +1,16 @@
 <template>
   <div class="user-images-wrap">
     <div class="images-manager">
-      <el-button type="primary">批量管理</el-button>
+      <el-button type="primary" @click="clickManage()">{{manageState.text}}</el-button>
+      <el-button type="primary" @click="clickCheckAll()" v-if="manageState.inManage">全选</el-button>
+      <el-button type="primary" @click="clickDelete()" v-if="manageState.inManage">删除</el-button>
     </div>
 
     <div class="user-images-box">
       <div class="user-images" v-if="userImages && userImages.length>0">
-        <div class="user-image" v-for="image in userImages" :key="image.id">
+        <div class="user-image" v-for="(image,index) in userImages" :key="image.id">
             <img class="user-image-show" :src="image.url" :alt="image.name" :title="image.name">
+            <el-checkbox class="check-image" @change="onCheckedChange(index,$event)" v-if="manageState.inManage"></el-checkbox>
         </div>
       </div>
 
@@ -26,7 +29,13 @@ import api from "../../api";
 export default {
   data() {
     return {
-      userImages: []
+      userImages: [],
+      manageState: {
+        inManage: false,
+        text: "批量管理"
+      },
+      checkAll: false,
+      checkedImageUrls: []
     };
   },
   mounted() {
@@ -40,7 +49,31 @@ export default {
         }
       });
     },
-    openManage() {}
+    onCheckedChange(pos, value) {
+      if (value) {
+        this.checkedImageUrls.push(this.userImages[pos].url);
+      } else {
+        var index = this.checkedImageUrls.indexOf(this.userImages[pos].url);
+        if (index > -1) {
+          this.checkedImageUrls.splice(index, 1);
+        }
+      }
+      console.log(this.checkedImageUrls);
+    },
+    clickManage() {
+      this.manageState.inManage = !this.manageState.inManage;
+      this.manageState.text = this.manageState.inManage ? "退出管理" : "批量管理";
+    },
+    clickCheckAll() {
+      this.checkAll = !this.checkAll;
+    },
+    clickDelete() {
+      if (!this.checkedImageUrls || this.checkedImageUrls.length == 0) {
+        this.$message.error("少侠还没有选择图片~");
+        return;
+      }
+      
+    }
   }
 };
 </script>
@@ -71,6 +104,8 @@ export default {
   .user-image-show {
     max-width: 160px;
     max-height: 100px;
+  }
+  .check-image {
   }
 }
 .no-user-images {

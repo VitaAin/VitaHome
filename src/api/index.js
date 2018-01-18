@@ -134,8 +134,8 @@ export default {
     return Vue.http.post(API_ROOT + "user_image/add", file);
   },
   // 删除用户图片
-  deleteUserImage(file) {
-    return Vue.http.post(API_ROOT + "user_image/delete", file);
+  deleteUserImage(url) {
+    return Vue.http.post(API_ROOT + "user_image/delete", url);
   },
 
   // 是否点赞

@@ -2,10 +2,10 @@
   <div class="follow-users">
     <div v-if="followUsers && followUsers.length>0">
       <div class="follow-user" v-for="followUser in followUsers" :key="followUser.id">
-        <router-link class="follow-user-info" :to="{name: 'UserArticles', params: {id: followUser.id}}">
+        <a class="follow-user-info"  :href="'#/user/'+followUser.id+'/articles'" target="_blank">
           <img class="follow-user-avatar" :src="followUser.avatar" alt="">
           <span class="follow-user-name">{{followUser.name}}</span>
-        </router-link>
+        </a>
 
         <div class="divider"></div>
       </div>
