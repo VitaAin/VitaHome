@@ -1,5 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import store from '../store'
+import NProgress from 'nprogress';
+import 'nprogress/nprogress.css';
 
 Vue.use(Router)
 
@@ -29,7 +32,7 @@ const NoticeReply = resolve => require(["../pages/notification/NoticeReply"], re
 const NoticeFollow = resolve => require(["../pages/notification/NoticeFollow"], resolve);
 const NoticeLike = resolve => require(["../pages/notification/NoticeLike"], resolve);
 
-export default new Router({
+const router = new Router({
   routes: [{
     path: "/",
     component: Common,
@@ -163,3 +166,28 @@ export default new Router({
     ]
   }]
 })
+
+router.beforeEach((to, from, next) => {
+  NProgress.start();
+  if (to.matched.some(record => record.meta.requireAuth)) {
+    const auth = store.state.account.auth;
+    // this route requires auth, check if logged in
+    // if not, redirect to login page.
+    if (!auth.check()) {
+      next({
+        path: '/user/login',
+        query: {
+          redirect_url: to.fullPath
+        }
+      });
+      return;
+    }
+  }
+  next();
+});
+
+router.afterEach(() => {
+  NProgress.done();
+});
+
+export default router;

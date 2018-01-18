@@ -4,28 +4,31 @@
       <el-col :span="18" :offset="3">
         <div class="result">
           <div class="search">
-            <h4 v-if="! articles.total">
+            <!-- <h4 v-if="!articles.total"> -->
+            <h4 v-if="!total">
               <i class="fa fa-search"></i> 未搜索到关于 “<span style="color: tomato">{{ name }}</span>” 任何结果
             </h4>
             <h4 v-else>
-              <i class="fa fa-search"></i> 关于 “<span style="color: tomato">{{ name }}</span>” 的搜索结果, 共 {{ articles.total }} 条
+              <!-- <i class="fa fa-search"></i> 关于 “<span style="color: tomato">{{ name }}</span>” 的搜索结果, 共 {{ articles.total }} 条 -->
+              <i class="fa fa-search"></i> 关于 “<span style="color: tomato">{{ name }}</span>” 的搜索结果, 共 {{ total }} 条
             </h4>
           </div>
           <div style="border-bottom: 1px solid #eee; padding-top: 10px"></div>
-          <div class="articles" v-for="article in articles.data" :key="article.id">
-            <router-link :to="{name: 'ArticleShow', params: {slug: article.id}}">{{ article.title }}</router-link>
+          <!-- <div class="articles" v-for="article in articles.data" :key="article.id"> -->
+          <div class="articles" v-for="article in articles" :key="article.id">
+            <router-link :to="{name: 'ArticleShow', params: {id: article.id}}">{{ article.title }}</router-link>
             <small>&nbsp; by</small>
-            <router-link :to="{name: 'UserArticles', params: {slug: article.user.id}}">
+            <router-link :to="{name: 'UserArticles', params: {id: article.user.id}}">
               <img class="avatar" alt="article.user.name" :src="article.user.avatar"/>
               <small>{{ article.user.name }}</small>
             </router-link>
             <p>{{ article.abstract }} ...</p>
             <div style="border-bottom: 1px solid #eee; padding-top: 20px"></div>
           </div>
-          <div v-if="articles.total" style="text-align: right; margin-top: 20px">
+          <!-- <div v-if="articles.total" style="text-align: right; margin-top: 20px">
             <el-pagination layout="prev, pager, next" :total="total" :page-size="page_size" @current-change="handleCurrentChange">
             </el-pagination>
-          </div>
+          </div> -->
         </div>
       </el-col>
     </el-row>
@@ -56,9 +59,13 @@ export default {
       api.search(this.$route.query.content).then(res => {
         if (res.data.status) {
           this.articles = res.data.data;
-          this.total = Number(res.data.data.total);
-          for (let index in this.articles.data) {
-            this.articles.data[index].abstract = this.articles.data[index].body
+          // this.total = Number(res.data.data.total);
+          this.total = this.articles.length;
+          console.log(this.total)
+          // for (let index in this.articles.data) {
+          for (let index in this.articles) {
+            // this.articles.data[index].abstract = this.articles.data[index].body
+            this.articles[index].abstract = this.articles[index].body
               .substring(0, 200)
               .replace(/<\/?.+?>/g, "")
               .replace(/ /g, "")

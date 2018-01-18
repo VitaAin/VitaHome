@@ -69,7 +69,8 @@ export default {
       user: {
         account: "",
         password: ""
-      }
+      },
+      path: this.$route.path.split("/")[2]
     };
   },
   computed: mapState({
@@ -107,7 +108,10 @@ export default {
     }
   },
   watch: {
-    success: "successWatcher"
+    success: "successWatcher",
+    $route(to, from) {
+      this.path = this.$route.path.split("/")[2];
+    }
   }
 };
 </script>
@@ -139,10 +143,10 @@ export default {
   .title-text {
     font-weight: bold;
   }
-  .title-login{
+  .title-login {
     color: #00b5ad;
   }
-  .title-register{
+  .title-register {
     color: #999;
   }
 }
