@@ -31,6 +31,7 @@ const NotificationsShow = resolve => require(["../pages/notification/Notificatio
 const NoticeReply = resolve => require(["../pages/notification/NoticeReply"], resolve);
 const NoticeFollow = resolve => require(["../pages/notification/NoticeFollow"], resolve);
 const NoticeLike = resolve => require(["../pages/notification/NoticeLike"], resolve);
+const Mobile = resolve => require(["../pages/Mobile"], resolve);
 
 const router = new Router({
   routes: [{
@@ -59,7 +60,12 @@ const router = new Router({
       {
         path: '/search',
         name: 'Search',
-        component: Search,
+        component: Search
+      },
+      {
+        path: "/mobile",
+        name: "Mobile",
+        component: Mobile
       },
       {
         path: "/article",

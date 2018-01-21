@@ -20,6 +20,7 @@ Vue.http.interceptors.push((request, next) => {
 
 const API_ROOT = "http://api.vitain.top/api/v1/";
 // const API_ROOT = "http://127.0.0.1/vitahomebackend/public/api/v1/";
+const LOCAL_STATIC = "../../static/data/";
 
 export default {
   // 注册
@@ -40,7 +41,7 @@ export default {
   },
 
   getHomeBanners() {
-    return Vue.http.get(API_ROOT_TEST + "HomeBanner.json");
+    return Vue.http.get(LOCAL_STATIC + "HomeBanner.json");
   },
   // 获取所有文章
   getArticles(params) {
@@ -192,5 +193,9 @@ export default {
   },
   getNoticeLike() {
     return Vue.http.get(API_ROOT + "notice_like");
-  }
+  },
+
+  getAbout() {
+    return Vue.http.get(LOCAL_STATIC + "About.json");
+  },
 }

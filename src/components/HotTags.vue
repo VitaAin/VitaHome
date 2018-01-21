@@ -51,10 +51,10 @@ export default {
   .tags {
     display: flex;
     flex-wrap: wrap;
-    padding: 0 4px;
+    padding: 4px;
     .tag {
       // text-align: left;
-      margin: 8px 4px;
+      margin: 4px 4px;
     }
   }
 }

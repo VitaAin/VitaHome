@@ -15,18 +15,6 @@
             </div>
           </div>
 
-          <div class="article-category">
-            > 分类：
-            <span>{{article.category.name}}</span>
-          </div>
-
-          <div class="article-tags" v-if="article.tags && article.tags.length>0">
-            > 标签：
-            <span v-for="tag in article.tags" :key="tag.id">
-              {{tag.name}}; 
-            </span>
-          </div>
-
           <div class="article-author">
             <router-link :to="{name: 'UserArticles', params: {slug: article.user.id}}">
               <img :src="article.user.avatar" alt="">
@@ -51,6 +39,18 @@
             <!-- <vue-markdown class="markdown-body">{{article.body}}</vue-markdown> -->
             <!-- <div class="markdown-body">{{article.body}}</div> wrong -->
             <div class="markdown-body" v-html="article.body"></div>
+          </div>
+
+          <div class="article-category">
+            > 分类：
+            <span>{{article.category.name}}</span>
+          </div>
+
+          <div class="article-tags" v-if="article.tags && article.tags.length>0">
+            > 标签：
+            <span v-for="tag in article.tags" :key="tag.id">
+              {{tag.name}}; 
+            </span>
           </div>
 
           <div class="article-like">
@@ -266,6 +266,7 @@ export default {
 }
 
 .article-like {
+  margin-top: 8px;
   border-top: 0.8px solid #eee;
   padding-top: 32px;
   .article-likes-count {

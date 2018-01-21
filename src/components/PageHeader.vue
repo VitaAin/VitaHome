@@ -36,16 +36,13 @@
         </el-menu-item>
       </div>
       
-      <!-- <div class="operate-nav">
-        <el-menu-item index="100" @click="colorDialogVisible = true">换肤</el-menu-item>
-        <el-dialog title="换肤" :visible.sync="colorDialogVisible" width="30%" center>
-          <el-color-picker v-model="color"></el-color-picker>
-          <span slot="footer" class="dialog-footer">
-            <el-button @click="colorDialogVisible = false">取 消</el-button>
-            <el-button type="primary" @click="changeColor()">确 定</el-button>
-          </span>
-        </el-dialog>
-      </div> -->
+      <div class="mobile-nav">
+        <router-link :to="{name: 'Mobile'}">
+          <el-menu-item class="head-item" index="1000">
+            <i class="fa fa-mobile" aria-hidden="true"></i> 
+          </el-menu-item>
+        </router-link>
+      </div>
       
       <div class="message-nav" v-if="auth.check()">
         <router-link :to="{name: 'NoticeReply', params: {id: auth.user.id}}">
@@ -94,7 +91,6 @@ export default {
   data() {
     return {
       homeName: "苍澜阁",
-      colorDialogVisible: false,
       color: "#409EFF",
       searchText: ""
     };
@@ -102,10 +98,6 @@ export default {
   methods: {
     handleSelect(key, keyPath) {
       // console.log(key, keyPath);
-    },
-    changeColor() {
-      console.log("color: " + this.color);
-      this.colorDialogVisible = false;
     },
     logout() {
       this.$store.dispatch("accountLogout").then(res => {
@@ -146,10 +138,13 @@ export default {
       color: white;
     }
   }
-  .user-nav {
+  .mobile-nav {
     float: right;
+    i {
+      font-size: 20px;
+    }
   }
-  .operate-nav {
+  .user-nav {
     float: right;
   }
   .message-nav {

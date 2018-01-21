@@ -2,7 +2,6 @@
   <div class="user-images-wrap">
     <div class="images-manager">
       <el-button type="primary" @click="clickManage()">{{manageState.text}}</el-button>
-      <el-button type="primary" @click="clickCheckAll()" v-if="manageState.inManage">全选</el-button>
       <el-button type="primary" @click="clickDelete()" v-if="manageState.inManage">删除</el-button>
     </div>
 
@@ -20,6 +19,14 @@
         </div>
       </div>
     </div>
+    
+    <el-dialog title="友情提示" :visible.sync="showdeleteImagesDialog" center>
+      <p>少侠确定要删除这些图片吗？删除后不能撤销的哦~~</p>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="showdeleteImagesDialog=false">取 消</el-button>
+        <el-button type="primary" @click="deleteImages()">确 定</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -35,6 +42,7 @@ export default {
         text: "批量管理"
       },
       checkAll: false,
+      showdeleteImagesDialog: false,
       checkedImageUrls: []
     };
   },
@@ -50,6 +58,7 @@ export default {
       });
     },
     onCheckedChange(pos, value) {
+      // console.log(value)
       if (value) {
         this.checkedImageUrls.push(this.userImages[pos].url);
       } else {
@@ -62,17 +71,26 @@ export default {
     },
     clickManage() {
       this.manageState.inManage = !this.manageState.inManage;
-      this.manageState.text = this.manageState.inManage ? "退出管理" : "批量管理";
-    },
-    clickCheckAll() {
-      this.checkAll = !this.checkAll;
+      this.manageState.text = this.manageState.inManage
+        ? "退出管理"
+        : "批量管理";
     },
     clickDelete() {
       if (!this.checkedImageUrls || this.checkedImageUrls.length == 0) {
         this.$message.error("少侠还没有选择图片~");
         return;
       }
-      
+      this.showdeleteImagesDialog = true;
+    },
+    deleteImages() {
+      this.showdeleteImagesDialog = false;
+      this.checkedImageUrls.forEach((url, index) => {
+        api.deleteUserImage({ url: url }).then(res => {
+          if (index == this.checkedImageUrls.length - 1) {
+            this.getUserImages();
+          }
+        });
+      });
     }
   }
 };
