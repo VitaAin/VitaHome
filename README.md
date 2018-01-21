@@ -1,6 +1,6 @@
 # VitaHome
 
-微型社区 苍澜阁 的前台项目，访问地址：http://www.vitain.top（开发中）
+微型社区 苍澜阁 的前台项目，访问地址：http://www.vitain.top （开发中）
 
 ## 简介
 
@@ -20,7 +20,7 @@ npm run dev
 npm run build
 ```
 
-## 技术栈
+## 使用技术
 vue2 + vuex + vue-router + vue-resource + ES6 + element-ui + sass
 
 # 联系我
