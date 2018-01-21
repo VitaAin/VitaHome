@@ -196,6 +196,7 @@ export default {
   },
 
   getAbout() {
-    return Vue.http.get(LOCAL_STATIC + "About.json");
+    // return Vue.http.get(LOCAL_STATIC + "About.json");
+    return Vue.http.get(API_ROOT + "about");
   },
 }

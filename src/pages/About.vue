@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-row>
-      <el-col :span="18" :offset="5">
+      <el-col :span="18" :offset="3">
         <div class="about" v-if="about">
           <p class="about-title">关于</p>
 
@@ -66,6 +66,14 @@
               </li>
             </ul>
           </p>
+
+          <h3>打赏一下</h3>
+          <div class="divider"></div>
+          <div class="payment">
+            <p>感谢各位少侠~~~</p>
+            <img src="../assets/pay_weixin.png" alt="">
+          </div>
+          
         </div>
       </el-col>
     </el-row>
@@ -125,6 +133,12 @@ export default {
   .hobby,
   .tag {
     margin-right: 8px;
+  }
+  .payment{
+    text-align: center;
+    img{
+      width: 160px;
+    }
   }
 }
 .divider {
