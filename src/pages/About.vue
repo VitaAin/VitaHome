@@ -72,8 +72,8 @@
           <div class="payment">
             <p>感谢各位少侠~~~</p>
             <img src="../assets/pay_weixin.png" alt="">
+            <img src="../assets/pay_ali.png" alt="">
           </div>
-          
         </div>
       </el-col>
     </el-row>
@@ -134,10 +134,11 @@ export default {
   .tag {
     margin-right: 8px;
   }
-  .payment{
+  .payment {
     text-align: center;
-    img{
+    img {
       width: 160px;
+      margin: 0 8px;
     }
   }
 }
