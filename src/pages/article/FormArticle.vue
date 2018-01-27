@@ -30,6 +30,7 @@
               <div class="upload-images-failed" v-if="failure">{{failure}}</div>
               <el-upload class="upload-image upload-cover"
                         :action="uploadImageUrl" :headers="headers"
+                        :data="{is_cover:true}"
                         :show-file-list="false" :list-type="'picture-card'"
                         :before-upload="beforeImageUpload" 
                         :on-success="onUploadCoverSuccess"
@@ -313,20 +314,14 @@ export default {
       }
     },
     onUploadCoverSuccess(response, file, fileList) {
-      console.log("------------------");
-      console.log(fileList);
       if (response.status == 1) {
         this.params.cover_url = response.data.url;
         let img = {
           uid: file.uid,
           name: file.name,
           url: file.response.data.url,
-          size: file.size,
-          is_cover: true
+          size: file.size
         };
-        api.addUserImage({ image: img }).then(res => {
-          console.log("add:: " + JSON.stringify(res));
-        });
       }
     },
     formatImageFileList(fileList) {

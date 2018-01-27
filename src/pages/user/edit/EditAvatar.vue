@@ -37,7 +37,7 @@ export default {
     return {
       user: null,
       // uploadAvatarUrl: this.$http.options.root + "avatar/upload",
-      uploadAvatarUrl: "http://admin.vitain.top/api/v1/" + "avatar/upload",
+      uploadAvatarUrl: "http://api.vitain.top/api/v1/" + "avatar/upload",
       headers: {
         Authorization: `Bearer ${accessToken}`
       },

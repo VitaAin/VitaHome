@@ -84,11 +84,12 @@ export default {
     display: flex;
   }
   .content-left {
-    width: 70%;
+    width: 66%;
   }
   .content-right {
     width: 30%;
     img {
+      width: 180px;
       height: 120px;
       border: 1px solid #ddd;
       border-radius: 4px;
