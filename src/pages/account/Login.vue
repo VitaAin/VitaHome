@@ -26,7 +26,7 @@
             <div class="login-failed" v-if="failure">
               <div class="failure-header">{{failure.message}}</div>
               <ul class="failure-list">
-                <li v-for="error in failure.data">{{error[0]}}</li>
+                <li v-for="error in failure.data" :key="error">{{error[0]}}</li>
               </ul>
             </div>
 
