@@ -27,7 +27,6 @@
             </el-form-item>
 
             <el-form-item prop="cover" label="封面图片" class="form-item">
-              <div class="upload-images-failed" v-if="failure">{{failure}}</div>
               <el-upload class="upload-image upload-cover"
                         :action="uploadImageUrl" :headers="headers"
                         :data="{is_cover:true}"
@@ -51,11 +50,10 @@
             </el-form-item>
 
             <el-form-item prop="is_public" class="form-item set-is-public">
-              <el-checkbox v-model="params.is_public">公开</el-checkbox>
+              <el-checkbox disabled v-model="params.is_public">公开</el-checkbox>
             </el-form-item>
 
             <el-form-item prop="images" label="插入图片" class="form-item upload-images">
-              <div class="upload-images-failed" v-if="failure">{{failure}}</div>
               <el-upload class="upload-image" 
                 :action="uploadImageUrl" :headers="headers" 
                 :show-file-list="true" :list-type="'picture-card'" 
@@ -72,6 +70,7 @@
             </el-form-item>
 
             <div>
+              <div class="failure" v-if="failure">{{failure.message}}</div>
               <el-button class="article-btn" @click="submit($event, 'params')">提交</el-button>
             </div>
           </el-form>
@@ -377,10 +376,10 @@ export default {
     margin: 0;
   }
 }
-.upload-images-failed {
+.failure {
   font-size: 14px;
   color: red;
-  margin: 8px;
+  margin-top: 8px;
 }
 .upload-cover .el-upload {
   border: 1px solid #aaa;
