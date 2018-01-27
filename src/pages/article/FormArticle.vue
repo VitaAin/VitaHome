@@ -315,13 +315,8 @@ export default {
     },
     onUploadCoverSuccess(response, file, fileList) {
       if (response.status == 1) {
+        console.log(response.data.url);
         this.params.cover_url = response.data.url;
-        let img = {
-          uid: file.uid,
-          name: file.name,
-          url: file.response.data.url,
-          size: file.size
-        };
       }
     },
     formatImageFileList(fileList) {
