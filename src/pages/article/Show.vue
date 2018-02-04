@@ -25,6 +25,8 @@
                 <router-link class="author-name" :to="{name: 'UserArticles', params: {id: article.user.id}}">
                   <span>{{article.user.name}}</span>
                 </router-link>
+                <button class="to-follow" v-if="!follow" @click.prevent="clickFollow()">+关注</button>
+                <button class="already-follow" v-if="follow" @click.prevent="clickFollow()">已关注</button>
               </div>
               <div class="article-count">
                 <span>{{ article.created_at }}</span>
@@ -140,6 +142,29 @@ export default {
         if (res.data.status == 1) {
           this.article = res.data.data;
           this.article.body = Marked(res.data.data.body);
+          this.getIsFollow();
+        }
+      });
+    },
+    getIsFollow() {
+      if (!this.auth.check()) {
+        return;
+      }
+
+      api.isFollowOrNot(this.article.user.id).then(res => {
+        if (res.data.status == 1) {
+          this.follow = res.data.data.followed;
+        }
+      });
+    },
+    clickFollow() {
+      if (!this.auth.check()) {
+        return;
+      }
+
+      api.follow(this.article.user.id).then(res => {
+        if (res.data.status == 1) {
+          this.follow = res.data.data.followed;
         }
       });
     },
@@ -256,6 +281,24 @@ export default {
       span {
         padding-right: 5px;
       }
+    }
+    .to-follow {
+      margin-left: 10px;
+      border: 0.4px solid #fa6c52;
+      border-radius: 6px;
+      font-size: 12px;
+      padding: 2px 6px;
+      background: #fa6c52;
+      color: white;
+    }
+    .already-follow {
+      margin-left: 10px;
+      border: 0.4px solid #b6b6b6;
+      border-radius: 6px;
+      font-size: 12px;
+      padding: 2px 6px;
+      background: #b6b6b6;
+      color: white;
     }
   }
 }
